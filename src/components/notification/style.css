@@ -1,0 +1,27 @@
+.notification{
+    cursor: pointer;
+    z-index: 10000;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 280px;
+    min-height: 80px;
+    top: 100px;
+    right: 2%;
+    box-shadow: 0px 8px 15px rgb(0 0 0 / 10%);
+    background-color: #18f6ba;
+    color: #34730a;
+    border-radius: 8px;
+    animation-name: run;
+    animation-duration: 1s;
+}
+
+@keyframes run {
+    0% {
+      right: -25%;
+    }
+    100% {
+      right: 2%;    
+    }
+}

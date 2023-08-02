@@ -1,0 +1,115 @@
+.agreement-price{
+    font-size: 24px;
+    margin-top: 20px;
+    color: #36ad8a;
+    font-weight: bold;
+}
+
+.agreement-price div{
+    color: black;
+    font-weight: 100;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+.agreement-details{
+    margin-top: 20px;
+    border: 1px dashed black;
+    padding: 20px;
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.wrapper-progressBar {
+    width: 100%;
+    height: 100px;
+    margin-top: 40px;
+}
+
+.progressBar {
+}
+
+.progressBar li {
+    list-style-type: none;
+    float: left;
+    width: 33%;
+    position: relative;
+    text-align: center;
+}
+
+.progressBar li:before {
+    content: " ";
+    line-height: 30px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px;
+    background-color: white
+}
+
+.progressBar li:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #ddd;
+    top: 15px;
+    left: -50%;
+    z-index: -1;
+}
+
+.progressBar li:first-child:after {
+    content: none;
+}
+
+.progressBar li.active {
+    color: #776dff;
+}
+
+.progressBar li.active:before {
+    border-color: #776dff;
+    background-color: #776dff
+}
+
+.progressBar li.active + li:after {
+    background-color: #776dff;
+}
+
+
+.skill-container .add-skill-btn{
+    background-color: #efefef;
+    color: #898989;
+    border-radius: 4px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.skill-container .skill-box{
+    padding: 10px 20px;
+    display: flex;
+}
+
+.skill-container .skill-box input{
+    width: calc(100% - 40px);
+    height: 24px;
+    font-size: 14px;
+    border-radius: 8px;
+    border-color: #776dff;
+    padding: 4px;
+}
+
+.skill-container .skill-box .remove{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    cursor: pointer;
+    font-size: 22px;
+}

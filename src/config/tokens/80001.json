@@ -1,0 +1,8 @@
+[
+    {
+        "name": "Dummy ERC20",
+        "ticker": "DERC20",
+        "contract": "0xfe4f5145f6e09952a5ba9e956ed0c25e3fa4c7f1",
+        "decimals": 18
+    }
+]

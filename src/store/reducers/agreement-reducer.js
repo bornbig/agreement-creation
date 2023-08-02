@@ -1,0 +1,10 @@
+// {
+//     escrow,
+//     client,
+//     service_provider,
+//     mode,
+//     ipfs_hash,
+//     skills,
+//     price,
+//     token
+// }

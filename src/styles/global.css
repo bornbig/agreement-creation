@@ -1,0 +1,226 @@
+body{
+    margin: 0;
+    font-family: sans-serif;
+    background-image: url('./images/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+}
+
+.container{
+    max-width: 800px;
+    margin: auto;
+}
+
+.bg{
+  width: 100%;
+  opacity: 0.5;
+  margin-top: -40px;
+  z-index: -1;
+  position: relative;
+}
+
+.connect{
+    width: auto !important;
+    height: auto !important;
+    padding: 18px 32px !important;
+    font-size: 18px !important;
+    border-radius: 34px;
+    cursor: pointer;
+}
+
+.type{
+  font-size: 26px;
+  display: inline-block;
+  white-space: pre-line;
+  line-height: 44px;
+}
+
+
+.btn{
+    position: relative;
+    display: flex;
+    min-width: 200px;
+    height: 52px;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    /* background: linear-gradient(90deg, #6affb0 0%, #00ddff 52.43%); */
+    background-color: #776dff;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.btn input[type="file"]{
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+a{
+  text-decoration: none;
+}
+
+.btn.small{
+  width: 200px;
+}
+
+.btn.withPadding{
+  min-width: 160px;
+  padding: 0 20px;
+}
+
+.address{
+    display: inline-block;
+    width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: 500;
+    vertical-align: bottom;
+}
+
+.flexBetween{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.arrow {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-left: 12px;
+  }
+  
+  .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  
+  .left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+  
+  .up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+  }
+  
+  .down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+
+.heading{
+    font-size: 100px;
+}
+
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+  .bar {
+    background-color: rgb(164, 164, 252);
+    min-width: 100%;
+    min-height: 5px;
+    position: relative;
+    overflow: hidden;
+  }
+  .bar::after {
+    content: "";
+    min-height: 5px;
+    position: absolute;
+    background: #fff;
+    transform: translateX(-100%);
+    animation: animate 2s infinite;
+  }
+  .bar::before {
+    content: "";
+    min-height: 5px;
+    position: absolute;
+    background: #fff;
+    transform: translateX(-100%);
+    animation: animate 2s infinite;
+    animation-delay: 1s;
+  }
+  @keyframes animate {
+    0% {
+      transform: translateX(-150%);
+      min-width: 100px;
+    }
+    100% {
+      transform: translateX(300%);
+      min-width: 400px;
+    }
+  }
+
+
+
+  .lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #000;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #000 transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+
+  .wallet-message{
+    font-size: 26px;
+    color: #776dff;
+    border: 1px solid #e7e7e7;
+    padding: 12px;
+    text-align: center;
+  }
+
+  section{
+    margin-top: 10vh;
+  }
+
+  .d-flex-between{
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+  .box-agreemet img{
+    height: 140px;
+    cursor: pointer;
+  }

@@ -5,7 +5,7 @@ import { API_ENDPOINT } from "../../config/config";
 
 export function AddNotification(props){
     const [isRegisterd, setIsRegisterd] = useState(false);
-    const { isConnected, wallet } = useSelector((state) => state.user);
+    const { isConnected, wallet, userInfo } = useSelector((state) => state.user);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -16,8 +16,12 @@ export function AddNotification(props){
         setLoading(true)
         if(isConnected){
             try{
-                const serverResponse = await axios.get(API_ENDPOINT + "/telegram/check?wallet="+ wallet);
-                setIsRegisterd(true);
+                if(userInfo?.email){
+                    setIsRegisterd(true);
+                }else{
+                    await axios.get(API_ENDPOINT + "/telegram/check?wallet="+ wallet);
+                    setIsRegisterd(true);
+                }
             }catch(e){
                 setIsRegisterd(false);
             }

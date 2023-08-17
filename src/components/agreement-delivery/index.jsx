@@ -25,7 +25,7 @@ export function AgreementDelivery(props){
         <>
         <br />
             {
-                (wallet == props.details?.client?.toLowerCase()) && (
+                (wallet?.toLowerCase() == props.details?.client?.toLowerCase()) && (
                     <>
                         <div className="flexBetween">
                             <div className="btn withPadding" onClick={() => !submitDeliveryLoading && releaseFunds()}>
@@ -42,7 +42,7 @@ export function AgreementDelivery(props){
             }
 
             {
-                (wallet == props.details?.service_provider?.toLowerCase()) && (
+                (wallet?.toLowerCase() == props.details?.service_provider?.toLowerCase()) && (
                     <>
                         <div className="btn withPadding" onClick={() => !disputeLoading && raiseDispute()}>
                             {disputeLoading && <div className="loading"><div className="bar"></div></div>}

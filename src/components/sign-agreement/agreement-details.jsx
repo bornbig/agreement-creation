@@ -71,7 +71,7 @@ export function AgreementDetails(props){
                     </div>
                     
                     <div className="agreement-price">{ (props.price / (10 ** decimals)).toFixed(decimals) } {ticker}
-                        {props.status != 105 && wallet == props.client?.toLowerCase() &&
+                        {props.status != 105 && wallet?.toLowerCase() == props.client?.toLowerCase() &&
                         <div>Release the funds only whe the Service Provider has deliverd: <b>{ipfsJson.delivery}</b></div>} <br></br>
                         <div>Time Left: <b>{(getRaminingTime())}</b></div>
                     </div>

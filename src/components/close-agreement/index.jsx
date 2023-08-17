@@ -86,7 +86,7 @@ export function CloseAgreement(props){
         }
         <br />
             {
-                (wallet == props.details?.client?.toLowerCase()) && (
+                (wallet?.toLowerCase() == props.details?.client?.toLowerCase()) && (
                     <>
                         {props.details.status == 102 &&  props.skills.length > 0 && (
                             <>
@@ -120,7 +120,7 @@ export function CloseAgreement(props){
             }
 
             {
-                (wallet == props.details?.service_provider?.toLowerCase()) && (
+                (wallet?.toLowerCase() == props.details?.service_provider?.toLowerCase()) && (
                     <>
                         <div className="flexBetween">
                             <div className="btn withPadding">

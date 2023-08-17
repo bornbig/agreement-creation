@@ -78,7 +78,7 @@ export function SignAgreement (props){
 
     return (
         <div>
-            {isConnected && wallet == props.details?.client?.toLowerCase() && (
+            {isConnected && wallet?.toLowerCase() == props.details?.client?.toLowerCase() && (
                 <div className="flexBetween">
                     {props.details?.mode &&
                         ((allowance < props.details?.price)? 
@@ -100,7 +100,7 @@ export function SignAgreement (props){
                 </div>
             )}
             
-            {isConnected && wallet == props.details?.service_provider?.toLowerCase() && (
+            {isConnected && wallet?.toLowerCase() == props.details?.service_provider?.toLowerCase() && (
                 <>
                     {!props.details?.mode && <Skills skills={skills} setSkills={setSkills} />}
                     <div className="flexBetween">

@@ -216,11 +216,21 @@ a{
 
   .d-flex-between{
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
   }
 
 
   .box-agreemet img{
     height: 140px;
     cursor: pointer;
+  }
+
+  .success{
+    color: green !important;
+  }
+
+  .btn.disabled{
+    pointer-events: none;
+    background-color: #918afd;
   }

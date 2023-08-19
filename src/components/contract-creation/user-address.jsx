@@ -1,14 +1,20 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { getUserWallet } from "../../store/actions/user-action"
 import Web3 from "web3";
 
 export function UserAddress(props){
 
-    const [userInput, updateUserInput] = useState("")
+    const [isValidInput, setIsValidInput] = useState(false);
+
+    useEffect(() => {
+        updateValidInput(props.userInput);
+    }, []);
 
     const updateUserWalletByEmail = async (value) => {
-        updateUserInput(value);
+        props.setUserInput(value);
+        updateValidInput(value);
         const wallet = await getUserWallet(value);
+
         if(Web3.utils.isAddress(wallet)){
             if(props.userType == 1){
                 props.setClient(wallet);
@@ -22,6 +28,16 @@ export function UserAddress(props){
                 props.setServiceProvider("");
             }  
         }
+    }
+
+    const updateValidInput = (value) => {
+        if(value.match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          ) || Web3.utils.isAddress(value)){
+            setIsValidInput(true)
+          }else{
+            setIsValidInput(false)
+          }
     }
 
     const getUserWalletText = () => {
@@ -44,14 +60,14 @@ export function UserAddress(props){
                 <div className="note">( Please take wallet address from the second party. )</div>
 
                     <div className="address-box">
-                        <input type="text" onChange={(e) => updateUserWalletByEmail(e.target.value)} value={userInput} />
+                        <input type="text" onChange={(e) => updateUserWalletByEmail(e.target.value)} value={props.userInput} />
                     </div>
-                    {userInput != getUserWalletText() &&
+                    {props.userInput != getUserWalletText() &&
                         <div className="note success">{props.userType == 1 ? props.client : props.serviceProvider}</div>
                     }
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
-                <div className={"btn bottom-right " + ((props.userType == 1 && !props.client || props.userType == 2 && !props.serviceProvider) && "disabled")} onClick={() => props.nextStep(props.step + 1)}>Next</div>
+                <div className={"btn bottom-right " + (!isValidInput && "disabled")} onClick={() => props.nextStep(props.step + 1)}>Next</div>
             </div> 
         </>
     )

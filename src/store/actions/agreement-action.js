@@ -176,3 +176,11 @@ export async function getAgreements(wallet){
 
   return agreements.nfts;
 }
+
+
+export async function createOfflineAgreement(chain, agreement, agreement_object){
+  const url = `${API_ENDPOINT}/agreement/offline/create`;
+  const creation = (await axios.post(url, {chain, agreement, agreement_object})).data;
+
+  return creation._id;
+}

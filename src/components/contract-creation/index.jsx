@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CONTRACT } from "../../config/config";
-import { storeDetails, storeSkills } from "../../store/actions/agreement-action";
+import { createOfflineAgreement, storeDetails, storeSkills } from "../../store/actions/agreement-action";
 import { showNotification } from "../../store/actions/notification-action";
 import "./style.css";
 import { Modal } from "../modal";
@@ -17,7 +17,7 @@ import { Deadline } from "./deadline";
 export function ContractCreation(props){
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { wallet, web3, chainId } = useSelector((state) => state.user);
+    const { wallet, web3, chainId, userInfo } = useSelector((state) => state.user);
     const [step, setStep] = useState(0);
     const [userType, setUserType] = useState(1);
     const [client, setClient] = useState("");
@@ -31,6 +31,7 @@ export function ContractCreation(props){
     const [selectedToken, setSelectedToken] = useState()
     const [deadlineValue, setDeadlineValue] = useState();
     const [deadlineRange, setDeadlineRange] = useState("Days");
+    const [userInput, setUserInput] = useState("");
 
     useEffect(() => {
         if(userType == 2){
@@ -77,30 +78,12 @@ export function ContractCreation(props){
 
             const deadline = await getDeadlineTimestamp();
 
-            console.log(CONTRACT[chainId].escrow.contract,
-                client,
-                serviceProvider,
-                wallet == serviceProvider,
-                ipfs_hash,
-                skills_hash,
-                price,
-                selectedToken.contract,
-                deadline);
-    
-            let contract = new web3.eth.Contract(CONTRACT[chainId].serviceProvider.abi, CONTRACT[chainId].serviceProvider.contract);
-            const transaction = await contract.methods.mint(
-                CONTRACT[chainId].escrow.contract,
-                client,
-                serviceProvider,
-                wallet == serviceProvider,
-                ipfs_hash,
-                skills_hash,
-                price,
-                selectedToken.contract,
-                deadline
-                ).send({from: wallet});
-    
-            const tokenId = transaction.events.Transfer[0].returnValues.tokenId;
+            let tokenId;
+            if(serviceProvider != "" && client != ""){
+                tokenId = await createOffChainAgreement(ipfs_hash, skills_hash, deadline);
+            }else{
+                tokenId = await createOnchainAgreement(ipfs_hash, skills_hash, deadline);
+            }
 
             dispatch(showNotification("Agreement is created", dispatch));
 
@@ -110,6 +93,54 @@ export function ContractCreation(props){
             console.log(e);
         }
         setSignLoadin(false);
+    }
+
+    const createOffChainAgreement = async (ipfs_hash, skills_hash, deadline) => {
+        const mode = wallet == serviceProvider;
+        let secondPartyEmail;
+        if(userInput.match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )){
+            secondPartyEmail = userInput;
+          }
+        const service_provider_email = mode? userInfo?.email : secondPartyEmail;
+        const client_email = !mode? userInfo?.email : secondPartyEmail;
+
+        const tokenId = createOfflineAgreement(chainId, CONTRACT[chainId].serviceProvider.contract, {
+            escrow: CONTRACT[chainId].escrow.contract,
+            client,
+            service_provider: serviceProvider,
+            mode,
+            ipfs_hash,
+            skills_hash,
+            price,
+            token: selectedToken.contract,
+            deadline,
+            service_provider_email,
+            client_email,
+        });
+
+        return tokenId;
+    }
+
+    const createOnchainAgreement = async (ipfs_hash, skills_hash, deadline) => {
+
+        let contract = new web3.eth.Contract(CONTRACT[chainId].serviceProvider.abi, CONTRACT[chainId].serviceProvider.contract);
+        const transaction = await contract.methods.mint(
+            CONTRACT[chainId].escrow.contract,
+            client,
+            serviceProvider,
+            wallet == serviceProvider,
+            ipfs_hash,
+            skills_hash,
+            price,
+            selectedToken.contract,
+            deadline
+            ).send({from: wallet});
+
+        const tokenId = transaction.events.Transfer[0].returnValues.tokenId;
+
+        return tokenId;
     }
 
     const checkIfAmountApproved = async () => {
@@ -146,7 +177,7 @@ export function ContractCreation(props){
     return (<>
         <Modal isOpen={props.isOpen} closeModal={props.closeModal} big={true}>
             {(step == 0) && <SelectUserType nextStep={setStep} step={step} userType={userType} setUserType={switchUserType}/>}
-            {(step == 1) && <UserAddress nextStep={setStep} step={step} userType={userType} client={client} serviceProvider={serviceProvider} setClient={setClient} setServiceProvider={setServiceProvider}/>}
+            {(step == 1) && <UserAddress userInput={userInput} setUserInput={setUserInput} nextStep={setStep} step={step} userType={userType} client={client} serviceProvider={serviceProvider} setClient={setClient} setServiceProvider={setServiceProvider}/>}
             {(step == 2) && <Deadline nextStep={setStep} step={step} deadlineValue={deadlineValue} setDeadlineValue={setDeadlineValue} deadlineRange={deadlineRange} setDeadlineRange={setDeadlineRange}/>}
             {(step == 3) && <AgreementDetails nextStep={setStep} step={step} details={details} setDetails={setDetails} />}
             {(step == 4) && <Deliverables nextStep={setStep} step={step} delivery={delivery} setDelivery={setDelivery}  />}

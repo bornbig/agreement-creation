@@ -3,7 +3,6 @@ import { useState } from "react";
 
 export function Price(props){
     const { decimals, ticker } = props.selectedToken;
-    const [viewPrice, setViewPrice] = useState();
     const bnDecimals = new BigNumber(10).pow(new BigNumber(decimals));
 
     const formatPrice = (price) => {
@@ -11,10 +10,10 @@ export function Price(props){
         let regexp = /^[0-9.]+$/;
 
         if(regexp.test(price)){
-            setViewPrice(price)
+            props.setViewPrice(price)
             props.setPrice(new BigNumber(price).mul(bnDecimals).toString());
         }else if(price == ""){
-            setViewPrice("")
+            props.setViewPrice("")
             props.setPrice(0);
         }
     }
@@ -28,7 +27,7 @@ export function Price(props){
                 <div className="note">( Ex: 320 USDT )</div>
 
                 <div className="price-box">
-                    <input type="text" onChange={(e) => formatPrice(e.target.value)} value={viewPrice} />
+                    <input type="text" onChange={(e) => formatPrice(e.target.value)} value={props.viewPrice} />
                     <div className="token-drop-down">
                         <div className="selected-token">{ticker} <i className="arrow down"></i></div>
                         <div className="drop-down-list">

@@ -16,6 +16,7 @@ export function UserAddress(props){
         const wallet = await getUserWallet(value);
 
         if(Web3.utils.isAddress(wallet)){
+            props.setSignLoadin(true);
             if(props.userType == 1){
                 props.setClient(wallet);
             }else if(props.userType == 2){
@@ -28,6 +29,7 @@ export function UserAddress(props){
                 props.setServiceProvider("");
             }  
         }
+        props.setSignLoadin(false)
     }
 
     const updateValidInput = (value) => {
@@ -60,14 +62,14 @@ export function UserAddress(props){
                 <div className="note">( Please take wallet address from the second party. )</div>
 
                     <div className="address-box">
-                        <input type="text" onChange={(e) => updateUserWalletByEmail(e.target.value)} value={props.userInput} />
+                        <input type="text" onChange={(e) => updateUserWalletByEmail(e.target.value) && props.setSignLoadin(true)} value={props.userInput} />
                     </div>
                     {props.userInput != getUserWalletText() &&
                         <div className="note success">{props.userType == 1 ? props.client : props.serviceProvider}</div>
                     }
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
-                <div className={"btn bottom-right " + (!isValidInput && "disabled")} onClick={() => props.nextStep(props.step + 1)}>Next</div>
+                <div className={"btn bottom-right " + (!isValidInput && "disabled")} onClick={() => props.nextStep(props.step + 1)}>{props.signLoading && <div className="loading"><div className="bar"></div></div>}Next</div>
             </div> 
         </>
     )

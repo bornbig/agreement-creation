@@ -177,7 +177,7 @@ export function ContractCreation(props){
     return (<>
         <Modal isOpen={props.isOpen} closeModal={props.closeModal} big={true}>
             {(step == 0) && <SelectUserType nextStep={setStep} step={step} userType={userType} setUserType={switchUserType}/>}
-            {(step == 1) && <UserAddress userInput={userInput} setUserInput={setUserInput} nextStep={setStep} step={step} userType={userType} client={client} serviceProvider={serviceProvider} setClient={setClient} setServiceProvider={setServiceProvider}/>}
+            {(step == 1) && <UserAddress userInput={userInput} setUserInput={setUserInput} nextStep={setStep} step={step} userType={userType} client={client} serviceProvider={serviceProvider} setClient={setClient} setServiceProvider={setServiceProvider} signLoading={signLoading} setSignLoadin={setSignLoadin}/>}
             {(step == 2) && <Deadline nextStep={setStep} step={step} deadlineValue={deadlineValue} setDeadlineValue={setDeadlineValue} deadlineRange={deadlineRange} setDeadlineRange={setDeadlineRange}/>}
             {(step == 3) && <AgreementDetails nextStep={setStep} step={step} details={details} setDetails={setDetails} />}
             {(step == 4) && <Deliverables nextStep={setStep} step={step} delivery={delivery} setDelivery={setDelivery}  />}

@@ -32,6 +32,7 @@ export function ContractCreation(props){
     const [deadlineValue, setDeadlineValue] = useState();
     const [deadlineRange, setDeadlineRange] = useState("Days");
     const [userInput, setUserInput] = useState("");
+    const [viewPrice, setViewPrice] = useState();
 
     useEffect(() => {
         if(userType == 2){
@@ -184,7 +185,7 @@ export function ContractCreation(props){
             {(step == 5) && <Price approveTokens={approveTokens} signLoading={signLoading} nextStep={setStep} step={step}
                                  sign={createAndSignAgreement} allowance={allowance} price={price}
                                   setPrice={setPrice} userType={userType} tokens={CONTRACT[chainId].tokens} setSelectedToken={setSelectedToken}
-                                  selectedToken={selectedToken} />}
+                                  selectedToken={selectedToken} setViewPrice={setViewPrice} viewPrice={viewPrice}/>}
             {(step == 6) && <Skills signLoading={signLoading} nextStep={setStep} step={step} sign={createAndSignAgreement} skills={skills} setSkills={setSkills}  />}
         </Modal>
        

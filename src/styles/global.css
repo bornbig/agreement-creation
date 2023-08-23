@@ -122,6 +122,12 @@ a{
     font-size: 100px;
 }
 
+.error-heading{
+    font-size: 70px;
+    display: flex;
+    justify-content: center;
+}
+
 .loading {
     position: absolute;
     top: 0;

@@ -27,7 +27,7 @@ export function ContractCreation(props){
     const [price, setPrice] = useState("");
     const [skills, setSkills] = useState([]);
     const [allowance, setAllowance] = useState(0);
-    const [signLoading, setSignLoadin] = useState(false)
+    const [nextLoading, setNextLoading                         ] = useState(false)
     const [selectedToken, setSelectedToken] = useState()
     const [deadlineValue, setDeadlineValue] = useState();
     const [deadlineRange, setDeadlineRange] = useState("Days");
@@ -68,7 +68,7 @@ export function ContractCreation(props){
 
     const createAndSignAgreement = async () => {
         try{
-            setSignLoadin(true);
+            setNextLoading                         (true);
             const ipfs_hash = await storeDetails(details, delivery)
 
             let skills_hash = "";
@@ -81,19 +81,19 @@ export function ContractCreation(props){
 
             let tokenId;
             if(serviceProvider != "" && client != ""){
-                tokenId = await createOffChainAgreement(ipfs_hash, skills_hash, deadline);
-            }else{
                 tokenId = await createOnchainAgreement(ipfs_hash, skills_hash, deadline);
+                dispatch(showNotification("Agreement is created", dispatch));
+                navigate(`/sbt/${CONTRACT[chainId].serviceProvider.contract}/${tokenId}`);
+            }else{
+                tokenId = await createOffChainAgreement(ipfs_hash, skills_hash, deadline);
+                dispatch(showNotification("Agreement is created", dispatch));
+                navigate(`/offchain/${tokenId}`);
             }
-
-            dispatch(showNotification("Agreement is created", dispatch));
-
-            navigate(`/sbt/${CONTRACT[chainId].serviceProvider.contract}/${tokenId}`);
             
         }catch(e){
             console.log(e);
         }
-        setSignLoadin(false);
+        setNextLoading                         (false);
     }
 
     const createOffChainAgreement = async (ipfs_hash, skills_hash, deadline) => {
@@ -178,15 +178,15 @@ export function ContractCreation(props){
     return (<>
         <Modal isOpen={props.isOpen} closeModal={props.closeModal} big={true}>
             {(step == 0) && <SelectUserType nextStep={setStep} step={step} userType={userType} setUserType={switchUserType}/>}
-            {(step == 1) && <UserAddress userInput={userInput} setUserInput={setUserInput} nextStep={setStep} step={step} userType={userType} client={client} serviceProvider={serviceProvider} setClient={setClient} setServiceProvider={setServiceProvider} signLoading={signLoading} setSignLoadin={setSignLoadin}/>}
+            {(step == 1) && <UserAddress userInput={userInput} setUserInput={setUserInput} nextStep={setStep} step={step} userType={userType} client={client} serviceProvider={serviceProvider} setClient={setClient} setServiceProvider={setServiceProvider} nextLoading={nextLoading} setNextLoading                         ={setNextLoading                         }/>}
             {(step == 2) && <Deadline nextStep={setStep} step={step} deadlineValue={deadlineValue} setDeadlineValue={setDeadlineValue} deadlineRange={deadlineRange} setDeadlineRange={setDeadlineRange}/>}
             {(step == 3) && <AgreementDetails nextStep={setStep} step={step} details={details} setDetails={setDetails} />}
             {(step == 4) && <Deliverables nextStep={setStep} step={step} delivery={delivery} setDelivery={setDelivery}  />}
-            {(step == 5) && <Price approveTokens={approveTokens} signLoading={signLoading} nextStep={setStep} step={step}
+            {(step == 5) && <Price approveTokens={approveTokens} nextLoading={nextLoading} nextStep={setStep} step={step}
                                  sign={createAndSignAgreement} allowance={allowance} price={price}
                                   setPrice={setPrice} userType={userType} tokens={CONTRACT[chainId].tokens} setSelectedToken={setSelectedToken}
                                   selectedToken={selectedToken} setViewPrice={setViewPrice} viewPrice={viewPrice}/>}
-            {(step == 6) && <Skills signLoading={signLoading} nextStep={setStep} step={step} sign={createAndSignAgreement} skills={skills} setSkills={setSkills}  />}
+            {(step == 6) && <Skills nextLoading={nextLoading} nextStep={setStep} step={step} sign={createAndSignAgreement} skills={skills} setSkills={setSkills}  />}
         </Modal>
        
         {/* {

@@ -184,3 +184,10 @@ export async function createOfflineAgreement(chain, agreement, agreement_object)
 
   return creation._id;
 }
+
+export async function getOffchainAgreement(id){
+  const url = `${API_ENDPOINT}/agreement/${id}`;
+  const agreementDetails = (await axios.get(url)).data;
+
+  return agreementDetails;
+}

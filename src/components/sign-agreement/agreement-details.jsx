@@ -75,6 +75,23 @@ export function AgreementDetails(props){
             return <span className="address">{props.service_provider_email}</span>;
     }
 
+    const formatNumber = (number) => {
+        const parts = number.split('.');
+    
+        if (parts.length === 2) {
+            const integerPart = parts[0];
+            let decimalPart = parts[1].replace(/0+$/, '');
+    
+            if (decimalPart === '') {
+                decimalPart = '000';
+            }
+    
+            return `${integerPart}.${decimalPart}`;
+        } else {
+            return number;
+        }
+    };
+    
     return (
         <div>
             {detailsLoading
@@ -86,7 +103,7 @@ export function AgreementDetails(props){
                         {ipfsJson.details}
                     </div>
                     
-                    <div className="agreement-price">{ (props.price / (10 ** decimals)).toFixed(decimals) } {ticker}
+                    <div className="agreement-price">{ formatNumber((props.price / (10 ** decimals)).toFixed(decimals)) } {ticker}
                         {props.status != 105 && wallet?.toLowerCase() == props.client?.toLowerCase() &&
                         <div>Release the funds only whe the Service Provider has deliverd: <b>{ipfsJson.delivery}</b></div>} <br></br>
                         <div>Time Left: <b>{(getRaminingTime())}</b></div>

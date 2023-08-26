@@ -11,25 +11,30 @@ export function UserAddress(props){
     }, []);
 
     const updateUserWalletByEmail = async (value) => {
-        props.setUserInput(value);
-        updateValidInput(value);
-        const wallet = await getUserWallet(value);
+        try{
+            props.setUserInput(value);
+            updateValidInput(value);
+            props.setNextLoading(true)
+            const wallet = await getUserWallet(value);
 
-        if(Web3.utils.isAddress(wallet)){
-            props.setSignLoadin(true);
-            if(props.userType == 1){
-                props.setClient(wallet);
-            }else if(props.userType == 2){
-                props.setServiceProvider(wallet);
+            if(Web3.utils.isAddress(wallet)){
+                if(props.userType == 1){
+                    props.setClient(wallet);
+                }else if(props.userType == 2){
+                    props.setServiceProvider(wallet);
+                }
+            }else{
+                if(props.userType == 1){
+                    props.setClient("");
+                }else if(props.userType == 2){
+                    props.setServiceProvider("");
+                }  
             }
-        }else{
-            if(props.userType == 1){
-                props.setClient("");
-            }else if(props.userType == 2){
-                props.setServiceProvider("");
-            }  
+        }catch(e){
+            console.log(e);
         }
-        props.setSignLoadin(false)
+
+        props.setNextLoading(false)
     }
 
     const updateValidInput = (value) => {
@@ -62,14 +67,14 @@ export function UserAddress(props){
                 <div className="note">( Please take wallet address from the second party. )</div>
 
                     <div className="address-box">
-                        <input type="text" onChange={(e) => updateUserWalletByEmail(e.target.value) && props.setSignLoadin(true)} value={props.userInput} />
+                        <input type="text" onChange={(e) => updateUserWalletByEmail(e.target.value)} value={props.userInput} />
                     </div>
                     {props.userInput != getUserWalletText() &&
                         <div className="note success">{props.userType == 1 ? props.client : props.serviceProvider}</div>
                     }
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
-                <div className={"btn bottom-right " + (!isValidInput && "disabled")} onClick={() => props.nextStep(props.step + 1)}>{props.signLoading && <div className="loading"><div className="bar"></div></div>}Next</div>
+                <div className={"btn bottom-right " + (!isValidInput && "disabled")} onClick={() => props.nextStep(props.step + 1)}>{props.nextLoading && <div className="loading"><div className="bar"></div></div>}Next</div>
             </div> 
         </>
     )

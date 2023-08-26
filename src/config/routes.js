@@ -3,6 +3,7 @@ import { Home } from "../pages/Home";
 import { Agreement } from "../pages/Agreement";
 import { Verify } from "../pages/Verify";
 import { WrongUrl } from "../pages/WorngUrl";
+import { OffchainAgreement } from "../pages/OffchainAgreement";
 
 export const router = createBrowserRouter([
     {
@@ -12,6 +13,10 @@ export const router = createBrowserRouter([
     {
         path: "/sbt/:contract/:id",
         element: <Agreement />,
+    },
+    {
+        path: "/offchain/:id",
+        element: <OffchainAgreement />,
     },
     {
         path: "/verify/:id",

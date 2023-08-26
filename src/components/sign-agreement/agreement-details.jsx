@@ -59,12 +59,28 @@ export function AgreementDetails(props){
         }
     }
 
+    const getClient = () => {
+        if(props.client != "")
+            return <a target="_blank" href={"https://testnets.opensea.io/" + props.client}><span className="address">{props.client}</span></a>;
+
+        if(props.client_email)
+            return <span className="address">{props.client_email}</span>;
+    }
+
+    const getServiceProvider = () => {
+        if(props.service_provider != "")
+            return <a target="_blank" href={"https://testnets.opensea.io/" + props.service_provider}><span className="address">{props.service_provider}</span></a>;
+
+        if(props.service_provider_email)
+            return <span className="address">{props.service_provider_email}</span>;
+    }
+
     return (
         <div>
             {detailsLoading
                 ? <><div className="lds-ring"><div></div><div></div><div></div><div></div></div></>
                 : <>
-                    <div className="type">The Agreement is between Client ( <a target="_blank" href={"https://testnets.opensea.io/" + props.client}><span className="address">{props.client}</span></a>) and Service Provider (<a target="_blank" href={"https://testnets.opensea.io/" + props.service_provider}><span className="address">{props.service_provider}</span></a>)</div>
+                    <div className="type">The Agreement is between Client ( {getClient()} ) and Service Provider ( {getServiceProvider()} )</div>
 
                     <div className="agreement-details">
                         {ipfsJson.details}

@@ -77,21 +77,21 @@ export function AgreementDetails(props){
 
     const formatNumber = (number) => {
         const parts = number.split('.');
-
+    
         if (parts.length === 2) {
             const integerPart = parts[0];
-            const decimalPart = parts[1].replace(/0+$/, ''); // Remove trailing zeros
-            
+            let decimalPart = parts[1].replace(/0+$/, '');
+    
             if (decimalPart === '') {
-              return integerPart + ".000";
-            } else {
-              return `${integerPart}.${decimalPart}`;
+                decimalPart = '000';
             }
-          } else {
+    
+            return `${integerPart}.${decimalPart}`;
+        } else {
             return number;
-          }
-    }
-
+        }
+    };
+    
     return (
         <div>
             {detailsLoading

@@ -109,7 +109,7 @@ export function AgreementDetails(props){
                         <div>Time Left: <b>{(getRaminingTime())}</b></div>
                     </div>
                     
-
+                    {props.showProgressBar && (
                     <div className="wrapper-progressBar">
                         <ul className="progressBar">
                             <li className={props.status >= 100 && "active"}>Agreement Created</li>
@@ -117,6 +117,7 @@ export function AgreementDetails(props){
                             <li className={props.status >= 105 && "active"}>Agreement Closed</li>
                         </ul>
                     </div>
+                    )}
                 </>
             }
         </div>

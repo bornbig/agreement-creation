@@ -71,7 +71,7 @@ a{
 
 .btn.withPadding{
   min-width: 160px;
-  padding: 0 20px;
+  padding: 0 40px;
 }
 
 .address{
@@ -87,8 +87,16 @@ a{
 .flexBetween{
   display: flex;
   justify-content: space-between;
+  margin: 60px 0;
+  padding: 0 20px;
 }
 
+.flexCenter{
+  display: flex;
+  justify-content: center;
+  margin: 60px 0;
+  padding: 0 20px;
+}
 
 .arrow {
     border: solid black;
@@ -120,6 +128,8 @@ a{
 
 .heading{
     font-size: 100px;
+    /* display: flex ; */
+    /* padding:  0 50px; */
 }
 
 .loading {
@@ -234,3 +244,5 @@ a{
     pointer-events: none;
     background-color: #918afd;
   }
+
+  

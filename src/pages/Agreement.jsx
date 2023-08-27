@@ -56,7 +56,7 @@ export function Agreement(){
                 ? <><div className="lds-ring"><div></div><div></div><div></div><div></div></div></>
                 : <>
                     <h1 className="heading"> Agreement </h1>
-                    <AgreementDetails {...details} />
+                    <AgreementDetails {...details} showProgressBar={true} />
                         {details.status == 100 && <SignAgreement details={details} refresh={getAgreementDetails} escrowAddress={escrowAddress} agreementAddress={params.contract} />}
                         {(details.status == 101 || details.status == 102) && <CloseAgreement details={details} refresh={getAgreementDetails} skills={skills} rateSkill={rateSkill} escrowAddress={escrowAddress} agreementAddress={params.contract} />}
 

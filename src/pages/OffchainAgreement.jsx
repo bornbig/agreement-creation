@@ -137,7 +137,8 @@ export function OffchainAgreement(){
                 ? <><div className="lds-ring"><div></div><div></div><div></div><div></div></div></>
                 : <>
                     <h1 className="heading"> Agreement </h1>
-                    <AgreementDetails {...details} />
+
+                   <AgreementDetails {...details} showProgressBar={false} />
 
                     <div>
                         {isConnected && checkifClient() && (

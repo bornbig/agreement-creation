@@ -32,13 +32,56 @@
 }
 
 .modal .close{
+    display: flex;
     position: absolute;
-    top: 10px;
-    right: 20px;
+    top: -30px;
+    right: -30px;
+    justify-content: center;
+    padding: 6px 11px;
     font-size: 20px;
-    cursor: pointer;
+    cursor: pointer ;
+    color: rgb(84, 84, 84);
+    background-color: #ffffff;
+    border-radius: 60px;
+    box-shadow: 3px 7px 15px rgba(0, 0, 0, .1);   
+}
+
+.modal .close:hover{
+    color: #000000;
 }
 
 .modal-head{
     height: 40px;
+    display: flex;
+    background-color: #c7c3fe;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+}
+
+.modal .toggle-btn {
+  display: flex;
+  width: 100%;
+  }
+  
+.modal .toggle-btn button {
+    background-color: transparent;
+    width: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #000000;
+    outline: none;
+    transition: background-color .4s ease;
+    border-top-left-radius: 16px; 
+    border-top-right-radius: 16px; 
+    box-shadow: 0px 7px 15px rgba(119,109,255, 0.2);   
+}
+
+.modal .toggle-btn .active{
+    background-color: #9d9aff;
+
+}
+
+.modal-content{
+    padding: 30px 0;
 }

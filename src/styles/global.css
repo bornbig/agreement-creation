@@ -245,4 +245,99 @@ a{
     background-color: #918afd;
   }
 
+  .signVerify{
+    width: 50%;
+  }
+
+  @media screen and (max-width : 890px) {
+    body{
+      background-size: 1600px;
+    }
+
+    .header{
+      display: flex;
+      justify-content: space-around;
+      padding: 30px 100px;
+      margin-right: 30px;
+    }
+
+    .header .logo{
+    margin-left: 30px;
+    width: 50%;
+    }
+
+    .header .connected{
+      position: relative
+    }
+
+    .heading{
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      margin: 140px 0;      
+    }
+
+    .btn{
+      margin: 0 auto;
+    }
+
+    .mt-4{
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .d-flex-between{
+      padding: 0 20px;
+      overflow: scroll;
+    }
+    .type{
+      padding: 0 30px;
+      text-align: center;
+    }
+    .agreement-details{
+      text-align: center;
+      margin: 20px 20px;
+    }
+    .agreement-price{
+      text-align: center;
+      font-size: 40px;
+    }
+    .flexBetween{
+      justify-content: center;
+      margin: 50px 0;
+      padding: 0 20px;
+    }
+}
+    
   
+  @media screen and (max-width : 620px){
+    body{
+      background-size: 1400px; 
+    }
+    .heading{
+      font-size: 60px;
+      margin: 70px 0;
+    }
+    .header{
+      padding: 20px 10px;
+      font-size: 35px;
+    }
+    .connect{
+      padding: 0 0;
+    }
+    .btn{
+      min-width: 10px;  
+    }
+    .d-flex-between{
+      padding: 0 10px;
+      overflow: scroll;
+    }
+    .flexBetween{
+      justify-content: center;
+      margin: 40px 0;
+      padding: 0 10px;
+    }
+    .agreement-price{
+      font-size: 35px;
+    }
+}

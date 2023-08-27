@@ -53,7 +53,7 @@
 .modal-head{
     height: 40px;
     display: flex;
-    background-color: #c7c3fe;
+    background-color: #ffffff;
     border-top-right-radius: 16px;
     border-top-left-radius: 16px;
 }
@@ -74,7 +74,7 @@
     transition: background-color .4s ease;
     border-top-left-radius: 16px; 
     border-top-right-radius: 16px; 
-    box-shadow: 0px 7px 15px rgba(119,109,255, 0.2);   
+    box-shadow: 0px 7px 15px rgba(119,109,255, 0.1);   
 }
 
 .modal .toggle-btn .active{
@@ -85,3 +85,18 @@
 .modal-content{
     padding: 30px 0;
 }
+
+@media screen and (max-width : 890px){
+    .modal.big {
+        position: absolute;
+        top: -10%;
+        overflow: scroll; 
+    }
+}
+
+@media screen and (max-width : 620px){
+    .modal.big {
+        position: absolute;
+
+    }
+  }

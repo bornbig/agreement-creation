@@ -198,10 +198,12 @@ export function ContractCreation(props){
                                  sign={createAndSignAgreement} allowance={allowance} price={price}
                                   setPrice={setPrice} userType={userType} tokens={CONTRACT[chainId].tokens} setSelectedToken={setSelectedToken}
                                   selectedToken={selectedToken} setViewPrice={setViewPrice} viewPrice={viewPrice}/>}
+                                  {(step == 3) &&  <h1 class='developer-lines'>Developers is still working on ' Payment ' Model.... </h1>}
         </>)}
+       
             
             </>
-        </Modal>
+        </Modal> 
        
         {/* {
             (userType == 2 && allowance < price)?

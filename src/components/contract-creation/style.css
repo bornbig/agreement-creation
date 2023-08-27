@@ -183,3 +183,11 @@
     cursor: pointer;
     font-size: 22px;
 }
+
+.developer-lines{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 60px;
+}

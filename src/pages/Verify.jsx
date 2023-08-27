@@ -38,7 +38,7 @@ export function Verify(props){
         <>
             <h1 className="heading"> Verify </h1>
 
-            <div className="btn" onClick={signAndVrify}>
+            <div className="btn signVerify" onClick={signAndVrify}>
                 {loading && <div className="loading"><div className="bar"></div></div>}
                 Sign and Verify
             </div>

@@ -32,7 +32,7 @@ async function saveToIPFS(content){
 
   if(!Moralis.Core.isStarted){
     await Moralis.start({
-      apiKey: "CLtJpRFrCkxHvgDcy9mewuod1qG9iIsG3TL8MLdrreCEwtCpUwU79fKxRRbCPBpA",
+      apiKey: "SrU8mbv6gkaw2oqHuwwSY6lZltefmGlLI2v8CtoYNP0yE4SSkEvm7W6aiimZQUKY",
       // ...and any other configuration
     });
   }
@@ -64,9 +64,9 @@ export async function getDetails(ipfs_hash){
 
 const encryptionSignature = async(web3) =>{
   const address = await web3.eth.getAccounts();
-  console.log(address[0]);
+
   const messageRequested = (await lighthouse.getAuthMessage(address[0])).data.message;
-  console.log(messageRequested);
+
   const signedMessage = await web3.eth.personal.sign(messageRequested, address[0]);
   return({
     signedMessage: signedMessage,
@@ -136,7 +136,6 @@ const applyAccessConditions = async(web3, cid, escrow, agreement, agreementId) =
     aggregator
   );
 
-  console.log(response);
 
   return response.data.cid;
   /*

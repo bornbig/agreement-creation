@@ -142,8 +142,6 @@ function Header() {
 
       let _accounts = await web3.eth.getAccounts();
 
-      console.log(info.idToken);
-
       if(info.idToken){
         submitIdToken(info.idToken, _accounts[0])
       }

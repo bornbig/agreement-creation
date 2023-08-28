@@ -31,17 +31,10 @@ export function OffchainAgreement(){
     }, [web3, wallet]);
 
     const getAgreementDetails = async () => {
-        console.log("called")
         if(web3){
-            console.log("called NEt")
             setDetailsLoading(true);
             
             const details = await getOffchainAgreement(params.id)
-
-            console.log(userInfo.email);
-            console.log(details.client_email);
-            console.log(details.service_provider_email);
-            console.log("krckjerc", checkifServiceProvider());
 
             setEscrowAddress(details.escrow);
             setDetails(details);
@@ -62,7 +55,6 @@ export function OffchainAgreement(){
 
     const signAndProceed = async () => {
         try{
-            console.log(details)
             setSignLoading(true);
             let skills_hash = details.skills_hash;
             if(!details.mode){

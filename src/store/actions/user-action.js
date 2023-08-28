@@ -46,7 +46,6 @@ export async function submitIdToken(token, wallet) {
     wallet: wallet
   })).data;
 
-  console.log(saveDataResponse)
 }
 
 export async function getUserWallet(email) {

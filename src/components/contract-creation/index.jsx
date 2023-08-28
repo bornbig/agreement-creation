@@ -61,7 +61,6 @@ export function ContractCreation(props){
         }
         const newTimestamp = timestamp + valueInMinutes;
 
-        console.log(valueInMinutes);
         return newTimestamp;
     }
 

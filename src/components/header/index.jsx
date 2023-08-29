@@ -172,6 +172,22 @@ function Header() {
     }
   }
 
+  function showPrivateKey() {
+    const privateKeyDiv = document.querySelector('.btnPrivateKey');
+    
+    if (privateKeyDiv.innerHTML === 'Show private key') {
+        privateKeyDiv.innerHTML = `
+        <div>
+            <span>${wallet}</span>
+            <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick="copyPrivateKey('${wallet}')"/>
+        </div>
+    `;
+// Add here the private key
+    } else {
+      privateKeyDiv.innerHTML = 'Show private key';
+    }
+  }
+
   return (
     <div className='header'>
       <div className="logo">
@@ -188,6 +204,7 @@ function Header() {
               <div className="info">
                 <div className="balance">${balance || 0}</div>
                 <div className="label">Balance</div>
+                <div className='btnPrivateKey' onClick={showPrivateKey}>Show private key</div>
                 <div className="logout" onClick={logout}>Logout</div>
               </div>
           </div>

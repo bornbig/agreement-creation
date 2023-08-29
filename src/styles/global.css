@@ -228,6 +228,7 @@ a{
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    background-color: antiquewhite;
   }
 
 
@@ -287,8 +288,9 @@ a{
     }
 
     .d-flex-between{
-      padding: 0 20px;
+      padding: 30px 20px;
       overflow: scroll;
+      justify-content: center;
     }
     .type{
       padding: 0 30px;
@@ -307,6 +309,12 @@ a{
       margin: 50px 0;
       padding: 0 20px;
     }
+    
+    .box-agreemet img {
+      height: 100px;
+      padding: 10px 10px;
+    }
+
 }
     
   
@@ -315,12 +323,12 @@ a{
       background-size: 1400px; 
     }
     .heading{
-      font-size: 60px;
+      font-size: 50px;
       margin: 70px 0;
     }
     .header{
       padding: 20px 10px;
-      font-size: 35px;
+      font-size: 10px;
     }
     .connect{
       padding: 0 0;
@@ -339,5 +347,9 @@ a{
     }
     .agreement-price{
       font-size: 35px;
+    }
+    .box-agreemet img {
+      height: 60px;
+      padding: 6px 6px;
     }
 }

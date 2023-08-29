@@ -34,8 +34,8 @@
 .modal .close{
     display: flex;
     position: absolute;
-    top: -30px;
-    right: -30px;
+    top: -20px;
+    right: -20px;
     justify-content: center;
     padding: 6px 11px;
     font-size: 20px;
@@ -51,11 +51,11 @@
 }
 
 .modal-head{
-    height: 40px;
+    height: 60px;
     display: flex;
     background-color: #ffffff;
-    border-top-right-radius: 16px;
     border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
 }
 
 .modal .toggle-btn {
@@ -71,19 +71,44 @@
     font-size: 18px;
     color: #000000;
     outline: none;
-    transition: background-color .4s ease;
-    border-top-left-radius: 16px; 
-    border-top-right-radius: 16px; 
-    box-shadow: 0px 7px 15px rgba(119,109,255, 0.1);   
-}
-
-.modal .toggle-btn .active{
-    background-color: #9d9aff;
+    /* transition: background-color .1s ease-in-out; */
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    
 
 }
 
 .modal-content{
-    padding: 30px 0;
+    padding: 25px 0;
+}
+
+#btn1{
+    background-color: rgb(240, 240, 240);
+    border-bottom-right-radius: 16px;
+    border-top-right-radius: 0px;
+    border-bottom: 2px solid rgb(236, 236, 236);
+    border-right: 2px solid rgb(236, 236, 236);
+}
+#btn2{
+    background-color: rgb(240, 240, 240);
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 16px;
+    border-bottom: 2px solid rgb(236, 236, 236);
+    border-left: 2px solid rgb(236, 236, 236); 
+}
+
+#btn1.active{
+    background-color: rgb(255, 255, 255);   
+    border-top-right-radius: 0px;
+    border-bottom: 0;
+    border-right: 0;
+}
+
+#btn2.active{
+    background-color: rgb(255, 255, 255);   
+    border-top-left-radius: 0px;
+    border-bottom: 0;
+    border-left: 0;
 }
 
 @media screen and (max-width : 890px){

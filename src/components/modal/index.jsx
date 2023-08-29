@@ -12,8 +12,8 @@ export function Modal(props){
                             <button id="btn1" className={props.activeModel === "Agreement" ? "active" : ""}
                                     onClick={() => props.setActiveModel("Agreement")} >Agreement</button>
                             <button id="btn2" 
-                            // className={props.activeModel === "Payment" ? "active" : ""} 
-                            //         onClick={() => props.setActiveModel("Payment")} ---> For Payment Model
+                            className={props.activeModel === "Payment" ? "active" : ""} 
+                                    onClick={() => props.setActiveModel("Payment")}
                                     >Payment</button>
                         </div>
                         <div className="close" onClick={() => props.closeModal(false)}>X</div>

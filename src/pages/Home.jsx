@@ -40,9 +40,7 @@ export function Home(){
     return (
         <>
             <h1 className="heading">Create an Agreement</h1>
-            {/* <AddNotification> */}
-                <div className="btn small" onClick={createAgreement}>Start</div>
-            {/* </AddNotification> */}
+            <div className="btn small" onClick={createAgreement}>Start</div>
             <ContractCreation isOpen={canStartContractCreation} closeModal={setCanStartContractCreation}/>
 
             <section className="mt-4">

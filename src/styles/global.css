@@ -228,13 +228,15 @@ a{
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    background-color: antiquewhite;
   }
-
 
   .box-agreemet img{
     height: 140px;
     cursor: pointer;
+    padding: 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
   }
 
   .success{
@@ -349,7 +351,7 @@ a{
       font-size: 35px;
     }
     .box-agreemet img {
-      height: 60px;
-      padding: 6px 6px;
+      height: 80px;
+      padding: 12px;
     }
 }

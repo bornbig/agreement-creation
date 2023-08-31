@@ -158,7 +158,13 @@
     .header .connected .wallet{
         padding-right: 13px;
     }
-    
+    .header .connected .info .btnPrivateKey{
+        font-size: 12px;
+        padding: 0 0;
+    }
+    .header .connected .info .btnPrivateKey img{
+        height: 14px;
+    }
 }
 
 @media screen and (max-width : 620px){

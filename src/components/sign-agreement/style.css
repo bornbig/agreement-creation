@@ -24,6 +24,7 @@
     width: 100%;
     height: 100px;
     margin-top: 40px;
+    margin-left: -20px !important;
 }
 
 .progressBar {

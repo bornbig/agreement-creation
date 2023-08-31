@@ -180,11 +180,16 @@ a{
     position: relative;
     width: 80px;
     height: 80px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+
   }
   .lds-ring div {
     box-sizing: border-box;
     display: block;
     position: absolute;
+    
     width: 64px;
     height: 64px;
     margin: 8px;
@@ -239,8 +244,16 @@ a{
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
   }
 
+  .agreement-details.box{
+    margin-left:0 !important; 
+  }
+
   .success{
+    font-size: 10px !important;
     color: green !important;
+    margin-right: 15px;
+    overflow: auto;
+    margin-bottom: 40px;
   }
 
   .btn.disabled{
@@ -298,14 +311,20 @@ a{
       padding: 0 30px;
       text-align: center;
     }
+
     .agreement-details{
       text-align: center;
-      margin: 20px 20px;
+      margin:10px 10px;
     }
+    .agreement-details.box{
+      margin-left:0 !important; 
+    }
+
     .agreement-price{
       text-align: center;
-      font-size: 40px;
+      font-size: 30px;
     }
+    
     .flexBetween{
       justify-content: center;
       margin: 50px 0;
@@ -348,7 +367,7 @@ a{
       padding: 0 10px;
     }
     .agreement-price{
-      font-size: 35px;
+      font-size: 25px;
     }
     .box-agreemet img {
       height: 80px;

@@ -61,9 +61,16 @@
     left: 0;
 }
 
-.modal .address-box, .modal .agreement-details{
+.modal .address-box{
     padding: 20px;
     border: none;
+    overflow: scroll;
+}
+
+.modal .agreement-details{
+    margin: 20px 20px;
+    border: none;
+    overflow: scroll;
 }
 
 .modal .address-box input, .modal .agreement-details textarea, .modal .price-box input{
@@ -106,7 +113,7 @@
 
 .modal .price-box .token-drop-down .selected-token .arrow{
     position: absolute;
-    top: 6px;
+    top: 20%;
 }
 
 .modal .price-box .token-drop-down .drop-down-list{
@@ -143,7 +150,7 @@
 }
 
 .modal .agreement-details textarea{
-    height: 160px;
+    height: 130px;
     resize: none;
     padding: 8px;
     font-size: 16px;
@@ -153,16 +160,17 @@
     background-color: #efefef;
     color: #898989;
     border-radius: 4px;
-    height: 40px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     margin: 20px;
+    margin-bottom: 8px !important;
 }
 
 .modal .skill-box{
-    padding: 10px 20px;
+    padding: 5px 20px;
     display: flex;
 }
 
@@ -190,4 +198,41 @@
     align-items: center;
     text-align: center;
     line-height: 60px;
+}
+
+@media screen and (max-width : 890px){
+    .modal .agreement-details textarea {
+        height: 118px;
+    }
+    .model .price-box{
+        /* padding: 0 20px; */
+    }
+}
+
+@media screen and (max-width : 620px){
+    .modal .agreement-details textarea {
+        height: 100px;
+    }
+    .model .price-box{
+        padding: 0 20px;
+    }
+    .modal .price-box .token-drop-down {
+        padding: 0 15px;
+        font-size: 17px;
+    }
+    .selected-token .arrow{
+        top: 15% !important;
+        /* right: -19%; */
+    }
+    .modal .question {
+        font-size: 17px;
+    }
+    .modal .add-skill-btn{
+        height: 28px;
+        margin-bottom: 10px !important;
+    }
+    .modal .skill-box input{
+        height: 18px;
+        font-size: 14px;
+    }
 }

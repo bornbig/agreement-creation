@@ -29,7 +29,7 @@ export function Skills(props){
                 <div className="question">
                     Add maximum two of your skills that you will use to complete this agreement.
                 </div>
-                <div className="note">( Ex: Adobe Photoshop, 3D Logo. Agreement will be converted into an SBT with the rating of these skills once the agreement is closed. )</div>
+                <div className="note">( Ex: Adobe Photoshop, 3D Logo. Agreement will be converted into an SBT with the rating of these skills once the agreement is closed.)</div>
                 <div className="add-skill-btn" onClick={addEmptySkill}>ADD SKILL</div>
                 {props.skills.map((skill, index) => (<>
                     <div className="skill-box">

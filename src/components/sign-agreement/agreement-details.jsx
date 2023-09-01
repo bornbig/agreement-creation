@@ -3,6 +3,7 @@ import { getDetails } from "../../store/actions/agreement-action"
 import { useSelector } from "react-redux";
 import { CONTRACT } from "../../config/config";
 import BigNumber from "bignumber.js";
+import "./style.css"
 
 export function AgreementDetails(props){
     const [ipfsJson, setIpfsJson] = useState({});
@@ -105,11 +106,11 @@ export function AgreementDetails(props){
                     
                     <div className="agreement-price">{ formatNumber((props.price / (10 ** decimals)).toFixed(decimals)) } {ticker}
                         {props.status != 105 && wallet?.toLowerCase() == props.client?.toLowerCase() &&
-                        <div>Release the funds only whe the Service Provider has deliverd: <b>{ipfsJson.delivery}</b></div>} <br></br>
+                        <div>Release the funds only when the Service Provider has deliverd: <b>{ipfsJson.delivery}</b></div>} <br></br>
                         <div>Time Left: <b>{(getRaminingTime())}</b></div>
                     </div>
                     
-
+                    {props.showProgressBar && (
                     <div className="wrapper-progressBar">
                         <ul className="progressBar">
                             <li className={props.status >= 100 && "active"}>Agreement Created</li>
@@ -117,6 +118,7 @@ export function AgreementDetails(props){
                             <li className={props.status >= 105 && "active"}>Agreement Closed</li>
                         </ul>
                     </div>
+                    )}
                 </>
             }
         </div>

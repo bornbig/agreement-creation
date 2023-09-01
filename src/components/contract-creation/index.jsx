@@ -33,6 +33,7 @@ export function ContractCreation(props){
     const [deadlineRange, setDeadlineRange] = useState("Days");
     const [userInput, setUserInput] = useState("");
     const [viewPrice, setViewPrice] = useState();
+    const [activeModel, setActiveModel] = useState("Agreement");
 
     useEffect(() => {
         if(userType == 2){
@@ -175,9 +176,11 @@ export function ContractCreation(props){
     }
 
     return (<>
-        <Modal isOpen={props.isOpen} closeModal={props.closeModal} big={true}>
+        <Modal isOpen={props.isOpen} closeModal={props.closeModal} big={true} activeModel={activeModel} setActiveModel={setActiveModel}>  
+        <>
+        {activeModel === "Agreement" && (<> 
             {(step == 0) && <SelectUserType nextStep={setStep} step={step} userType={userType} setUserType={switchUserType}/>}
-            {(step == 1) && <UserAddress userInput={userInput} setUserInput={setUserInput} nextStep={setStep} step={step} userType={userType} client={client} serviceProvider={serviceProvider} setClient={setClient} setServiceProvider={setServiceProvider} nextLoading={nextLoading} setNextLoading                         ={setNextLoading                         }/>}
+            {(step == 1) && <UserAddress userInput={userInput} setUserInput={setUserInput} nextStep={setStep} step={step} userType={userType} client={client} serviceProvider={serviceProvider} setClient={setClient} setServiceProvider={setServiceProvider} nextLoading={nextLoading} setNextLoading={setNextLoading}/>}
             {(step == 2) && <Deadline nextStep={setStep} step={step} deadlineValue={deadlineValue} setDeadlineValue={setDeadlineValue} deadlineRange={deadlineRange} setDeadlineRange={setDeadlineRange}/>}
             {(step == 3) && <AgreementDetails nextStep={setStep} step={step} details={details} setDetails={setDetails} />}
             {(step == 4) && <Deliverables nextStep={setStep} step={step} delivery={delivery} setDelivery={setDelivery}  />}
@@ -186,7 +189,20 @@ export function ContractCreation(props){
                                   setPrice={setPrice} userType={userType} tokens={CONTRACT[chainId].tokens} setSelectedToken={setSelectedToken}
                                   selectedToken={selectedToken} setViewPrice={setViewPrice} viewPrice={viewPrice}/>}
             {(step == 6) && <Skills nextLoading={nextLoading} nextStep={setStep} step={step} sign={createAndSignAgreement} skills={skills} setSkills={setSkills}  />}
-        </Modal>
+        </> ) }
+        {activeModel === "Payment" && (<> 
+            {(step == 0) && <SelectUserType nextStep={setStep} step={step} userType={userType} setUserType={switchUserType}/>}
+            {(step == 1) && <UserAddress userInput={userInput} setUserInput={setUserInput} nextStep={setStep} step={step} userType={userType} client={client} serviceProvider={serviceProvider} setClient={setClient} setServiceProvider={setServiceProvider} nextLoading={nextLoading} setNextLoading={setNextLoading}/>}
+            {(step == 2) && <Price approveTokens={approveTokens} nextLoading={nextLoading} nextStep={setStep} step={step}
+                                 sign={createAndSignAgreement} allowance={allowance} price={price}
+                                  setPrice={setPrice} userType={userType} tokens={CONTRACT[chainId].tokens} setSelectedToken={setSelectedToken}
+                                  selectedToken={selectedToken} setViewPrice={setViewPrice} viewPrice={viewPrice}/>}
+                                  {(step == 3) &&  <h1 class='developer-lines'>Developers is still working on ' Payment ' Model.... </h1>}
+        </>)}
+       
+            
+            </>
+        </Modal> 
        
         {/* {
             (userType == 2 && allowance < price)?

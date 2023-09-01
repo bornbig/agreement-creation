@@ -17,11 +17,52 @@
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     position: absolute;
     right: 0;
+    background: #f0f0f0;
+
 }
 
 .header .connected .info{
     display: none;
     text-align: center;
+    background: #f0f0f0;
+}
+
+.header .connected .info .btnPrivateKey{
+    display: flex;
+    height: 30px;
+    max-width: 170px;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    color: #4d4d4d;
+    cursor: pointer;
+    border-radius: 28px;
+    font-size: 15px;
+    margin: 8px 10px;
+    padding: 5px 0px;
+    margin-bottom: 15px;
+    outline: none;
+    border: 1px solid #000000;
+}
+
+.btnPrivateKey span {
+    display: flex;
+    justify-content: center;
+    padding-left: 5px; 
+    cursor: copy;
+}
+
+
+
+.header .connected .info .btnPrivateKey img{
+    height: 20px;
+    cursor: copy;
+}
+
+.header .connected .info .btnPrivateKey:hover{
+    background-color: #776dff;
+    color: white;
+    border: 1px solid #776dff;
 }
 
 .header .connected .info .balance{
@@ -31,7 +72,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
-    width: 160px;
+    /* width: 160px; */
 }
 
 .header .connected .info .label{
@@ -107,4 +148,28 @@
 
 .header .modal .network:last-child{
     border-bottom: none;
+}
+
+@media screen and (max-width : 890px){
+    .header .connected .info .balance{
+        font-size: 25px;
+        padding: 0 0;
+    }
+    .header .connected .wallet{
+        padding-right: 13px;
+    }
+    .header .connected .info .btnPrivateKey{
+        font-size: 12px;
+        padding: 0 0;
+    }
+    .header .connected .info .btnPrivateKey img{
+        height: 14px;
+    }
+}
+
+@media screen and (max-width : 620px){
+    .header .connected .wallet{
+        width: 88px;
+        padding-right: 30px;
+    }
 }

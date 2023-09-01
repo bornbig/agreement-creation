@@ -25,3 +25,17 @@
       right: 2%;    
     }
 }
+
+@media screen and (max-width : 890px) {
+  .notification{
+    top: 200px;
+    animation-duration: 2s;
+  }
+}
+
+@media screen and (max-width : 620px){
+  .notification{
+    top: 140px;
+    animation-duration: 2s;
+  }
+}

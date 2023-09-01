@@ -170,6 +170,27 @@ function Header() {
     }
   }
 
+  async function showPrivateKey (){
+
+    const privateKeyDiv = document.querySelector('.btnPrivateKey');
+
+    const privateKey = await web3auth.provider.request({
+      method: "eth_private_key"
+    });
+
+    if (privateKeyDiv.innerHTML === 'Private key') {
+        privateKeyDiv.innerHTML = `
+        <div className='privatekey' onClick="navigator.clipboard.writeText('${await privateKey}')">
+        <span>Copy<span/>
+            <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" />
+        </div>`;
+
+    } else {
+      privateKeyDiv.innerHTML = 'Private key';
+
+    }
+  }
+
   return (
     <div className='header'>
       <div className="logo">
@@ -186,6 +207,7 @@ function Header() {
               <div className="info">
                 <div className="balance">${balance || 0}</div>
                 <div className="label">Balance</div>
+                <div className='btnPrivateKey' onClick={showPrivateKey}>Private key</div>
                 <div className="logout" onClick={logout}>Logout</div>
               </div>
           </div>

@@ -16,6 +16,7 @@ function Header() {
   const dispatch = useDispatch();
   const { wallet, chainId, isConnected, userInfo } = useSelector((state) => state.user);
   const [balance, setbalance] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   const web3AuthInit = async () => {
     web3auth = new Web3Auth({
@@ -180,17 +181,11 @@ function Header() {
       method: "eth_private_key"
     });
 
-    if (privateKeyDiv.innerHTML === 'Private key') {
-        privateKeyDiv.innerHTML = `
-        <div className='privatekey' onClick="navigator.clipboard.writeText('${await privateKey}')">
-        <span>Copy<span/>
-            <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" />
-        </div>`;
+    setIsCopied(true);
 
-    } else {
-      privateKeyDiv.innerHTML = 'Private key';
-
-    }
+    setTimeout(() => {setIsCopied(false)}, 1500);
+  
+    navigator.clipboard.writeText(privateKey)
   }
 
   return (
@@ -209,7 +204,10 @@ function Header() {
               <div className="info">
                 <div className="balance">${balance || 0}</div>
                 <div className="label">Balance</div>
-                <div className='btnPrivateKey' onClick={showPrivateKey}>Private key</div>
+                <a className='btnPrivateKey' href="/add-funds">Add Funds</a>
+                <div className='logout b' onClick={showPrivateKey}>
+                  {isCopied? "✅ " :  <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" />}
+                  Private key</div>
                 <div className="logout" onClick={logout}>Logout</div>
               </div>
           </div>

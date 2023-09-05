@@ -87,6 +87,16 @@
     cursor: pointer;
 }
 
+.header .connected .info .logout.b{
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.header .connected .info .logout img{
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
 .header .connected:hover .info{
     display: block;
 }

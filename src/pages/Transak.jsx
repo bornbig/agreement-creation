@@ -10,12 +10,22 @@ export function Transak(props){
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
-    const { wallet, web3, isConnected, chainId } = useSelector((state) => state.user);
+    const [fiatAmount, setfiatAmount] = useState(0);
+    const { wallet, web3, isConnected, chainId, userInfo } = useSelector((state) => state.user);
 
     const initializeTransak = () => {
         let transak = new transakSDK({
-            apiKey: '295ba884-3204-42e4-8a64-924e080e25de', // (Required)
+            apiKey: 'a7193b71-7510-4225-9df0-c3e31343577b', // (Required)
             environment: 'STAGING', // (Required)
+            network: 'polygon',
+            cryptoCurrencyCode: "USDT",
+            productsAvailed: "BUY",
+            fiatCurrency: "USD",
+            defaultFiatAmount: fiatAmount,
+            defaultPaymentMethod: "pm_jwire",
+            widgetHeight: "80%",
+            walletAddress: wallet,
+            email: userInfo.email
           });
           
           transak.init();
@@ -38,12 +48,13 @@ export function Transak(props){
           
     }
 
-    initializeTransak();
-
-
     return (
         <>
-            <h1 className="heading"> Add USDT </h1>
+            <h1 className="heading"> Add Funds </h1>
+            <div className="fund-box">
+              <input type="text" className="" onChange={(e) => setfiatAmount(e.target.value)}/>
+            </div>
+            <div className="btn small" onClick={initializeTransak}>Add Funds</div>
         </>
     )
 }

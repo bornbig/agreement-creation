@@ -201,7 +201,7 @@ function Header() {
       </div>
       {(balance !== false) && <div className="preview">
         <img src="https://cdn-icons-png.flaticon.com/512/482/482541.png" alt="" />
-      <span className='balance'>${balance || 76.654}</span>
+      <span className='balance'>${balance || 0}</span>
     </div>}
       {isConnected ? (
           <div className='connected'>
@@ -210,8 +210,8 @@ function Header() {
                 <span>{wallet}</span>
               </div>
               <div className="info">
-                <div className="balance">${balance || 0}</div>
-                <div className="label">Balance</div>
+                {/* <div className="balance">${balance || 0}</div>
+                <div className="label">Balance</div> */}
                 <a className='btnPrivateKey' href="/add-funds">Add Funds</a>
                 <div className='logout b' onClick={showPrivateKey}>
                   {isCopied? "✅ " :  <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" />}

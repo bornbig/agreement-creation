@@ -37,6 +37,18 @@ body{
 }
 
 
+.fund-box input{
+  max-width: 80%;
+  width: 400px;
+  height: 48px;
+  border-radius: 20px;
+  border: 1px solid #949494;
+  margin-bottom: 20px;
+  font-size: 32px;
+  padding: 12px;
+}
+
+
 .btn{
     position: relative;
     display: flex;

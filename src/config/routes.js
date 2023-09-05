@@ -3,6 +3,7 @@ import { Home } from "../pages/Home";
 import { Agreement } from "../pages/Agreement";
 import { Verify } from "../pages/Verify";
 import { OffchainAgreement } from "../pages/OffchainAgreement";
+import { Transak } from "../pages/Transak";
 
 export const router = createBrowserRouter([
     {
@@ -20,5 +21,9 @@ export const router = createBrowserRouter([
     {
         path: "/verify/:id",
         element: <Verify />,
+    },
+    {
+        path: "/add-funds",
+        element: <Transak />,
     }
 ]);

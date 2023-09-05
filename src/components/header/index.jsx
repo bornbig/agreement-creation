@@ -122,6 +122,7 @@ function Header() {
 
   useEffect(() => {
     checkIfConnected();
+    setbalance(false)
   }, []);
 
   const checkIfConnected = async () => {
@@ -129,6 +130,7 @@ function Header() {
     if(web3auth?.connected){
       openModel();
     }
+    setbalance(false)
   }
 
   const openModel = async () => {
@@ -160,6 +162,7 @@ function Header() {
   const logout = async () => {
     await web3auth.logout();
     dispatch(setWalletDisconnect());
+    setbalance(false)
   }
 
   const updateBalance = async (_wallet) => {
@@ -167,8 +170,9 @@ function Header() {
       const balanceResponse = await getUSDTBalance(_wallet);
 
       const humanReadableBalance = balanceResponse.result / (10 ** 6);
-
-      setbalance(humanReadableBalance);
+      console.log(humanReadableBalance)
+        setbalance(humanReadableBalance);
+      
     }
   }
 
@@ -200,6 +204,10 @@ function Header() {
           <img src="/images/logo.png" alt="" />
         </a>
       </div>
+      {(balance !== false) && <div className="preview">
+        <img src="https://cdn-icons-png.flaticon.com/512/482/482541.png" alt="" />
+      <span className='balance'>${balance || 76.654}</span>
+    </div>}
       {isConnected ? (
           <div className='connected'>
               <div className='wallet'>
@@ -207,8 +215,8 @@ function Header() {
                 <span>{wallet}</span>
               </div>
               <div className="info">
-                <div className="balance">${balance || 0}</div>
-                <div className="label">Balance</div>
+                {/* <div className="balance">${balance || 0}</div> */}
+                {/* <div className="label">Balance</div> */}
                 <div className='btnPrivateKey' onClick={showPrivateKey}>Private key</div>
                 <div className="logout" onClick={logout}>Logout</div>
               </div>

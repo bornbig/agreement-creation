@@ -40,7 +40,7 @@ export function Skills(props){
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
                 <div className="btn bottom-right" onClick={() => props.sign()}>
-                    {props.signLoading && <div className="loading"><div className="bar"></div></div>}
+                    {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
                    Sign
                 </div>
             </div> 

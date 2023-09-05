@@ -11,7 +11,7 @@ export function AgreementDetails(props){
     const [ticker, setTicker] = useState("");
     const [detailsLoading, setDetailsLoading] = useState(false);
     const { wallet, web3, isConnected, chainId } = useSelector((state) => state.user);
-    const [timestamp, setTimestam] = useState();
+    const [timestamp, setTimestamp] = useState();
 
     useEffect(() => {
         updateDetails(props.ipfs_hash);
@@ -42,7 +42,7 @@ export function AgreementDetails(props){
         const blockNumber = await web3.eth.getBlockNumber();
         const timestamp = (await web3.eth.getBlock(blockNumber)).timestamp;
 
-        setTimestam(timestamp);
+        setTimestamp(timestamp);
     }
 
     const getRaminingTime = () => {
@@ -106,8 +106,9 @@ export function AgreementDetails(props){
                     
                     <div className="agreement-price">{ formatNumber((props.price / (10 ** decimals)).toFixed(decimals)) } {ticker}
                         {props.status != 105 && wallet?.toLowerCase() == props.client?.toLowerCase() &&
-                        <div>Release the funds only when the Service Provider has deliverd: <b>{ipfsJson.delivery}</b></div>} <br></br>
-                        <div>Time Left: <b>{(getRaminingTime())}</b></div>
+                        <div>Release the funds only when the Service Provider has delivered: <b>{ipfsJson.delivery}</b></div>} <br></br>
+                        <div>Time Left: <b>{(getRaminingTime())}</b></div> 
+                        {/* Have to work on */}
                     </div>
                     
                     {props.showProgressBar && (

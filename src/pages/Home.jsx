@@ -16,6 +16,7 @@ export function Home(){
 
     useEffect(() => {
         getMyAgreements();
+        setAgreements(null)
     }, [wallet]);
 
     const createAgreement = () => {
@@ -44,7 +45,7 @@ export function Home(){
             <ContractCreation isOpen={canStartContractCreation} closeModal={setCanStartContractCreation}/>
 
             <section className="mt-4">
-                {agreements && <h2>My Agreements</h2>}
+                {(agreements !== null)  && <h2>My Agreements</h2>}
                 <div className="d-flex-between">
                     {agreements?.map((agreement, index) => (
                         <div className="box-agreemet" onClick={() => takeMeToAgreement(agreement.contract_address, agreement.token_id)}>

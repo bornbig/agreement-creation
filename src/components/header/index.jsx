@@ -199,19 +199,20 @@ function Header() {
           <img src="/images/logo.png" alt="" />
         </a>
       </div>
-      {(balance !== false) && <div className="preview">
-        <img src="https://cdn-icons-png.flaticon.com/512/482/482541.png" alt="" />
-      <span className='balance'>${balance || 0}</span>
-    </div>}
       {isConnected ? (
+        <div className='btn-wrap'>
+          <div className="preview">
+            <img src="https://cdn-icons-png.flaticon.com/512/482/482541.png" alt="" />
+            <span className='balance'>${balance || 0}</span>
+          </div>
           <div className='connected'>
               <div className='wallet'>
                 <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={() => navigator.clipboard.writeText(wallet)} />
                 <span>{wallet}</span>
               </div>
               <div className="info">
-                {/* <div className="balance">${balance || 0}</div>
-                <div className="label">Balance</div> */}
+                <div className="balance">${balance || 0}</div>
+                <div className="label">Balance</div>
                 <a className='btnPrivateKey' href="/add-funds">Add Funds</a>
                 <div className='logout b' onClick={showPrivateKey}>
                   {isCopied? "✅ " :  <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" />}
@@ -219,6 +220,7 @@ function Header() {
                 <div className="logout" onClick={logout}>Logout</div>
               </div>
           </div>
+        </div>
         ) : (
           <div onClick={openModel} className="btn connect">Login</div>
         )}

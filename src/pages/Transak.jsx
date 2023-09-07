@@ -52,7 +52,7 @@ export function Transak(props){
             transak.close();
           });
       } catch (e) {
-        console.log(e)
+        console.log("wrong")
         dispatch(showNotification("Please try again", dispatch));
       }
       

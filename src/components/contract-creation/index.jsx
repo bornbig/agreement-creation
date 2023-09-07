@@ -203,14 +203,8 @@ export function ContractCreation(props){
                                   selectedToken={selectedToken} setViewPrice={setViewPrice} viewPrice={viewPrice}/>}
             {(step == 6) && <Skills nextLoading={nextLoading} nextStep={setStep} step={step} sign={createAndSignAgreement} skills={skills} setSkills={setSkills}  />}
         </> ) }
-        {activeModel === "Payment" && (<> 
-            {(step == 0) && <SelectUserType nextStep={setStep} step={step} userType={userType} setUserType={switchUserType}/>}
-            {(step == 1) && <UserAddress userInput={userInput} setUserInput={setUserInput} nextStep={setStep} step={step} userType={userType} client={client} serviceProvider={serviceProvider} setClient={setClient} setServiceProvider={setServiceProvider} nextLoading={nextLoading} setNextLoading={setNextLoading}/>}
-            {(step == 2) && <Price approveTokens={approveTokens} nextLoading={nextLoading} nextStep={setStep} step={step}
-                                 sign={createAndSignAgreement} allowance={allowance} price={price}
-                                  setPrice={setPrice} userType={userType} tokens={CONTRACT[chainId].tokens} setSelectedToken={setSelectedToken}
-                                  selectedToken={selectedToken} setViewPrice={setViewPrice} viewPrice={viewPrice}/>}
-                                  {(step == 3) &&  <h1 class='developer-lines'>Developers is still working on ' Payment ' Model.... </h1>}
+        {activeModel === "Payment" && (<>
+            <h1 class='developer-lines'>Coming soon...</h1>
         </>)}
        
             

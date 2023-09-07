@@ -13,8 +13,13 @@ export function Transak(props){
     const [fiatAmount, setfiatAmount] = useState(0);
     const [cryptoAmount, setCryptoAmount] = useState(0);
     const { wallet, web3, isConnected, chainId, userInfo } = useSelector((state) => state.user);
+    const [detailsLoading, setDetailsLoading] = useState(false);
 
     const initializeTransak = () => {
+      try {
+
+        setDetailsLoading(true);
+
         let transak = new transakSDK({
             apiKey: 'a7193b71-7510-4225-9df0-c3e31343577b', // (Required)
             environment: 'STAGING', // (Required)
@@ -46,16 +51,27 @@ export function Transak(props){
             console.log(orderData);
             transak.close();
           });
-          
+      } catch (e) {
+        console.log(e)
+        dispatch(showNotification("Please try again", dispatch));
+      }
+      
+      setDetailsLoading(false);
+      
     }
 
     return (
-        <>
+        <> {detailsLoading
+          ? <><div className="lds-ring"><div></div><div></div><div></div><div></div></div></>
+          : <>
             <h1 className="heading"> Add Funds </h1>
             <div className="fund-box">
-              <input type="text" className="" onChange={(e) => setCryptoAmount(e.target.value)}/>
+              <input type="text" className="" onChange={(e) => setCryptoAmount(e.target.value)} defaultValue={0} />
             </div>
+            
             <div className="btn small" onClick={initializeTransak}>Add Funds</div>
+         </>
+        }
         </>
     )
 }

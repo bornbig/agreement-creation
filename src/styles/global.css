@@ -36,13 +36,15 @@ body{
 }
 
 
+
+
 .fund-box input{
   max-width: 80%;
   width: 400px;
   height: 48px;
   border-radius: 20px;
   border: 1px solid #949494;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   font-size: 32px;
   padding: 12px;
 }
@@ -288,6 +290,23 @@ a{
     height: 100%;
   }
 
+  .transak_modal {
+    background: none !important;
+    height: 100% !important;
+    top: 60% !important;
+    max-height: 95% !important;
+  }
+
+  .transak_close {
+  right: -25px !important;
+    top: -10px !important;
+  }
+  .transak_close:hover {
+    color: #000 !important;
+    background-color: #e7e7e7 !important;
+  }
+
+
   @media screen and (max-width : 890px) {
     body{
       background-size: 1700px;
@@ -368,6 +387,11 @@ a{
       padding: 8px 10px;
       text-align: center;
     }
+
+    .fund-box{
+      display: flex;
+      justify-content: center;
+    }
 }
     
   
@@ -423,5 +447,9 @@ a{
     .skill-container .skill-box {
       width: 275px;
       margin-right: -20px !important;
+    }
+    .transak_close {
+      right: -3px !important;
+      top: -20px !important;
     }
 }

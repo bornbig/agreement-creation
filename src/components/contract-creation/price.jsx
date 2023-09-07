@@ -44,6 +44,7 @@ export function Price(props){
                     : (
                         props.allowance < props.price
                             ? <div className="btn bottom-right" onClick={() => props.approveTokens()}>
+                                {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
                                 Approve Tokens
                               </div>
                             : <div className="btn bottom-right" onClick={() => !props.nextLoading && props.sign()}>

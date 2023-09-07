@@ -161,6 +161,7 @@ export function ContractCreation(props){
 
     const approveTokens = async () => {
         try {
+            setNextLoading(true)
             let contract = new web3.eth.Contract(CONTRACT[chainId].tokenAbi, selectedToken.contract);
 
             let approved = await contract.methods.approve(CONTRACT[chainId].escrow.contract, price).send({from: wallet});
@@ -171,7 +172,7 @@ export function ContractCreation(props){
         } catch (error) {
             dispatch(showNotification("Don't have enough balance", dispatch));
         }
-        
+        setNextLoading(false)
     }
 
     const switchUserType = (value) => {

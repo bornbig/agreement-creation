@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector  } from "react-redux";
+import { showNotification } from "../../store/actions/notification-action";
+import { Navigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import EscrowABI from "../../data/abi/Escrow.json";
 import ERC20ABI from "../../data/abi/ERC20.json";
@@ -8,7 +10,7 @@ import { Skills } from "./skills";
 import { storeSkills } from "../../store/actions/agreement-action";
 
 export function SignAgreement (props){
-
+    const dispatch = useDispatch();
     const { wallet, web3, isConnected } = useSelector((state) => state.user);
     const [allowance, setAllowance] = useState(0);
     const [allowanceLoading, setallowanceLoading] = useState(false);
@@ -30,13 +32,18 @@ export function SignAgreement (props){
     }
 
     const approveTokens = async () => {
-        setallowanceLoading(true);
+        try {
+            setallowanceLoading(true);
         let contract = new web3.eth.Contract(ERC20ABI, props.details.token);
 
         let approved = await contract.methods.approve(props.escrowAddress, props.details.price).send({from: wallet});
 
-        if(approved){
-            setAllowance(props.details.price);
+            if(approved){
+                setAllowance(props.details.price);
+            }
+        } catch (e) {
+            console.log(e)
+            dispatch(showNotification("Please try again", dispatch));
         }
         setallowanceLoading(false)
     }
@@ -54,6 +61,7 @@ export function SignAgreement (props){
             await contract.methods.signAgreement(props.agreementAddress, params.id, skills_hash).send({from: wallet});
         }catch(e){
             console.log(e);
+            dispatch(showNotification("Please try again", dispatch));
         }
 
         props.refresh();

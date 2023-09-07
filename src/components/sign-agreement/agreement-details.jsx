@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { getDetails } from "../../store/actions/agreement-action"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CONTRACT } from "../../config/config";
+import { showNotification } from '../../store/actions/notification-action'
 import BigNumber from "bignumber.js";
 import "./style.css"
 
@@ -13,29 +14,38 @@ export function AgreementDetails(props){
     const { wallet, web3, isConnected, chainId } = useSelector((state) => state.user);
     const [timestamp, setTimestamp] = useState();
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         updateDetails(props.ipfs_hash);
         if(!timestamp){
             setTymstamp();
         }
+        setIpfsJson({})
     }, [])
 
     const updateDetails = async (ipfs_hash) => {
-        if(web3 && props.token){
-            const erc20Contract = new web3.eth.Contract(CONTRACT[chainId].tokenAbi, props.token);
-            let decimals = await erc20Contract.methods.decimals().call();
-            let ticker = await erc20Contract.methods.symbol().call();
-
-            setDecimals(decimals);
-            setTicker(ticker);
+        try {
+            if(web3 && props.token){
+                const erc20Contract = new web3.eth.Contract(CONTRACT[chainId].tokenAbi, props.token);
+                let decimals = await erc20Contract.methods.decimals().call();
+                let ticker = await erc20Contract.methods.symbol().call();
+    
+                setDecimals(decimals);
+                setTicker(ticker);
+            }
+    
+            if(ipfs_hash){
+                setDetailsLoading(true)
+                const ipfsDetails = await getDetails(ipfs_hash);
+                setIpfsJson(ipfsDetails);
+                setDetailsLoading(false)
+            }
+            
+        } catch (e) {
+            dispatch(showNotification("Unable to update details", dispatch));
         }
-
-        if(ipfs_hash){
-            setDetailsLoading(true)
-            const ipfsDetails = await getDetails(ipfs_hash);
-            setIpfsJson(ipfsDetails);
-            setDetailsLoading(false)
-        }
+        
     }
 
     const setTymstamp = async () => {
@@ -49,7 +59,7 @@ export function AgreementDetails(props){
 
         const diffTimestamp = (props.deadline - timestamp) / 60;
 
-        console.log(diffTimestamp < 60 * 60);
+        // console.log(diffTimestamp < 60 * 60);
 
         if(diffTimestamp < 60){
             return (diffTimestamp.toFixed(2)) + " Minutes";
@@ -61,18 +71,18 @@ export function AgreementDetails(props){
     }
 
     const getClient = () => {
-        if(props.client != "")
+        if(isConnected && props.client != "")
             return <a target="_blank" href={"https://testnets.opensea.io/" + props.client}><span className="address">{props.client}</span></a>;
 
-        if(props.client_email)
+        if(isConnected && props.client_email)
             return <span className="address">{props.client_email}</span>;
     }
 
     const getServiceProvider = () => {
-        if(props.service_provider != "")
+        if(isConnected && props.service_provider != "")
             return <a target="_blank" href={"https://testnets.opensea.io/" + props.service_provider}><span className="address">{props.service_provider}</span></a>;
 
-        if(props.service_provider_email)
+        if(isConnected && props.service_provider_email)
             return <span className="address">{props.service_provider_email}</span>;
     }
 
@@ -103,13 +113,12 @@ export function AgreementDetails(props){
                     <div className="agreement-details">
                         {ipfsJson.details}
                     </div>
-                    
-                    <div className="agreement-price">{ formatNumber((props.price / (10 ** decimals)).toFixed(decimals)) } {ticker}
+                    {isConnected && <div className="agreement-price">{ formatNumber((props.price / (10 ** decimals)).toFixed(decimals)) } {ticker}
                         {props.status != 105 && wallet?.toLowerCase() == props.client?.toLowerCase() &&
                         <div>Release the funds only when the Service Provider has delivered: <b>{ipfsJson.delivery}</b></div>} <br></br>
                         <div>Time Left: <b>{(getRaminingTime())}</b></div> 
                         {/* Have to work on */}
-                    </div>
+                    </div>}
                     
                     {props.showProgressBar && (
                     <div className="wrapper-progressBar">

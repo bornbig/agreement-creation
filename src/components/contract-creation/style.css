@@ -68,7 +68,6 @@
 }
 
 .modal .agreement-details{
-    margin: 20px 20px;
     border: none;
     overflow: scroll;
 }
@@ -165,8 +164,8 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin: 20px;
-    margin-bottom: 8px !important;
+    margin: 20px 20px;
+    width: 100px;
 }
 
 .modal .skill-box{
@@ -203,9 +202,6 @@
 @media screen and (max-width : 890px){
     .modal .agreement-details textarea {
         height: 118px;
-    }
-    .model .price-box{
-        /* padding: 0 20px; */
     }
 }
 

@@ -7,7 +7,7 @@ export function AgreementDetails(props){
                 </div>
                 <div className="note">( Ex: This agreement is to create a 3D logo for Google. )</div>
 
-                <div className="agreement-details box">
+                <div className="agreement-details">
                     <textarea onChange={(e) => props.setDetails(e.target.value)} value={props.details}></textarea>
                 </div>
 

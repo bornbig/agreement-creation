@@ -93,6 +93,7 @@ export function ContractCreation(props){
             
         }catch(e){
             console.log(e);
+            dispatch(showNotification("Please try again", dispatch));
         }
         setNextLoading                         (false);
     }
@@ -146,21 +147,31 @@ export function ContractCreation(props){
     }
 
     const checkIfAmountApproved = async () => {
-        let contract = new web3.eth.Contract(CONTRACT[chainId].tokenAbi, selectedToken.contract);
+        try{
+            let contract = new web3.eth.Contract(CONTRACT[chainId].tokenAbi, selectedToken.contract);
 
-        let approvedAmount = await contract.methods.allowance(wallet, CONTRACT[chainId].escrow.contract).call();
+            let approvedAmount = await contract.methods.allowance(wallet, CONTRACT[chainId].escrow.contract).call();
 
-        setAllowance(approvedAmount);
+            setAllowance(approvedAmount);
+        }catch(e){
+            dispatch(showNotification("Don't have enough balance", dispatch));
+        }
+        
     }
 
     const approveTokens = async () => {
-        let contract = new web3.eth.Contract(CONTRACT[chainId].tokenAbi, selectedToken.contract);
+        try {
+            let contract = new web3.eth.Contract(CONTRACT[chainId].tokenAbi, selectedToken.contract);
 
-        let approved = await contract.methods.approve(CONTRACT[chainId].escrow.contract, price).send({from: wallet});
+            let approved = await contract.methods.approve(CONTRACT[chainId].escrow.contract, price).send({from: wallet});
 
-        if(approved){
-            setAllowance(price);
+            if(approved){
+                setAllowance(price); // for client
+            }
+        } catch (error) {
+            dispatch(showNotification("Don't have enough balance", dispatch));
         }
+        
     }
 
     const switchUserType = (value) => {

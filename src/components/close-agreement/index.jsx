@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import EscrowABI from "../../data/abi/Escrow.json";
 import { storeSkills } from "../../store/actions/agreement-action";
 import { uploadDeliveres, decryptDelivery } from "../../store/actions/agreement-action";
+import { showNotification } from "../../store/actions/notification-action";
 
 export function CloseAgreement(props){
+    const dispatch = useDispatch();
     const { wallet, web3 } = useSelector((state) => state.user);
     let params = useParams();
     const [relaseFundsLoading, setRelaseFundsLoading] = useState(false);
@@ -21,27 +23,45 @@ export function CloseAgreement(props){
     }, [web3, wallet]);
 
     const getDelivery = async () => {
-        const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
-       const delivery = await contract.methods.deliveries(props.agreementAddress, params.id).call({from: wallet});
-
-       setDeliveryHash(delivery);
+        try {
+            const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
+           const delivery = await contract.methods.deliveries(props.agreementAddress, params.id).call({from: wallet});
+    
+           setDeliveryHash(delivery);
+            
+        } catch (e) {
+            console.log(e)
+            dispatch(showNotification("Please try again", dispatch));
+        }
     }
 
     const releaseFunds = async () => {
-        setRelaseFundsLoading(true)
-        const skills_hash = await storeSkills(props.skills);
-        const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
-        
-        await contract.methods.releaseFunds(props.agreementAddress, params.id, skills_hash).send({from: wallet});
-        props.refresh()
+        try {
+            setRelaseFundsLoading(true)
+            const skills_hash = await storeSkills(props.skills);
+            const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
+            
+            await contract.methods.releaseFunds(props.agreementAddress, params.id, skills_hash).send({from: wallet});
+            props.refresh()
+            
+        } catch (e) {
+            console.log(e)
+            dispatch(showNotification("Please try again", dispatch));
+        }
         setRelaseFundsLoading(false);
     }
 
     const raiseDispute = async () => {
-        setDisputeLoading(true)
-        const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
-        await contract.methods.raiseDispute(props.agreementAddress, params.id).send({from: wallet});
-        props.refresh()
+        try {
+            setDisputeLoading(true)
+            const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
+            await contract.methods.raiseDispute(props.agreementAddress, params.id).send({from: wallet});
+            props.refresh()
+            
+        } catch (e) {
+            console.log(e)
+            dispatch(showNotification("Please try again", dispatch));
+        }
         setDisputeLoading(false)
     }
 
@@ -59,7 +79,10 @@ export function CloseAgreement(props){
             
             await contract.methods.submitDelivery(props.agreementAddress, params.id, delivery).send({from: wallet});
             props.refresh()
-        }catch(e){}
+        }catch(e){
+            console.log(e)
+            dispatch(showNotification("Please try again", dispatch));
+        }
         setSubmitDeliveryLoading(false);
     }
 
@@ -68,7 +91,9 @@ export function CloseAgreement(props){
             setDownloadLoading(true);
             const durl = await decryptDelivery(deliveryHash, web3)
             window.open(durl, '_blank');
-        }catch(e){}
+        }catch(e){
+            dispatch(showNotification("Please try again", dispatch));
+        }
         setDownloadLoading(false);
     }
 

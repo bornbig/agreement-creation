@@ -27,9 +27,6 @@
     margin-left: -20px !important;
 }
 
-.progressBar {
-}
-
 .progressBar li {
     list-style-type: none;
     float: left;
@@ -82,19 +79,21 @@
 
 .skill-container .add-skill-btn{
     background-color: #efefef;
-    color: #898989;
+    color: #707070;
     border-radius: 4px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin: 20px;
+    margin: 40px 10px;
+    width: 250px;
 }
 
 .skill-container .skill-box{
-    padding: 10px 20px;
+    padding: 10px 0px;
     display: flex;
+    width: 400px;
 }
 
 .skill-container .skill-box input{

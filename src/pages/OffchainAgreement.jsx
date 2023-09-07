@@ -2,8 +2,9 @@ import { SignAgreement } from "../components/sign-agreement";
 import { AgreementDetails } from "../components/sign-agreement/agreement-details";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CloseAgreement } from "../components/close-agreement";
+import { showNotification } from "../store/actions/notification-action";
 import { getDetails, getOffchainAgreement, storeSkills } from "../store/actions/agreement-action";
 import { AddNotification } from "../components/add-notification";
 import { Skills } from "../components/sign-agreement/skills";
@@ -21,6 +22,7 @@ export function OffchainAgreement(){
     const [cancelLoading, setCancelLoading] = useState(false);
     const [signLoading, setSignLoading] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     let params = useParams();
 
@@ -31,23 +33,27 @@ export function OffchainAgreement(){
     }, [web3, wallet]);
 
     const getAgreementDetails = async () => {
-        console.log("called")
-        if(web3){
-            console.log("called NEt")
-            setDetailsLoading(true);
-            
-            const details = await getOffchainAgreement(params.id)
-
-            console.log(userInfo.email);
-            console.log(details.client_email);
-            console.log(details.service_provider_email);
-            console.log("krckjerc", checkifServiceProvider());
-
-            setEscrowAddress(details.escrow);
-            setDetails(details);
-            
-            updateSkills(details.skills_hash);
-            setDetailsLoading(false);
+        try {
+            console.log("called")
+            if(web3){
+                console.log("called NEt")
+                setDetailsLoading(true);
+                
+                const details = await getOffchainAgreement(params.id)
+    
+                console.log(userInfo.email);
+                console.log(details.client_email);
+                console.log(details.service_provider_email);
+                console.log("krckjerc", checkifServiceProvider());
+    
+                setEscrowAddress(details.escrow);
+                setDetails(details);
+                
+                updateSkills(details.skills_hash);
+                setDetailsLoading(false);
+            }
+        } catch (e) {
+            dispatch(showNotification("Please connect your wallet first", dispatch));
         }
     }
 
@@ -92,7 +98,8 @@ export function OffchainAgreement(){
 
             navigate(`/sbt/${details.agreement}/${tokenId}`);
         }catch(e){
-            console.log(e);
+            console.log(e)
+            dispatch(showNotification("Please try again", dispatch));
         }
 
         // Redirect to onchain agreement
@@ -100,13 +107,19 @@ export function OffchainAgreement(){
     }
 
     const approveTokens = async () => {
-        setallowanceLoading(true);
-        let contract = new web3.eth.Contract(ERC20ABI, details.token);
-
-        let approved = await contract.methods.approve(escrowAddress, details.price).send({from: wallet});
-
-        if(approved){
-            setAllowance(details.price);
+        try {
+            setallowanceLoading(true);
+            let contract = new web3.eth.Contract(ERC20ABI, details.token);
+    
+            let approved = await contract.methods.approve(escrowAddress, details.price).send({from: wallet});
+    
+            if(approved){
+                setAllowance(details.price);
+            }
+            
+        } catch (e) {
+            console.log(e)
+            dispatch(showNotification("Please try again", dispatch));
         }
         setallowanceLoading(false)
     }

@@ -17,6 +17,7 @@ function Header() {
   const { wallet, chainId, isConnected, userInfo } = useSelector((state) => state.user);
   const [balance, setbalance] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [hasClass, setHasClass] = useState("masked");
 
   const web3AuthInit = async () => {
     web3auth = new Web3Auth({
@@ -124,6 +125,7 @@ function Header() {
   useEffect(() => {
     checkIfConnected();
     setbalance(false)
+    setHasClass(true)
   }, []);
 
   const checkIfConnected = async () => {
@@ -145,7 +147,7 @@ function Header() {
 
       let _accounts = await web3.eth.getAccounts();
 
-      console.log(info.idToken);
+      // console.log(info.idToken);
 
       if(info.idToken){
         submitIdToken(info.idToken, _accounts[0])
@@ -156,7 +158,7 @@ function Header() {
       updateBalance(_accounts[0]);
 
     }catch(e){
-      console.log(e);
+      dispatch(showNotification("Network Error", dispatch));
     }
   }
 
@@ -171,15 +173,12 @@ function Header() {
       const balanceResponse = await getUSDTBalance(_wallet);
 
       const humanReadableBalance = balanceResponse.result / (10 ** 6);
-      console.log(humanReadableBalance)
         setbalance(humanReadableBalance);
       
     }
   }
 
   async function showPrivateKey (){
-
-    const privateKeyDiv = document.querySelector('.btnPrivateKey');
 
     const privateKey = await web3auth.provider.request({
       method: "eth_private_key"
@@ -203,15 +202,17 @@ function Header() {
         <div className='btn-wrap'>
           <div className="preview">
             <img src="https://cdn-icons-png.flaticon.com/512/482/482541.png" alt="" />
-            <span className='balance'>${balance || 0}</span>
+            <span className='balance'>${balance || '00.00' }</span>
           </div>
-          <div className='connected'>
+          
+          <div className='connected'  >
               <div className='wallet'>
                 <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={() => navigator.clipboard.writeText(wallet)} />
                 <span>{wallet}</span>
+                
               </div>
               <div className="info">
-                <div className="balance">${balance || 0}</div>
+                <div className="balance">${balance || '00.00'}</div>
                 <div className="label">Balance</div>
                 <a className='btnPrivateKey' href="/add-funds">Add Funds</a>
                 <div className='logout b' onClick={showPrivateKey}>
@@ -220,6 +221,7 @@ function Header() {
                 <div className="logout" onClick={logout}>Logout</div>
               </div>
           </div>
+          <div className="masked"><div className="close">X</div></div>
         </div>
         ) : (
           <div onClick={openModel} className="btn connect">Login</div>

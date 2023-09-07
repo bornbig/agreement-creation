@@ -15,7 +15,7 @@
     position: absolute;
     right: 3%;
     z-index: 1;
-    width: 300px;
+    width: 360px;
     display: flex;
     justify-content: space-between;
     background: lavender;
@@ -25,7 +25,7 @@
 
 .header .connected{
     border: 1px solid #d9d9d9;
-    border-radius: 34px;
+    border-radius: 32px;
     overflow: hidden;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     background: #f0f0f0;
@@ -38,7 +38,7 @@
 .header .btn-wrap .info{
     display: none;
     text-align: center;
-    background: #f0f0f0;
+    background: #ffffff;
 }
 
 .header .connected .info .btnPrivateKey{
@@ -46,7 +46,7 @@
     height: 30px;
     justify-content: center;
     align-items: center;
-    background-color: #f0f0f0;
+    background-color: #f7f7f7;
     color: #4d4d4d;
     cursor: pointer;
     border-radius: 28px;
@@ -81,7 +81,8 @@
 .header .connected .info .balance{
     font-size: 40px;
     padding: 0 20px;
-    background: #f0f0f0;
+    padding-top: 14px;
+    background: #ffffff;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
@@ -90,11 +91,11 @@
 .header .connected .info .label{
     padding: 0 20px;
     padding-bottom: 12px;
-    background: #f0f0f0;
+    background: #ffffff;
 }
 
 .header .connected .info .logout{
-    background-color: #e5e5e5;
+    background-color: #eeeeee;
     padding: 12px;
     cursor: pointer;
 }
@@ -128,7 +129,7 @@
 .header .connected .wallet{
     text-align: center;
     font-size: 16px;
-    background: #f0f0f0;
+    background: #ffffff;
     color: #777777;
     padding: 20px;
     text-overflow: ellipsis;
@@ -172,7 +173,7 @@
 }
 
 .preview{
-    font-size: 22px;
+    font-size: 19px;
     display: flex;
     align-items: center;
     color: #000000;
@@ -180,24 +181,45 @@
 }
 
 .preview img{
-    height: 28px;
-    margin-right: 12px;
+    height: 26px;
+    margin-right: 8px;
+    margin-bottom: 3px;
 }
 
 .preview .balance{
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
-    width: 160px;
+    width: 94px;
     font-weight: 600;
 }
 
+.close{
+    display: none;
+    position: absolute;
+    top: 42px;
+    right: 6px;
+    color: #000000;
+    font-size: 14px;
+    padding: 2px 5px;
+    background-color: #f8f8f8;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, .3);
+    border-radius: 70px;
+}
+
 .header .btn-wrap:hover .connected{
-    /* animation-name: slide-left;
-    animation-duration: 1s; */
     animation: slide-left 500ms ease-in-out forwards;
     width: 100%;
 }
+
+.header .btn-wrap:hover .masked{
+    display: block;
+}
+
+.masked:hover{
+    display: none !important;
+}
+
 @keyframes slide-left {
     from { width: 200px;}
     to {width: 100%; }
@@ -209,9 +231,16 @@
 }
 
 @media screen and (max-width : 890px){
+    .close{
+        display: block;
+        top: 52px;
+        right: 11px;
+    }
+    .header .connected{
+        width: 0;
+    }
     .header .connected .info .balance{
         font-size: 25px;
-        padding: 0 0;
     }
     .header .connected .wallet{
         padding-right: 13px;
@@ -224,26 +253,77 @@
         height: 14px;
     }
     .preview{
-        font-size: 20px;
+        font-size: 19px;
         /* width: 30%; */
     }
     .preview img{
-        width: 5%;
+        width: 20%;
+        height: 40%;
     }
+    .header .btn-wrap:hover .connected{
+        /* animation-name: slide-left;
+        animation-duration: 1s; */
+        animation: slide-left 500ms ease-in-out forwards;
+        width: 100%;
+    }
+
+    .header .btn-wrap:hover .info{
+        display: block;
+    }
+
+    .header .btn-wrap{
+        width: 340px;      
+    }
+    
+
+    @keyframes slide-left {
+        from { width: 190px;}
+        to {width: 100%; }
+    }
+    @keyframes slide-right {
+        from { width: 100%;}
+        to {width: 190px; }
+    }
+
 }
 
 @media screen and (max-width : 620px){
+    .close{
+        top: 42px;
+        right: 6px;
+    }
     .header .connected .wallet{
-        width: 104px;
         font-size: 12px;
-        padding: 12px;
+        padding: 21px 10px;
     }
     .preview{
-        font-size: 16px;
-        justify-content: left;
+        display: none;
+        font-size: 0;
+        margin-left: 15px;
     }
     .preview img{
-        width: 8%;
+        width: 23%;
+        height: 35%;
+        margin: 0;
+    }
+    .header .btn-wrap{
+        width: 207px;   
+        background-color: #ffffff;  
+    }
+    .header .connected .wallet img {
+        margin-right: 2px;
+    }
+    .preview .balance{
+        width: 73px;
+    }
+
+    @keyframes slide-left {
+        from { width: 150px;}
+        to {width: 100%; }
+    }
+    @keyframes slide-right {
+        from { width: 100%;}
+        to {width: 150px; }
     }
 }
 

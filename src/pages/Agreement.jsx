@@ -3,12 +3,14 @@ import ProofABI from "../data/abi/Proof.json";
 import { AgreementDetails } from "../components/sign-agreement/agreement-details";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CloseAgreement } from "../components/close-agreement";
 import { getDetails } from "../store/actions/agreement-action";
 import { AddNotification } from "../components/add-notification";
+import { showNotification } from "../store/actions/notification-action";
 
 export function Agreement(){
+    const dispatch = useDispatch();
     const [details, setDetails] = useState({});
     const [skills, setSkills] = useState([]);
     const [detailsLoading, setDetailsLoading] = useState(false);
@@ -21,18 +23,23 @@ export function Agreement(){
     }, [web3, wallet]);
 
     const getAgreementDetails = async () => {
-        if(web3){
-            setDetailsLoading(true);
-            let contract = new web3.eth.Contract(ProofABI, params.contract);
-            let details = await contract.methods.getAgreementDetails(params.id).call({from: wallet});
-            let escrow = await contract.methods.escrowUsed(params.id).call({from: wallet});
-
-            setEscrowAddress(escrow);
-            setDetails(details);
+        try {
+            if(web3){
+                setDetailsLoading(true);
+                let contract = new web3.eth.Contract(ProofABI, params.contract);
+                let details = await contract.methods.getAgreementDetails(params.id).call({from: wallet});
+                let escrow = await contract.methods.escrowUsed(params.id).call({from: wallet});
+    
+                setEscrowAddress(escrow);
+                setDetails(details);
+                
+                updateSkills(details.skills);
+            }
             
-            updateSkills(details.skills);
-            setDetailsLoading(false);
+        } catch (e) {
+            dispatch(showNotification("Unable to get details", dispatch));
         }
+        setDetailsLoading(false);
     }
 
     const updateSkills = async (skills_hash) => {

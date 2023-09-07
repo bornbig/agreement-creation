@@ -29,7 +29,6 @@ export function Verify(props){
             }
         }catch(e){
             showNotification("Error: Please try again", dispatch)
-            // console.log(e);
         }
         setLoading(false)
     }

@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react"
 import { getUserWallet } from "../../store/actions/user-action"
 import Web3 from "web3";
+import { showNotification } from "../../store/actions/notification-action";
+import { useDispatch } from "react-redux";
+
 
 export function UserAddress(props){
+    const dispatch = useDispatch();
 
     const [isValidInput, setIsValidInput] = useState(false);
 
@@ -32,6 +36,7 @@ export function UserAddress(props){
             }
         }catch(e){
             console.log(e);
+            dispatch(showNotification("Please try again", dispatch));
         }
 
         props.setNextLoading(false)

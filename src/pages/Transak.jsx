@@ -11,6 +11,7 @@ export function Transak(props){
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const [fiatAmount, setfiatAmount] = useState(0);
+    const [cryptoAmount, setCryptoAmount] = useState(0);
     const { wallet, web3, isConnected, chainId, userInfo } = useSelector((state) => state.user);
 
     const initializeTransak = () => {
@@ -21,7 +22,7 @@ export function Transak(props){
             cryptoCurrencyCode: "USDT",
             productsAvailed: "BUY",
             fiatCurrency: "USD",
-            defaultFiatAmount: fiatAmount,
+            defaultCryptoAmount	: cryptoAmount,
             defaultPaymentMethod: "pm_jwire",
             widgetHeight: "80%",
             walletAddress: wallet,
@@ -52,7 +53,7 @@ export function Transak(props){
         <>
             <h1 className="heading"> Add Funds </h1>
             <div className="fund-box">
-              <input type="text" className="" onChange={(e) => setfiatAmount(e.target.value)}/>
+              <input type="text" className="" onChange={(e) => setCryptoAmount(e.target.value)}/>
             </div>
             <div className="btn small" onClick={initializeTransak}>Add Funds</div>
         </>

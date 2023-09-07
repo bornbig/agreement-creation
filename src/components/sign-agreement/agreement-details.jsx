@@ -92,6 +92,8 @@ export function AgreementDetails(props){
             return number;
         }
     };
+
+    const humanReadableTokenAmount = formatNumber((props.price / (10 ** decimals)).toFixed(decimals));
     
     return (
         <div>
@@ -104,7 +106,7 @@ export function AgreementDetails(props){
                         {ipfsJson.details}
                     </div>
                     
-                    <div className="agreement-price">{ formatNumber((props.price / (10 ** decimals)).toFixed(decimals)) } {ticker}
+                    <div className="agreement-price">{ humanReadableTokenAmount } {ticker}
                         {props.status != 105 && wallet?.toLowerCase() == props.client?.toLowerCase() &&
                         <div>Release the funds only when the Service Provider has delivered: <b>{ipfsJson.delivery}</b></div>} <br></br>
                         <div>Time Left: <b>{(getRaminingTime())}</b></div> 

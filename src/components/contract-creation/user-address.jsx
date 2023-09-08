@@ -75,7 +75,7 @@ export function UserAddress(props){
                         <input type="text" onChange={(e) => updateUserWalletByEmail(e.target.value)} value={props.userInput} />
                     </div>
                     {props.userInput != getUserWalletText() &&
-                        <div className="note success">{props.userType == 1 ? props.client : props.serviceProvider}</div>
+                        <div className="note success">{(props.client && props.serviceProvider) && <><p className="heading-success">Address- </p><p className="text-success-add"> {props.userType == 1 ? props.client : props.serviceProvider}</p> </>}</div>
                     }
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>

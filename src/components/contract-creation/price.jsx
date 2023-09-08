@@ -1,10 +1,14 @@
 import BigNumber from "bignumber.js";
 import { useState } from "react";
 import { getUSDTQuote } from "../../store/actions/price-discovery";
+import { PLATFORM_FEE } from "../../config/config";
+import { useDispatch } from "react-redux";
+import { showNotification } from "../../store/actions/notification-action";
 
 export function Price(props){
+    const dispatch = useDispatch();
     const { decimals, ticker } = props.selectedToken;
-    const bnDecimals = new BigNumber(10).pow(new BigNumber(decimals));
+    const bnDecimals = new BigNumber(100).pow(new BigNumber(decimals));
     const [quote, setQuote] = useState({});
 
     const formatPrice = (price) => {
@@ -37,22 +41,38 @@ export function Price(props){
         }
     }
 
-    function getDisabledClass(viewPrice) {
-        return ((viewPrice == 0 || viewPrice == '.' || !viewPrice) ? " disabled" : "");
+    function checkPriceInput(viewPrice) {
+        if(viewPrice > 10000){
+            dispatch(showNotification("Please place an order of less than 10000", dispatch))
+        }
+        return ((viewPrice == 0 || viewPrice == '.' || !viewPrice || viewPrice == "") ? " disabled" : "");
       }
       
 
     const updateUsdtPrice = async (usdPrice) => {
         try {
-            const usdtReposnse = await getUSDTQuote(usdPrice);
+            const usdtReposnse = await getUSDTQuote(usdPrice , dispatch);
             setQuote(usdtReposnse.response);
             props.setPrice(new BigNumber(usdtReposnse.response.cryptoAmount).mul(bnDecimals).toString());
             
-        } catch (error) {
-            console.log("Entered wrong price")
+        } catch (e) {
+            console.log(e + "Entered wrong price")
         }
     }
 
+    const BillingAmount = (price) => {
+        try {
+
+            const reducedPrice = price - (price * (PLATFORM_FEE / 100));
+            const formattedPrice = (reducedPrice / bnDecimals).toFixed(2)
+
+
+        return formattedPrice;
+        } catch (e) {
+            console.log(e)
+        }
+        
+    }
 
     return (
         <>
@@ -81,21 +101,32 @@ export function Price(props){
                     <div className="dollar">$</div>
                     <input type="text" className="fiat-text" onChange={(e) => updateFiat(e.target.value)} value={props.viewPrice} />
                 </div>
-
-                {<div className="note success">
-                    {props.price && (props.price /bnDecimals) + " USDT"}
+                {props.userType == 1 && 
+                <>
+                {checkPriceInput(props.viewPrice) !== " disabled" && <div className="note success no-margin">
+                <p className="heading-success no-margin">Client will be charged for</p>
+                <p className="text-success no-margin">{props.price && (props.price /bnDecimals).toFixed(2) + " USDT"}</p>
                 </div>}
+                {checkPriceInput(props.viewPrice) !== " disabled" && <div className="note success no-margin">
+                <p className="heading-success no-margin">Fee </p>
+                <p className="text-success no-margin">{PLATFORM_FEE + "%"}</p>
+                </div>}
+                {checkPriceInput(props.viewPrice) !== " disabled" && <div className="note success no-margin">
+                <p className="heading-success no-margin"><hr className="line"/>You will get </p>
+                <p className="text-success no-margin"><hr className="line"/>{BillingAmount(props.price) + " USDT"}</p>
+                </div>}
+                </>}
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
                 {props.userType == 1 
-                    ? <div className={"btn bottom-right " + getDisabledClass(props.viewPrice)} onClick={() => props.nextStep(props.step + 1)}>Next</div>
+                    ? <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.nextStep(props.step + 1)}>Next</div>
                     : (
                         props.allowance < props.price
-                            ? <div className={"btn bottom-right " + getDisabledClass(props.viewPrice)} onClick={() => props.approveTokens()}>
+                            ? <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.approveTokens()}>
                                 {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
                                 Approve Tokens
                               </div>
-                            : <div className={"btn bottom-right " + getDisabledClass(props.viewPrice)} onClick={() => !props.nextLoading && props.sign()}>
+                            : <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => !props.nextLoading && props.sign()}>
                                 {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
                                 Sign
                             </div>

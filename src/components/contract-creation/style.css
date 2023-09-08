@@ -4,14 +4,51 @@
 }
 
 .modal .note{
-    font-size: 12px;
+    font-size: 13px;
     padding: 0 20px;
     margin-top: 20px;
     margin-bottom: 20px;
     color: #5f5f5f;
 }
 
-.modal .note.success{
+.no-margin{
+    margin: 3px 0 !important;
+}
+
+.modal .success{
+    text-align: right;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* font-size: 11px !important; */
+    color: green ;
+    margin-right: 15px;
+    overflow: auto;
+    margin-bottom: 40px;
+    opacity: 0; /* Initially set the opacity to 0 */
+  animation: fadeIn .4s ease-in-out .6s forwards; /* Animation name, duration, timing function, and delay */
+}
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+.note .heading-success{
+    color: #5f5f5f;
+    text-align: start;
+}
+hr.line{
+    margin: 0 0;
+    margin-bottom: 5px !important;
+    /* height: 1px; */
+    background: #a7a7a7;
+    border: .1px solid #c5c5c5;
+}
+
+.note .text-success{
+    text-align: right;
+}
+.note .text-success-add{
     text-align: right;
 }
 
@@ -97,7 +134,6 @@
 }
 
 .modal .price-box{
-    overflow: hidden;
     margin: 20px;
     display: flex;
     align-items: center;
@@ -114,6 +150,8 @@
     padding-right: 16px;
     background: lavender;
     margin-right: 8px;
+    border-top-left-radius: 6px;
+    border-end-start-radius: 6px;
 }
 
 .modal .price-box input{
@@ -232,7 +270,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    line-height: 60px;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 160px;
 }
 
 .model-skill-btn{
@@ -271,5 +311,10 @@
     .modal .skill-box input{
         height: 18px;
         font-size: 14px;
+    }
+    .note .text-success-add{
+        display: flex;
+        align-items: center;
+        font-size: 8px !important;
     }
 }

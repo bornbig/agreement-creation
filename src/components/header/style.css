@@ -231,6 +231,9 @@
 }
 
 @media screen and (max-width : 890px){
+    .header{
+        margin: 10px 0;
+    }
     .close{
         display: block;
         top: 52px;
@@ -288,6 +291,7 @@
 }
 
 @media screen and (max-width : 620px){
+    
     .close{
         top: 42px;
         right: 6px;

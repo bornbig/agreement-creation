@@ -40,6 +40,7 @@ export const CONTRACT = {
     }
 }
 
+export const PLATFORM_FEE = 2;
 export const API_ENDPOINT = "https://profile.pentonium.com/api";
 export const LIGHTHOSE_API_KEY = "8449756f.64556c4559ba41e2b00707e597bf8a2b";
 export const WEB3AUTH_KEY = "BKg7EUhTp6i5JKLvfkuPBSCDAZrI_Ipe829otL5QYNGccZgLON75bRgtQVGpLXBQJIZgIF7o87vjA69WBiPj0HU";

@@ -9,21 +9,18 @@ export function Skills(props){
 
         skill.push({name: "", rating: null})
         props.setSkills(skill)
-        console.log(props.skills)
     }
 
     const removeSkill = (index) => {
         let skill = [...props.skills];
         skill.splice(index, 1);
         props.setSkills(skill)
-        console.log(props.skills)
     }
 
     const setSkillName = (name, index) => {
         const skill = [...props.skills] || [];
         skill[index]["name"] = name
         props.setSkills(skill);
-        console.log(props.skills)
     }
 
     return (

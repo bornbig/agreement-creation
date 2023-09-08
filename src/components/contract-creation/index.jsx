@@ -189,7 +189,17 @@ export function ContractCreation(props){
     }
 
     return (<>
-        <Modal isOpen={props.isOpen} closeModal={props.closeModal} big={true} activeModel={activeModel} setActiveModel={setActiveModel}>  
+        <Modal 
+            header={
+            <div className="toggle-btn">
+                <div className={"tab " + (activeModel === "Agreement" && "active" )}
+                        onClick={() => setActiveModel("Agreement")} >Agreement</div>
+                <div 
+                    className={"tab " + (activeModel === "Payment" && "active")} 
+                        onClick={() => setActiveModel("Payment")}
+                        >Payment</div>
+            </div>}
+            isOpen={props.isOpen} closeModal={props.closeModal} big={true} activeModel={activeModel} setActiveModel={setActiveModel}>  
         <>
         {activeModel === "Agreement" && (<> 
             {(step == 0) && <SelectUserType nextStep={setStep} step={step} userType={userType} setUserType={switchUserType}/>}

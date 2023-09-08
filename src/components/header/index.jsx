@@ -10,6 +10,7 @@ import { Web3Auth } from '@web3auth/modal';
 import { CHAIN_NAMESPACES, WALLET_ADAPTERS } from "@web3auth/base";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { WEB3AUTH_KEY } from '../../config/config';
+import { SendToken } from '../send-token';
 
 let web3auth = null;
 function Header() {
@@ -18,6 +19,7 @@ function Header() {
   const [balance, setbalance] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [hasClass, setHasClass] = useState("masked");
+  const [isSendTokenOpen, setIsSendTokenOpen] = useState(false)
 
   const web3AuthInit = async () => {
     web3auth = new Web3Auth({
@@ -215,6 +217,9 @@ function Header() {
                 <div className="balance">${balance || '00.00'}</div>
                 <div className="label">Balance</div>
                 <a className='btnPrivateKey' href="/add-funds">Add Funds</a>
+
+                <div className='logout'>
+                <span onClick={() => setIsSendTokenOpen(true)}>Send Token</span></div>
                 <div className='logout b' onClick={showPrivateKey}>
                   {isCopied? "✅ " :  <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" />}
                   Private key</div>
@@ -226,6 +231,7 @@ function Header() {
         ) : (
           <div onClick={openModel} className="btn connect">Login</div>
         )}
+        <SendToken isOpen={isSendTokenOpen} closeModal={setIsSendTokenOpen} />
     </div>
   );
 }

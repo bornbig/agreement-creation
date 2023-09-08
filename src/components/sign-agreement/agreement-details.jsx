@@ -5,11 +5,14 @@ import { CONTRACT } from "../../config/config";
 import { showNotification } from '../../store/actions/notification-action'
 import BigNumber from "bignumber.js";
 import "./style.css"
+import { getUSDQuote } from "../../store/actions/price-discovery";
 
 export function AgreementDetails(props){
     const [ipfsJson, setIpfsJson] = useState({});
     const [decimals, setDecimals] = useState(0);
     const [ticker, setTicker] = useState("");
+    const [humanReadableTokenAmount, setHumanReadableTokenAmount] = useState(0);
+    const [usdPrice, setUsdPrice] = useState(0);
     const [detailsLoading, setDetailsLoading] = useState(false);
     const { wallet, web3, isConnected, chainId } = useSelector((state) => state.user);
     const [timestamp, setTimestamp] = useState();
@@ -30,9 +33,12 @@ export function AgreementDetails(props){
                 const erc20Contract = new web3.eth.Contract(CONTRACT[chainId].tokenAbi, props.token);
                 let decimals = await erc20Contract.methods.decimals().call();
                 let ticker = await erc20Contract.methods.symbol().call();
+                const cryptoAmount = formatNumber((props.price / (10 ** decimals)).toFixed(decimals));
     
                 setDecimals(decimals);
                 setTicker(ticker);
+                setHumanReadableTokenAmount(cryptoAmount);
+                getPriceInUSD(cryptoAmount)
             }
     
             if(ipfs_hash){
@@ -103,7 +109,11 @@ export function AgreementDetails(props){
         }
     };
 
-    const humanReadableTokenAmount = formatNumber((props.price / (10 ** decimals)).toFixed(decimals));
+    const getPriceInUSD = async (price) => {
+        const usdResponse = await getUSDQuote(price);
+
+        setUsdPrice(usdResponse.response.fiatAmount);
+    }
     
     return (
         <div>
@@ -116,7 +126,7 @@ export function AgreementDetails(props){
                         {ipfsJson.details}
                     </div>
                     
-                    {isConnected && <div className="agreement-price">{ humanReadableTokenAmount } {ticker}
+                    {isConnected && <div className="agreement-price">~${ usdPrice } <span>({ humanReadableTokenAmount } {ticker})</span>
                         {props.status != 105 && wallet?.toLowerCase() == props.client?.toLowerCase() &&
                         <div>Release the funds only when the Service Provider has delivered: <b>{ipfsJson.delivery}</b></div>} <br></br>
                         <div>Time Left: <b>{(getRaminingTime())}</b></div> 

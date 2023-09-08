@@ -5,7 +5,7 @@
     font-weight: bold;
 }
 
-.agreement-price div{
+.agreement-price div, .agreement-price span{
     color: black;
     font-weight: 100;
     font-size: 14px;

@@ -12,7 +12,7 @@ export function AgreementDetails(props){
                 </div>
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
-                <div className="btn bottom-right" onClick={() => props.nextStep(props.step + 1)}>Next</div>
+                <div className={"btn bottom-right " + (!props.details && " disabled")} onClick={() => props.nextStep(props.step + 1)}>Next</div>
             </div> 
         </>
     )

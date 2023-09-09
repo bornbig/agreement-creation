@@ -66,9 +66,7 @@ export function Agreement(){
                 : <>
                     <h1 className="heading"> Agreement </h1>
                     <AgreementDetails {...details} showProgressBar={true} usdPrice={usdPrice} setUsdPrice={setUsdPrice}/>
-                        {
-                        // details.status == 100 &&
-                         <SignAgreement details={details} refresh={getAgreementDetails} escrowAddress={escrowAddress} agreementAddress={params.contract} usdPrice={usdPrice}/>}
+                        {details.status == 100 && <SignAgreement details={details} refresh={getAgreementDetails} escrowAddress={escrowAddress} agreementAddress={params.contract} usdPrice={usdPrice}/>}
                         {(details.status == 101 || details.status == 102) && <CloseAgreement details={details} refresh={getAgreementDetails} skills={skills} rateSkill={rateSkill} escrowAddress={escrowAddress} agreementAddress={params.contract} />}
 
                         {details.status == 98 && <h1>Service Provider Rejected it</h1>}

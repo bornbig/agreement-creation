@@ -148,14 +148,14 @@ export function CloseAgreement(props){
                 (wallet?.toLowerCase() == props.details?.service_provider?.toLowerCase()) && (
                     <>
                         <div className="flexBetween">
-                            <div className="btn withPadding">
+                            <div className="btn withPadding withMargin">
                             {submitDeliveryLoading && <div className="loading"><div className="bar"></div></div>}
                                 <span>Submit Delivery</span>
                                 <input type="file" onChange={(e) => submitDelivery(e)}  />
                             </div>
 
 
-                            <div className="btn withPadding" onClick={() => !disputeLoading && raiseDispute()}>
+                            <div className="btn withPadding withMargin" onClick={() => !disputeLoading && raiseDispute()}>
                                 {disputeLoading && <div className="loading"><div className="bar"></div></div>}
                                 Dispute
                             </div>

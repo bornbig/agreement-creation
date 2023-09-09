@@ -146,6 +146,9 @@ function Header() {
       const info = await web3auth.getUserInfo();
       
       const web3 = new Web3(provider);
+      
+      // const getGasPrice = await new web3.eth.getGasPrice()
+      // console.log(getGasPrice)
 
       let _accounts = await web3.eth.getAccounts();
 

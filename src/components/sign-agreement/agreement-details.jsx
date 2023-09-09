@@ -12,7 +12,6 @@ export function AgreementDetails(props){
     const [decimals, setDecimals] = useState(0);
     const [ticker, setTicker] = useState("");
     const [humanReadableTokenAmount, setHumanReadableTokenAmount] = useState(0);
-    const [usdPrice, setUsdPrice] = useState(0);
     const [detailsLoading, setDetailsLoading] = useState(false);
     const { wallet, web3, isConnected, chainId } = useSelector((state) => state.user);
     const [timestamp, setTimestamp] = useState();
@@ -77,7 +76,7 @@ export function AgreementDetails(props){
     }
 
     const getClient = () => {
-        if(isConnected && props.client != "")
+        if(isConnected && props.client != undefined)
             return <a target="_blank" href={"https://testnets.opensea.io/" + props.client}><span className="address">{props.client}</span></a>;
 
         if(isConnected && props.client_email)
@@ -85,7 +84,7 @@ export function AgreementDetails(props){
     }
 
     const getServiceProvider = () => {
-        if(isConnected && props.service_provider != "")
+        if(isConnected && props.service_provider != undefined)
             return <a target="_blank" href={"https://testnets.opensea.io/" + props.service_provider}><span className="address">{props.service_provider}</span></a>;
 
         if(isConnected && props.service_provider_email)
@@ -112,7 +111,7 @@ export function AgreementDetails(props){
     const getPriceInUSD = async (price) => {
         const usdResponse = await getUSDQuote(price);
 
-        setUsdPrice(usdResponse.response.fiatAmount);
+        props.setUsdPrice(usdResponse.response.fiatAmount);
     }
     
     return (
@@ -126,7 +125,7 @@ export function AgreementDetails(props){
                         {ipfsJson.details}
                     </div>
                     
-                    {isConnected && <div className="agreement-price">~${ usdPrice } <span>({ humanReadableTokenAmount } {ticker})</span>
+                    {isConnected && <div className="agreement-price">~${ props.usdPrice } <span>({ humanReadableTokenAmount } {ticker})</span>
                         {props.status != 105 && wallet?.toLowerCase() == props.client?.toLowerCase() &&
                         <div>Release the funds only when the Service Provider has delivered: <b>{ipfsJson.delivery}</b></div>} <br></br>
                         <div>Time Left: <b>{(getRaminingTime())}</b></div> 

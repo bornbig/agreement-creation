@@ -28,11 +28,11 @@ export function AgreementDelivery(props){
                 (wallet?.toLowerCase() == props.details?.client?.toLowerCase()) && (
                     <>
                         <div className="flexBetween">
-                            <div className="btn withPadding" onClick={() => !submitDeliveryLoading && releaseFunds()}>
+                            <div className="btn withPadding withMargin" onClick={() => !submitDeliveryLoading && releaseFunds()}>
                                 {submitDeliveryLoading && <div className="loading"><div className="bar"></div></div>}
                                 Release Funds
                             </div>
-                            <div className="btn withPadding" onClick={() => !disputeLoading && raiseDispute()}>
+                            <div className="btn withPadding withMargin" onClick={() => !disputeLoading && raiseDispute()}>
                                 {disputeLoading && <div className="loading"><div className="bar"></div></div>}
                                 Dispute
                             </div>

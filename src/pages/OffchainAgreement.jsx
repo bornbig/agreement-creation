@@ -158,12 +158,12 @@ export function OffchainAgreement(){
                             <div className="flexBetween">
                                 {details?.mode &&
                                     ((allowance < details?.price)? 
-                                        (<div className="btn withPadding" onClick={() => !allowanceLoading && approveTokens()}>
+                                        (<div className="btn withPadding withMargin" onClick={() => !allowanceLoading && approveTokens()}>
                                             {allowanceLoading && <div className="loading"><div className="bar"></div></div>}
-                                            Approve Tokens and Sign
+                                            Approve Tokens and Sign 
                                         </div>)
                                     :
-                                        (<div className="btn withPadding" onClick={() => !signLoading && signAndProceed()}>
+                                        (<div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
                                             {signLoading && <div className="loading"><div className="bar"></div></div>}
                                             Sign & Proceed
                                         </div>

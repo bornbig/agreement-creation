@@ -84,7 +84,15 @@ a{
 
 .btn.withPadding{
   min-width: 160px;
-  padding: 0 40px;
+  padding: 4px 40px;
+}
+
+.btn.withMargin{
+  margin: 0 5px;
+}
+
+.btn.cancel{
+  background-color: #9d96ff !important;
 }
 
 .address{
@@ -99,16 +107,21 @@ a{
 
 .flexBetween{
   display: flex;
+  text-align: center;
   justify-content: space-between;
   margin: 60px 0;
   padding: 0 10px;
 }
 
 .flexCenter{
+  flex-direction: column;
   display: flex;
-  justify-content: center;
-  margin: 60px 0;
-  padding: 0 20px;
+  text-align: center;
+  justify-content: space-between;
+  height: 160px;
+  /* margin: 60px 0; */
+  color: #3f3f3f;
+  padding: 20px;
 }
 
 .arrow {
@@ -360,8 +373,17 @@ a{
       justify-content: center;
       margin: 50px 0;
       padding: 0 20px;
+      flex-direction: column;
     }
     
+    .btn.withMargin {
+      margin: 6px 5px;
+    }
+    .btn.withPadding {
+        min-width: 160px;
+        padding: 0 40px;
+    }
+
     .box-agreemet img {
       height: 100px;
       padding: 10px 10px;

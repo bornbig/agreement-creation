@@ -1,0 +1,32 @@
+.send-token{
+    /* padding: 20px; */
+}
+
+.send-token .balance{
+    font-size: 32px;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.send-token .balance div{
+    font-size: 12px;
+    margin-top: 12px;
+}
+
+.send-token .input{
+    margin: 20px;
+    padding: 0px 8px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    border: 2px solid #776dff;
+    overflow: visible;
+}
+
+.send-token .input input{
+    width: 100%;
+    outline: none;
+    border: none;
+    height: 40px;
+    font-size: 20px;
+}

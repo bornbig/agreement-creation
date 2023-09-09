@@ -218,8 +218,7 @@ function Header() {
                 <div className="label">Balance</div>
                 <a className='btnPrivateKey' href="/add-funds">Add Funds</a>
 
-                <div className='logout'>
-                <span onClick={() => setIsSendTokenOpen(true)}>Send Token</span></div>
+                <div className='logout b' onClick={() => setIsSendTokenOpen(true)}>Send Token</div>
                 <div className='logout b' onClick={showPrivateKey}>
                   {isCopied? "✅ " :  <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" />}
                   Private key</div>

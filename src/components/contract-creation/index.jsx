@@ -27,7 +27,7 @@ export function ContractCreation(props){
     const [price, setPrice] = useState("");
     const [skills, setSkills] = useState([]);
     const [allowance, setAllowance] = useState(0);
-    const [nextLoading, setNextLoading                         ] = useState(false)
+    const [nextLoading, setNextLoading] = useState(false)
     const [selectedToken, setSelectedToken] = useState()
     const [deadlineValue, setDeadlineValue] = useState();
     const [deadlineRange, setDeadlineRange] = useState("Days");

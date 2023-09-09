@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_ENDPOINT } from "../../config/config";
+import ERC20ABI from "../../data/abi/ERC20.json";
 
 export const SET_USER_DATA = 'SET_USER_DATA';
 export function setUserWalletConnection(wallet, chainId, web3, userInfo) {
@@ -36,6 +37,19 @@ export async function getUSDTBalance(wallet) {
   const balanceResponse = (await axios(url)).data;
 
   return balanceResponse;
+}
+
+export async function sendToken(web3, token, wallet, amount) {
+  try{
+    let contract = new web3.eth.Contract(ERC20ABI, token);
+    
+    await contract.methods.transfer(wallet, amount).call();
+  }catch(e){
+    console.log(e);
+    return false;
+  }
+
+  return true;
 }
 
 

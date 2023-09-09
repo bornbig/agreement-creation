@@ -78,7 +78,7 @@ export function Price(props){
         <>
             <div className="contract-creation">
                 <div className="question">
-                    Please select the token and amount of componsation decided.
+                    Please enter the amount of compensation decided.
                 </div>
                 <div className="note">( Ex: $320 )</div>
 
@@ -119,14 +119,14 @@ export function Price(props){
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
                 {props.userType == 1 
-                    ? <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.nextStep(props.step + 1)}>Next</div>
-                    : (
-                        props.allowance < props.price
-                            ? <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.approveTokens()}>
+                    && <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.nextStep(props.step + 1)}>Next</div>
+                }{props.userType == 2 &&  (
+                        props.allowance < props.price && 
+                            <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.approveTokens()}>
                                 {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
                                 Approve Tokens
-                              </div>
-                            : <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => !props.nextLoading && props.sign()}>
+                              </div>)
+                           ( props.allowance == props.price &&  <div className={"btn bottom-right " + (!props.viewPrice && " disabled")} onClick={() => !props.nextLoading && props.sign()}>
                                 {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
                                 Sign
                             </div>

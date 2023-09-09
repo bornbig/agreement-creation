@@ -50,6 +50,9 @@ hr.line{
 }
 .note .text-success-add{
     text-align: right;
+    display: flex;
+    align-items: center;
+    font-size: 11px;
 }
 
 .modal .user-type{

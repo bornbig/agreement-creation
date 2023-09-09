@@ -170,7 +170,7 @@ export function ContractCreation(props){
                 setAllowance(price); // for client
             }
         } catch (error) {
-            dispatch(showNotification("Don't have enough balance", dispatch));
+            dispatch(showNotification("Please try again", dispatch));
         }
         setNextLoading(false)
     }
@@ -207,7 +207,7 @@ export function ContractCreation(props){
             {(step == 2) && <Deadline nextStep={setStep} step={step} deadlineValue={deadlineValue} setDeadlineValue={setDeadlineValue} deadlineRange={deadlineRange} setDeadlineRange={setDeadlineRange}/>}
             {(step == 3) && <AgreementDetails nextStep={setStep} step={step} details={details} setDetails={setDetails} />}
             {(step == 4) && <Deliverables nextStep={setStep} step={step} delivery={delivery} setDelivery={setDelivery}  />}
-            {(step == 5) && <Price approveTokens={approveTokens} nextLoading={nextLoading} nextStep={setStep} step={step}
+            {(step == 5) && <Price approveTokens={approveTokens} nextLoading={nextLoading} setNextLoading={setNextLoading} nextStep={setStep} step={step}
                                  sign={createAndSignAgreement} allowance={allowance} price={price}
                                   setPrice={setPrice} userType={userType} tokens={CONTRACT[chainId].tokens} setSelectedToken={setSelectedToken}
                                   selectedToken={selectedToken} setViewPrice={setViewPrice} viewPrice={viewPrice}/>}

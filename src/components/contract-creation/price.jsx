@@ -118,11 +118,10 @@ export function Price(props){
                 </>}
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
-                {props.userType == 1 
-                    && <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.nextStep(props.step + 1)}>Next</div>
-                }{props.userType == 2 &&  (
-                        props.allowance < props.price && 
-                            <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.approveTokens()}>
+                {props.userType == 1 ? <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.nextStep(props.step + 1)}>Next</div>
+                :
+                        (props.allowance < props.price) && 
+                            (<div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.approveTokens()}>
                                 {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
                                 Approve Tokens
                               </div>)

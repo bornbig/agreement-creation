@@ -19,14 +19,11 @@ export function SignAgreement (props){
     const [cancelLoading, setCancelLoading] = useState(false);
     const [signLoading, setSignLoading] = useState(false);
     const [skills, setSkills] = useState([]);
-    const [isEnoughBalance , setIsEnoughBalance] = useState()
-    const [allowSigning ,setAllowSigning] = useState(true)
-    const [requiredAmount , setRequiredAmount] = useState()
     let params = useParams();
 
     useEffect(() => {
         checkIfAmountApproved();
-    }, [web3, wallet, isEnoughBalance]);
+    }, [web3, wallet]);
 
     const checkIfAmountApproved = async () => {
         let contract = new web3.eth.Contract(ERC20ABI, props.details.token);
@@ -57,49 +54,22 @@ export function SignAgreement (props){
     const signAndProceed = async () => {
         try{
             setSignLoading(true);
-            if(allowSigning){
                 
                 let skills_hash = "";
                 if(!props.details.mode){
                 skills_hash = await storeSkills(skills);
-                
+                }
 
                 const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
                 await contract.methods.signAgreement(props.agreementAddress, params.id, skills_hash).send({from: wallet});
-                props.refresh();
-            }else if(!allowSigning){
-                setIsEnoughBalance(true)
-            }
-            }
-        }catch(e){
+
+        } catch(e){
             console.log(e);
             dispatch(showNotification("Please try again", dispatch));
         }
 
+        props.refresh();
         setSignLoading(false);
-    }
-
-
-    const walletBalance = async ()=>{
-        if(wallet?.toLowerCase() == props.details?.client?.toLowerCase()){
-
-            if(props.details?.mode){
-
-                const balance = await new web3.eth.getBalance(wallet)
-                console.log(balance)
-                setRequiredAmount(props.usdPrice - balance)
-
-                if(balance < props.usdPrice){
-                    setIsEnoughBalance(true);
-                    setAllowSigning(false);
-                    
-                }else if(balance >= props.usdPrice){
-                    setIsEnoughBalance(false);
-                }
-            }
-        }else{
-            setIsEnoughBalance();
-        }
     }
 
     const rejectByClient = async () => {
@@ -120,26 +90,17 @@ export function SignAgreement (props){
 
     return (
         <div>
-            {<Modal isOpen={isEnoughBalance} closeModal={setIsEnoughBalance} >
-                <div className="small flexCenter" >
-                    <h2>&nbsp;Add {requiredAmount} USDT</h2>
-                    <div><a href="/add-funds" className="btn">Add Funds</a></div>
-                </div>
-                
-            </Modal>}
             {isConnected && wallet?.toLowerCase() == props.details?.client?.toLowerCase() && (
                 <div className="flexBetween">
                     {props.details?.mode &&
                         ((allowance < props.details?.price)? 
-                            (
-                            <div className="btn withPadding withMargin" onClick={() => !allowanceLoading && approveTokens()}>
-                                {allowanceLoading && <div className="loading"><div className="bar"></div></div>}
+                            (<div className="btn withPadding" onClick={() => !allowanceLoading && approveTokens()}>
                                 Approve Tokens and Sign 
                             </div>
                             )
                         :
                             (
-                            <div className="btn withPadding withMargin" onClick={() => !signLoading && walletBalance() && signAndProceed()}>
+                            <div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
                                 {signLoading && <div className="loading"><div className="bar"></div></div>}
                                 Sign & Proceed
                             </div>

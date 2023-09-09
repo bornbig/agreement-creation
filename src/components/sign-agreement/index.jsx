@@ -127,49 +127,49 @@ export function SignAgreement (props){
                 </div>
                 
             </Modal>}
-            {/* {isConnected && wallet?.toLowerCase() == props.details?.client?.toLowerCase() && ( */}
+            {isConnected && wallet?.toLowerCase() == props.details?.client?.toLowerCase() && (
                 <div className="flexBetween">
-                    {/* {props.details?.mode && */}
-                        {/* ((allowance < props.details?.price)?  */}
-                            {/* ( */}
+                    {props.details?.mode &&
+                        ((allowance < props.details?.price)? 
+                            (
                             <div className="btn withPadding withMargin" onClick={() => !allowanceLoading && approveTokens()}>
                                 {allowanceLoading && <div className="loading"><div className="bar"></div></div>}
                                 Approve Tokens and Sign 
                             </div>
-                            {/* ) */}
-                        {/* : */}
-                            {/* ( */}
+                            )
+                        :
+                            (
                             <div className="btn withPadding withMargin" onClick={() => !signLoading && walletBalance() && signAndProceed()}>
                                 {signLoading && <div className="loading"><div className="bar"></div></div>}
                                 Sign & Proceed
                             </div>
-                        {/* ) */}
-                        {/* ) */}
-                    {/* } */}
+                        )
+                        )
+                    }
                     <div className="btn withPadding withMargin cancel" onClick={() => !cancelLoading && rejectByClient()}>
                         {cancelLoading && <div className="loading"><div className="bar"></div></div>}
                         Cancel
                     </div>
                 </div>
-            {/* )} */}
+            )} 
             
-            {/* {isConnected && wallet?.toLowerCase() == props.details?.service_provider?.toLowerCase() && ( */}
+            {isConnected && wallet?.toLowerCase() == props.details?.service_provider?.toLowerCase() && (
                 <>
-                    {/* {!props.details?.mode && <Skills skills={skills} setSkills={setSkills} />} */}
+                    {!props.details?.mode && <Skills skills={skills} setSkills={setSkills} />}
                     <div className="flexBetween">
-                        {/* {!props.details?.mode && */}
+                        {!props.details?.mode &&
                          <div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
                             {signLoading && <div className="loading"><div className="bar"></div></div>}
                             Sign & Proceed
                             </div>
-                            {/* } */}
+                            }
                         <div className="btn withPadding withMargin cancel" onClick={() => !cancelLoading && rejectByServiceProvider()}>
                             {cancelLoading && <div className="loading"><div className="bar"></div></div>}
                             Cancel
                         </div>
                     </div>
                 </>
-            {/* )} */}
+            )}
         </div>
     )
 }

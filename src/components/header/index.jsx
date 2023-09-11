@@ -206,7 +206,7 @@ function Header() {
                 <div className="logout" onClick={logout}>Logout</div>
               </div>
           </div>
-          <div className="masked"><div className="close">X</div></div>
+          <div className="masked"></div>
         </div>
         ) : (
           <div onClick={openModel} className="btn connect">Login</div>

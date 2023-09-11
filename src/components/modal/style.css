@@ -95,7 +95,7 @@
     border-bottom-left-radius: 20px;
 }
 
-@media screen and (max-width : 890px){
+/* @media screen and (max-width : 890px){
     .modal.big {
         position: absolute;
         top: -10%;
@@ -107,4 +107,4 @@
         position: absolute;
 
     }
-  }
+  } */

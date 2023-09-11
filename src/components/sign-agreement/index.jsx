@@ -7,13 +7,12 @@ import EscrowABI from "../../data/abi/Escrow.json";
 import ERC20ABI from "../../data/abi/ERC20.json";
 import "./style.css"
 import { Skills } from "./skills";
-import { getUSDTBalance } from "../../store/actions/user-action";
 import { storeSkills } from "../../store/actions/agreement-action";
-import { Modal } from "../modal";
+import transakSDK from '@transak/transak-sdk';
 
 export function SignAgreement (props){
     const dispatch = useDispatch();
-    const { wallet, web3, isConnected } = useSelector((state) => state.user);
+    const { wallet, web3, isConnected, userInfo, balance } = useSelector((state) => state.user);
     const [allowance, setAllowance] = useState(0);
     const [allowanceLoading, setallowanceLoading] = useState(false);
     const [cancelLoading, setCancelLoading] = useState(false);
@@ -88,23 +87,44 @@ export function SignAgreement (props){
         setCancelLoading(false);
     }
 
+    const addFunds = async () => {
+        //default Crypto amount is wrong
+        let transak = new transakSDK({
+            apiKey: 'a7193b71-7510-4225-9df0-c3e31343577b', // (Required)
+            environment: 'STAGING', // (Required)
+            network: 'polygon',
+            cryptoCurrencyCode: "USDT",
+            productsAvailed: "BUY",
+            fiatCurrency: "USD",
+            defaultCryptoAmount	: props.details.price,
+            defaultPaymentMethod: "pm_jwire",
+            widgetHeight: "80%",
+            walletAddress: wallet,
+            email: userInfo.email
+          });
+          
+          transak.init();
+    }
+
     return (
         <div>
+            {/** If Client needs to sign */}
             {isConnected && wallet?.toLowerCase() == props.details?.client?.toLowerCase() && (
                 <div className="flexBetween">
                     {props.details?.mode &&
-                        ((allowance < props.details?.price)? 
-                            (<div className="btn withPadding" onClick={() => !allowanceLoading && approveTokens()}>
-                                Approve Tokens and Sign 
-                            </div>
+                        ((balance.raw >= props.details.price) ?
+                            ((allowance < props.details?.price)? 
+                                (<div className="btn withPadding" onClick={() => !allowanceLoading && approveTokens()}>
+                                    Approve Tokens and Sign 
+                                </div>)
+                            :
+                                (<div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
+                                    {signLoading && <div className="loading"><div className="bar"></div></div>}
+                                    Sign & Proceed
+                                </div>)
                             )
-                        :
-                            (
-                            <div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
-                                {signLoading && <div className="loading"><div className="bar"></div></div>}
-                                Sign & Proceed
-                            </div>
-                        )
+                            :
+                            <div className="btn withPadding" onClick={addFunds}>Add Funds</div>
                         )
                     }
                     <div className="btn withPadding withMargin cancel" onClick={() => !cancelLoading && rejectByClient()}>

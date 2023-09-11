@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUSDTBalance, setUserNetwork, setUserWalletConnection, setWalletDisconnect, submitIdToken } from '../../store/actions/user-action';
+import { getUSDTBalance, setUserNetwork, setUserWalletConnection, setWalletDisconnect, submitIdToken, updateUserBalance } from '../../store/actions/user-action';
 import { showNotification } from '../../store/actions/notification-action';
 import { NETWORK, NETWORK_LIST } from '../../config/network';
 import "./style.css";
@@ -15,10 +15,8 @@ import { SendToken } from '../send-token';
 let web3auth = null;
 function Header() {
   const dispatch = useDispatch();
-  const { wallet, chainId, isConnected, userInfo } = useSelector((state) => state.user);
-  const [balance, setbalance] = useState(false);
+  const { wallet, chainId, isConnected, userInfo, balance } = useSelector((state) => state.user);
   const [isCopied, setIsCopied] = useState(false);
-  const [hasClass, setHasClass] = useState("masked");
   const [isSendTokenOpen, setIsSendTokenOpen] = useState(false)
 
   const web3AuthInit = async () => {
@@ -126,8 +124,6 @@ function Header() {
 
   useEffect(() => {
     checkIfConnected();
-    setbalance(false)
-    setHasClass(true)
   }, []);
 
   const checkIfConnected = async () => {
@@ -135,7 +131,6 @@ function Header() {
     if(web3auth?.connected){
       openModel();
     }
-    setbalance(false)
   }
 
   const openModel = async () => {
@@ -146,41 +141,24 @@ function Header() {
       const info = await web3auth.getUserInfo();
       
       const web3 = new Web3(provider);
-      
-      // const getGasPrice = await new web3.eth.getGasPrice()
-      // console.log(getGasPrice)
 
       let _accounts = await web3.eth.getAccounts();
-
-      // console.log(info.idToken);
 
       if(info.idToken){
         submitIdToken(info.idToken, _accounts[0])
       }
 
       dispatch(setUserWalletConnection(_accounts[0], "0x13881", web3, info));
-
-      updateBalance(_accounts[0]);
+      dispatch(updateUserBalance(_accounts[0]));
 
     }catch(e){
-      dispatch(showNotification("Network Error", dispatch));
+      // dispatch(showNotification("Network Error", dispatch));
     }
   }
 
   const logout = async () => {
     await web3auth.logout();
     dispatch(setWalletDisconnect());
-    setbalance(false)
-  }
-
-  const updateBalance = async (_wallet) => {
-    if(_wallet){
-      const balanceResponse = await getUSDTBalance(_wallet);
-
-      const humanReadableBalance = balanceResponse.result / (10 ** 6);
-        setbalance(humanReadableBalance);
-      
-    }
   }
 
   async function showPrivateKey (){
@@ -207,7 +185,7 @@ function Header() {
         <div className='btn-wrap'>
           <div className="preview">
             <img src="https://cdn-icons-png.flaticon.com/512/482/482541.png" alt="" />
-            <span className='balance'>${balance || '00.00' }</span>
+            <span className='balance'>${balance.humanReadable || '00.00' }</span>
           </div>
           
           <div className='connected'  >
@@ -217,7 +195,7 @@ function Header() {
                 
               </div>
               <div className="info">
-                <div className="balance">${balance || '00.00'}</div>
+                <div className="balance">${balance.humanReadable || '00.00'}</div>
                 <div className="label">Balance</div>
                 <a className='btnPrivateKey' href="/add-funds">Add Funds</a>
 

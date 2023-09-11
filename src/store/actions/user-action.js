@@ -39,6 +39,17 @@ export async function getUSDTBalance(wallet) {
   return balanceResponse;
 }
 
+export const SET_USER_BALANCE = 'SET_USER_BALANCE';
+export async function updateUserBalance(wallet){
+  const balanceResponse = await getUSDTBalance(wallet);
+
+  return {
+    type: SET_USER_BALANCE,
+    balance: balanceResponse.result,
+    humanReadableBalance: (balanceResponse.result / (10 ** 6))
+  };
+}
+
 export async function sendToken(web3, token, wallet, amount) {
   try{
     let contract = new web3.eth.Contract(ERC20ABI, token);

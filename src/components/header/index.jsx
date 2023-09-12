@@ -185,7 +185,7 @@ function Header() {
         <div className='btn-wrap'>
           <div className="preview">
             <img src="https://cdn-icons-png.flaticon.com/512/482/482541.png" alt="" />
-            <span className='balance'>${balance.humanReadable || '00.00' }</span>
+            <span className='balance'>${balance.raw}</span>
           </div>
           
           <div className='connected'  >
@@ -195,7 +195,7 @@ function Header() {
                 
               </div>
               <div className="info">
-                <div className="balance">${balance.humanReadable || '00.00'}</div>
+                <div className="balance">${balance.raw}</div>
                 <div className="label">Balance</div>
                 <a className='btnPrivateKey' href="/add-funds">Add Funds</a>
 

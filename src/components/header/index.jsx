@@ -11,13 +11,15 @@ import { CHAIN_NAMESPACES, WALLET_ADAPTERS } from "@web3auth/base";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { WEB3AUTH_KEY } from '../../config/config';
 import { SendToken } from '../send-token';
+import { PrivateKeyModel } from './private-key';
 
 let web3auth = null;
 function Header() {
   const dispatch = useDispatch();
   const { wallet, chainId, isConnected, userInfo, balance } = useSelector((state) => state.user);
-  const [isCopied, setIsCopied] = useState(false);
   const [isSendTokenOpen, setIsSendTokenOpen] = useState(false)
+  const [showPrivateKeyModel, setShowPrivateKeyModel] = useState(false);
+  const [privateKey, setPrivateKey] = useState(false);
 
   const web3AuthInit = async () => {
     web3auth = new Web3Auth({
@@ -149,7 +151,7 @@ function Header() {
       }
 
       dispatch(setUserWalletConnection(_accounts[0], "0x13881", web3, info));
-      dispatch(updateUserBalance(_accounts[0]));
+      dispatch(await updateUserBalance(_accounts[0]));
 
     }catch(e){
       // dispatch(showNotification("Network Error", dispatch));
@@ -166,12 +168,9 @@ function Header() {
     const privateKey = await web3auth.provider.request({
       method: "eth_private_key"
     });
-
-    setIsCopied(true);
-
-    setTimeout(() => {setIsCopied(false)}, 1500);
-  
-    navigator.clipboard.writeText(privateKey)
+    
+    setPrivateKey(privateKey);
+    setShowPrivateKeyModel(true);
   }
 
   return (
@@ -185,7 +184,7 @@ function Header() {
         <div className='btn-wrap'>
           <div className="preview">
             <img src="https://cdn-icons-png.flaticon.com/512/482/482541.png" alt="" />
-            <span className='balance'>${balance.raw}</span>
+            <span className='balance'>${balance.usdBalance}</span>
           </div>
           
           <div className='connected'  >
@@ -195,14 +194,12 @@ function Header() {
                 
               </div>
               <div className="info">
-                <div className="balance">${balance.raw}</div>
+                <div className="balance">${balance.usdBalance}</div>
                 <div className="label">Balance</div>
                 <a className='btnPrivateKey' href="/add-funds">Add Funds</a>
 
                 <div className='logout b' onClick={() => setIsSendTokenOpen(true)}>Send Token</div>
-                <div className='logout b' onClick={showPrivateKey}>
-                  {isCopied? "✅ " :  <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" />}
-                  Private key</div>
+                <div className='logout b' onClick={showPrivateKey}>Private key</div>
                 <div className="logout" onClick={logout}>Logout</div>
               </div>
           </div>
@@ -212,6 +209,7 @@ function Header() {
           <div onClick={openModel} className="btn connect">Login</div>
         )}
         <SendToken isOpen={isSendTokenOpen} closeModal={setIsSendTokenOpen} />
+        <PrivateKeyModel privateKey={privateKey} isOpen={showPrivateKeyModel} closeModal={setShowPrivateKeyModel} />
     </div>
   );
 }

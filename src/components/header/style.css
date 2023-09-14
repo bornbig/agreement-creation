@@ -216,6 +216,37 @@
     display: block;
 }
 
+.privateKey{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.privateKey input{
+    width: calc(100% - 40px);
+    font-size: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border: 1px solid #b6b6b6;
+    border-right: 0;
+    padding: 16px;
+}
+
+.privateKey input:focus{
+    outline: none;
+}
+
+.privateKey div{
+    width: 40px;
+    padding: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: 1px solid #b6b6b6;
+    border-left: 0;
+}
+
+.privateKey div img{ width:  100%;}
+
 .masked:hover{
     display: none !important;
 }

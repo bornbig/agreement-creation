@@ -32,12 +32,6 @@ export function setWalletDisconnect() {
     };
 }
 
-export async function getUSDBalance(usdtPrice) {
-  const usdbalance = await getUSDQuote(usdtPrice);
-  
-  return usdbalance;
-}
-
 export async function getUSDTBalance(wallet) {
   const url = `https://api.polygonscan.com/api?module=account&action=tokenbalance&contractaddress=0xc2132d05d31c914a87c6611c10748aeb04b58e8f&address=${wallet}&tag=latest`
   const balanceResponse = (await axios(url)).data;
@@ -49,12 +43,16 @@ export const SET_USER_BALANCE = 'SET_USER_BALANCE';
 export async function updateUserBalance(wallet){
   const balanceResponse = await getUSDTBalance(wallet);
 
-  const balance = await getUSDBalance(balanceResponse.result);
+  const humanReadableBalance = balanceResponse.result / (10 ** 6);
+  const usdBalance = await getUSDQuote(humanReadableBalance);
+
+  console.log(usdBalance);
 
   return {
     type: SET_USER_BALANCE,
-    balance: balance,
-    humanReadableBalance: (balanceResponse.result / (10 ** 6))
+    raw: balanceResponse.result,
+    humanReadableBalance: humanReadableBalance,
+    usdBalance: usdBalance.response.fiatAmount
   };
 }
 

@@ -10,6 +10,13 @@ function App() {
       <Header />
       <RouterProvider router={router} />
       <Notification />
+      <div className="footer">
+        <div className="links">
+          <a href="">Terms Of Use</a>
+          <a href="">AML</a>
+          <a href="">Privacy Policy</a>
+        </div>
+      </div>
     </div>
   );
 }

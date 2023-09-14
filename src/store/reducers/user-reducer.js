@@ -1,4 +1,4 @@
-import { SET_ON_NETWORK_CHANGE, SET_USER_BALANCE, SET_USER_DATA, SET_WALLET_DISCONNECT } from "../actions/user-action";
+import { SET_ON_NETWORK_CHANGE, SET_USD_QUOTE, SET_USER_BALANCE, SET_USER_DATA, SET_WALLET_DISCONNECT } from "../actions/user-action";
 
 const initialState = {
     userLoading: false,
@@ -7,7 +7,7 @@ const initialState = {
     chainId: null,
     web3: null,
     userInfo: null,
-    balance: {raw: 0, humanReadable: 0},
+    balance: {raw: 0, humanReadable: 0, usdBalance: 0},
   };
   
 export default function (state = initialState, action) {
@@ -31,11 +31,13 @@ export default function (state = initialState, action) {
                 ...initialState
             }
         case SET_USER_BALANCE:
+            console.log("changed");
             return {
                 ...state,
                 balance: {
                     raw: action.balance,
                     humanReadable: action.humanReadableBalance,
+                    usdBalance: action.usdBalance
                 }
             }
         default:

@@ -19,7 +19,7 @@ export function SendToken(props){
         <Modal big={true} isOpen={props.isOpen} closeModal={props.closeModal}>
             <div className="send-token">
                 <div className="balance">
-                    $0.00 <div>{balance.humanReadable} USDT</div>
+                    ${balance.usdBalance} <div>{balance.humanReadable} USDT</div>
                 </div>
 
                 <div className="input">
@@ -27,7 +27,7 @@ export function SendToken(props){
                 </div>
 
                 <div className="input">
-                    <input type="text" onChange={(e) => setToAddress(e.target.value)} />
+                    <input type="text" onChange={(e) => setToAddress(e.target.value)} placeholder="0x6F5d0Fd24566a5DfDce22f1fCD595Bdb7d4D07D8" />
                 </div>
 
                 <div className="btn bottom" onClick={sendUSDT}>Send</div>

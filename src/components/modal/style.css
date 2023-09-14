@@ -33,6 +33,14 @@
     box-shadow: rgba(119,109,255, 0.08) 0px 0px 100px 0px, rgba(119,109,255, 0.18) 0px 40px 100px 0px;
 }
 
+.modal.message-box{
+    width: 600px;
+    max-width: 80%;
+    height: auto;
+    bottom: auto;
+    top: 10%;
+}
+
 .modal .close{
     display: flex;
     position: absolute;
@@ -79,6 +87,10 @@
     padding: 25px 0;
 }
 
+.modal.modal.message-box .modal-content{
+    padding: 20px;
+}
+
 .tab{
     background-color: rgb(240, 240, 240);
 }
@@ -95,16 +107,6 @@
     border-bottom-left-radius: 20px;
 }
 
-/* @media screen and (max-width : 890px){
-    .modal.big {
-        position: absolute;
-        top: -10%;
-    }
+.modal .modal-title{
+    font-size: 20px;
 }
-
-@media screen and (max-width : 620px){
-    .modal.big {
-        position: absolute;
-
-    }
-  } */

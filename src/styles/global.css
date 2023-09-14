@@ -19,6 +19,12 @@ body{
   position: relative;
 }
 
+.danger{
+  font-size: 12px;
+  color: red;
+  text-align: center;
+}
+
 .connect{
     width: auto !important;
     height: auto !important;
@@ -103,6 +109,22 @@ a{
     overflow: hidden;
     font-weight: 500;
     vertical-align: bottom;
+}
+
+.footer{
+  margin-top: 200px;
+}
+
+.footer .links{
+  text-align: center;
+}
+
+.footer .links a + a{
+  margin-left: 40px;
+}
+
+.footer .links a{
+  font-size: 14px;
 }
 
 .flexBetween{

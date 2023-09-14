@@ -45,7 +45,7 @@ export function Price(props){
         if(viewPrice > 10000){
             dispatch(showNotification("Please place an order of less than 10000", dispatch))
         }
-        return ((viewPrice == 0 || viewPrice == '.' || !viewPrice || viewPrice == "") ? " disabled" : "");
+        return ((viewPrice == 0 || viewPrice == '.' || !viewPrice || viewPrice == "") && " disabled");
       }
       
 
@@ -101,31 +101,32 @@ export function Price(props){
                     <div className="dollar">$</div>
                     <input type="text" className="fiat-text" onChange={(e) => updateFiat(e.target.value)} value={props.viewPrice} />
                 </div>
-                {props.userType == 1 && 
+                {props.userType == 1 && checkPriceInput(props.viewPrice) !== " disabled" &&
                 <>
-                {checkPriceInput(props.viewPrice) !== " disabled" && <div className="note success no-margin">
-                <p className="heading-success no-margin">Client will be charged for</p>
-                <p className="text-success no-margin">{props.price && (props.price /bnDecimals).toFixed(2) + " USDT"}</p>
+                {<div className="note success text-margin">
+                <p className="heading-success text-margin">Client will be charged for</p>
+                <p className="text-success text-margin">{props.price && (props.price /bnDecimals).toFixed(2) + " USDT"}</p>
                 </div>}
-                {checkPriceInput(props.viewPrice) !== " disabled" && <div className="note success no-margin">
-                <p className="heading-success no-margin">Fee </p>
-                <p className="text-success no-margin">{PLATFORM_FEE + "%"}</p>
+                {<div className="note success text-margin">
+                <p className="heading-success text-margin">Fee </p>
+                <p className="text-success text-margin">{PLATFORM_FEE + "%"}</p>
                 </div>}
-                {checkPriceInput(props.viewPrice) !== " disabled" && <div className="note success no-margin">
-                <p className="heading-success no-margin"><hr className="line"/>You will get </p>
-                <p className="text-success no-margin"><hr className="line"/>{BillingAmount(props.price) + " USDT"}</p>
+                {<div className="note success text-margin">
+                <p className="heading-success text-margin"><hr className="line"/>You will get </p>
+                <p className="text-success text-margin"><hr className="line"/>{BillingAmount(props.price) + " USDT"}</p>
                 </div>}
                 </>}
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
-                {props.userType == 1 ? <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.nextStep(props.step + 1)}>Next</div>
-                :
-                        (props.allowance < props.price) && 
+                {props.userType == 1 && <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.nextStep(props.step + 1)}>Next</div>}
+                {props.userType == 2 && 
+                        (props.price != '') ? 
                             (<div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.approveTokens()}>
                                 {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
                                 Approve Tokens
                               </div>)
-                           ( props.allowance == props.price &&  <div className={"btn bottom-right " + (!props.viewPrice && " disabled")} onClick={() => !props.nextLoading && props.sign()}>
+                            :
+                           (<div className={"btn bottom-right " + (!props.viewPrice && " disabled")} onClick={() => !props.nextLoading && props.sign()}>
                                 {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
                                 Sign
                             </div>

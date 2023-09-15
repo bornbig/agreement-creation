@@ -27,7 +27,7 @@ export function Deadline(props){
                 </div> */}
 
                 <div className="price-box">
-                    <input type="text" onChange={(e) => props.setDeadlineValue(e.target.value)} value={props.deadlineValue || ''} />
+                    <input type="text" onChange={(e) => props.setDeadlineValue(e.target.value)} value={props.deadlineValue || ''} autoFocus/>
                     <div className="token-drop-down">
                         <div className="selected-token">{props.deadlineRange} <i className="arrow down"></i></div>
                         <div className="drop-down-list">

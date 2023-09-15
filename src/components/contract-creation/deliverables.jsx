@@ -8,7 +8,7 @@ export function Deliverables(props){
                 <div className="note">( Ex: .PNG, .AI, .GIF Files or 100 Followers on Twitter @pentonium_ptm. )</div>
 
                 <div className="address-box">
-                    <input type="text" onChange={(e) => props.setDelivery(e.target.value)} value={props.delivery} />
+                    <input type="text" onChange={(e) => props.setDelivery(e.target.value)} value={props.delivery} autoFocus/>
                 </div>
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>

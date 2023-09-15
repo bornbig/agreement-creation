@@ -1,4 +1,13 @@
+import { useEffect, useRef } from "react";
+
 export function AgreementDetails(props){
+    const textareaRef = useRef(null);
+    
+    useEffect(() => {
+      // When the component mounts, set the cursor position to the end
+      textareaRef.current.selectionStart = textareaRef.current.selectionEnd = textareaRef.current.value.length;
+    }, []);
+
     return (
         <>
             <div className="contract-creation">
@@ -8,7 +17,7 @@ export function AgreementDetails(props){
                 <div className="note">( Ex: This agreement is to create a 3D logo for Google. )</div>
 
                 <div className="agreement-details">
-                    <textarea onChange={(e) => props.setDetails(e.target.value)} value={props.details}></textarea>
+                    <textarea onChange={(e) => props.setDetails(e.target.value)} value={props.details} autoFocus ref={textareaRef}></textarea>
                 </div>
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>

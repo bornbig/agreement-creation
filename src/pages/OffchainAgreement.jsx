@@ -53,7 +53,7 @@ export function OffchainAgreement(){
                 setDetailsLoading(false);
             }
         } catch (e) {
-            dispatch(showNotification("Please connect your wallet first", dispatch));
+            dispatch(showNotification("Please try again", dispatch));
         }
     }
 

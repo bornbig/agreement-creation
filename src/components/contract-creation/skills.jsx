@@ -33,7 +33,7 @@ export function Skills(props){
                 <div className="add-skill-btn model-skill-btn" onClick={addEmptySkill}>ADD SKILL</div>
                 {props.skills.map((skill, index) => (<>
                     <div className="skill-box" key={index}>
-                        <input type="text" onChange={(e) => setSkillName(e.target.value, index)} value={skill.name}/>
+                        <input type="text" onChange={(e) => setSkillName(e.target.value, index)} value={skill.name} autoFocus/>
                         <div className="remove" onClick={() => removeSkill(index)}>x</div>
                     </div>
                 </>))}

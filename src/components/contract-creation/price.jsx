@@ -9,7 +9,6 @@ export function Price(props){
     const dispatch = useDispatch();
     const { decimals, ticker } = props.selectedToken;
     const bnDecimals = new BigNumber(100).pow(new BigNumber(decimals));
-    const [quote, setQuote] = useState({});
 
     const formatPrice = (price) => {
 
@@ -43,7 +42,7 @@ export function Price(props){
 
     function checkPriceInput(viewPrice) {
 
-        const numberPattern = /^\d+(\.\d{1,2})?$/;
+        const numberPattern = /^\d+(\.\d{1,6})?$/;
     
         if (!viewPrice || viewPrice == 0) {
 
@@ -69,8 +68,10 @@ export function Price(props){
     const updateUsdtPrice = async (usdPrice) => {
         try {
             const usdtReposnse = await getUSDTQuote(usdPrice , dispatch);
-            setQuote(usdtReposnse.response);
+
+            if(usdtReposnse){
             props.setPrice(new BigNumber(usdtReposnse.response.cryptoAmount).mul(bnDecimals).toString());
+            }
             
         } catch (e) {
             console.log("Something went wrong")
@@ -116,9 +117,9 @@ export function Price(props){
 
                 <div className="price-box">
                     <div className="dollar">$</div>
-                    <input type="text" className="fiat-text" onChange={(e) => updateFiat(e.target.value)} value={props.viewPrice} />
+                    <input type="text" className="fiat-text" onChange={(e) => updateFiat(e.target.value)} value={props.viewPrice} autoFocus/>
                 </div>
-                {props.userType == 1 && checkPriceInput(props.viewPrice) !== " disabled" &&
+                {props.userType == 1 && checkPriceInput(props.viewPrice) !== " disabled" && !(props.viewPrice < 0.01) && 
                 <>
                 {<div className="note success text-margin">
                 <p className="heading-success text-margin">Client will be charged for</p>

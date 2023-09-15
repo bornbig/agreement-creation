@@ -72,7 +72,7 @@ export function UserAddress(props){
                 <div className="note">(Please obtain this information from the second party.)</div>
 
                     <div className="address-box">
-                        <input type="text" onChange={(e) => updateUserWalletByEmail(e.target.value)} value={props.userInput} />
+                        <input type="text" onChange={(e) => updateUserWalletByEmail(e.target.value)} value={props.userInput} autoFocus/>
                     </div>
                     {props.userInput != getUserWalletText() &&
                         <div className="note success">{(props.client && props.serviceProvider) && <><p className="heading-success">Address- </p><p className="text-success-add"> {props.userType == 1 ? props.client : props.serviceProvider}</p> </>}</div>

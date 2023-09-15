@@ -42,12 +42,29 @@ export function Price(props){
     }
 
     function checkPriceInput(viewPrice) {
-        if(viewPrice > 10000){
-            dispatch(showNotification("Please place an order of less than 10000", dispatch))
+
+        const numberPattern = /^\d+(\.\d{1,2})?$/;
+    
+        if (!viewPrice || viewPrice == 0) {
+
+            return " disabled";
         }
-        return ((viewPrice == 0 || viewPrice == '.' || !viewPrice || viewPrice == "") && " disabled");
-      }
-      
+    
+        if (!numberPattern.test(viewPrice)) {
+
+            dispatch(showNotification("Please enter a valid price", dispatch));
+            return " disabled";
+        }
+    
+        if (parseFloat(viewPrice) > 10000) {
+            
+            dispatch(showNotification("Please place an order of less than 10000", dispatch));
+            return " disabled";
+        }
+    
+        return "";
+    }
+    
 
     const updateUsdtPrice = async (usdPrice) => {
         try {
@@ -56,7 +73,7 @@ export function Price(props){
             props.setPrice(new BigNumber(usdtReposnse.response.cryptoAmount).mul(bnDecimals).toString());
             
         } catch (e) {
-            console.log(e + "Entered wrong price")
+            console.log("Something went wrong")
         }
     }
 
@@ -118,9 +135,9 @@ export function Price(props){
                 </>}
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
-                {props.userType == 1 && <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.nextStep(props.step + 1)}>Next</div>}
-                {props.userType == 2 && 
-                        (props.price != '') ? 
+                {props.userType == 1 ? <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.nextStep(props.step + 1)}>Next</div>
+                : 
+                        (props.allowance < props.viewPrice) ? 
                             (<div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.approveTokens()}>
                                 {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
                                 Approve Tokens

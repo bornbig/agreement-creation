@@ -39,7 +39,7 @@ export function Skills(props){
                 </>))}
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
-                <div className={"btn bottom-right " + (!props.skills[0] && ' disabled')} onClick={() => props.sign()}>
+                <div className={"btn bottom-right " + (!props.skills[0]?.name && ' disabled')} onClick={() => props.sign()}>
                     {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
                    Sign
                 </div>

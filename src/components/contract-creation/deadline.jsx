@@ -3,6 +3,17 @@ import { useSelector } from "react-redux";
 
 export function Deadline(props){
 
+    function CheckDeadlineValue(deadlineValue) {
+       
+        const validValueRegex = /^(?!0+$)\d+$/; 
+    
+        if (!validValueRegex.test(deadlineValue)) {
+            return "disabled";
+        }
+    
+        return null;
+    }
+
     return (
         <>
             <div className="contract-creation">
@@ -28,7 +39,7 @@ export function Deadline(props){
                 </div>
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
-                <div className={"btn bottom-right " + (!props.deadlineValue && "disabled")}  onClick={() => props.nextStep(props.step + 1)}>Next</div>
+                <div className={"btn bottom-right " + (CheckDeadlineValue(props.deadlineValue))}  onClick={() => props.nextStep(props.step + 1)}>Next</div>
             </div> 
         </>
     )

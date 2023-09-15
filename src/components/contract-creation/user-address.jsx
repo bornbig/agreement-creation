@@ -66,10 +66,10 @@ export function UserAddress(props){
         <>
           <div className="contract-creation">
                 <div className="question">
-                    You are the {props.userType == 1 && "Service Provider"}{props.userType == 2 && "Client"}, Please enter the wallet address of 
-                    {props.userType == 2 && " Service Provider"} {props.userType == 1 && "Client"}
+                    As the {props.userType == 1 && "Service Provider"}{props.userType == 2 && "Client"}, kindly provide the email address or wallet address of the  
+                    {props.userType == 2 && " Service Provider."} {props.userType == 1 && "Client."}
                 </div>
-                <div className="note">( Please take wallet address from the second party. )</div>
+                <div className="note">(Please obtain this information from the second party.)</div>
 
                     <div className="address-box">
                         <input type="text" onChange={(e) => updateUserWalletByEmail(e.target.value)} value={props.userInput} />

@@ -46,13 +46,12 @@ export async function updateUserBalance(wallet){
   const humanReadableBalance = balanceResponse.result / (10 ** 6);
   const usdBalance = await getUSDQuote(humanReadableBalance);
 
-  console.log(usdBalance);
 
   return {
     type: SET_USER_BALANCE,
     raw: balanceResponse.result,
     humanReadableBalance: humanReadableBalance,
-    usdBalance: usdBalance.response.fiatAmount
+    usdBalance: usdBalance?.response?.fiatAmount || 0
   };
 }
 

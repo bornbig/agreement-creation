@@ -120,7 +120,7 @@ export function CloseAgreement(props){
                                 props.skills?.map((skill, index) => (
                                     <div>
                                         {skill.name} : 
-                                        <input type="range" min="0" max="5" value={skill.rating} onChange={(e) => props.rateSkill(index, e.target.value)} />
+                                        <input type="range" min="0" max="5" onChange={(e) => props.rateSkill(index, e.target.value)} />
                                     </div>
                                 ))
                             }

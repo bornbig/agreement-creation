@@ -42,7 +42,7 @@ export function Price(props){
 
     function checkPriceInput(viewPrice) {
 
-        const numberPattern = /^\d+(\.\d{1,6})?$/;
+        const numberPattern = /^\d+(\.\d{1,5})?$/;
     
         if (!viewPrice || viewPrice == 0) {
 
@@ -55,13 +55,13 @@ export function Price(props){
             return " disabled";
         }
     
-        if (parseFloat(viewPrice) > 10000) {
+        // if (parseFloat(viewPrice) > 10000) {
             
-            dispatch(showNotification("Please place an order of less than 10000", dispatch));
-            return " disabled";
-        }
+        //     dispatch(showNotification("Please place an order of less than 10000", dispatch));
+        //     return " disabled";
+        // }
     
-        return "";
+        // return "";
     }
     
 
@@ -84,16 +84,26 @@ export function Price(props){
         try {
 
             const reducedPrice = price - (price * (PLATFORM_FEE / 100));
-            const formattedPrice = (reducedPrice / bnDecimals).toFixed(2)
-
-            return formattedPrice;
+            const formattedPrice = (reducedPrice / bnDecimals)
+            if(formattedPrice >= 0.01){
+                return formattedPrice.toFixed(2) + " USDT";
+            }else{
+                return formattedPrice + " USDT";
+            }
         } catch (e) {
             console.log(e)
         }
         
     }
 
-    console.log(props.price)
+    const usdtPrice = (price) => {
+        const usdt = price / bnDecimals
+        if (usdt >= 0.01) {
+            return usdt.toFixed(2) + " USDT";
+        } else {
+            return usdt + " USDT";
+        }
+    }
 
     return (
         <>
@@ -107,19 +117,19 @@ export function Price(props){
                     <div className="dollar">$</div>
                     <input type="text" className="fiat-text" onChange={(e) => updateFiat(e.target.value)} value={props.viewPrice} autoFocus/>
                 </div>
-                {props.userType == 1 && checkPriceInput(props.viewPrice) !== " disabled" && !(props.viewPrice < 0.01) && 
+                {props.userType == 1 && checkPriceInput(props.viewPrice) !== " disabled" && 
                     <>
                         {<div className="note success text-margin">
                             <p className="heading-success text-margin">Client will be charged for</p>
-                            <p className="text-success text-margin">{props.price && (props.price /bnDecimals).toFixed(2) + " USDT"}</p>
+                            <p className="text-success text-margin">{props.price && usdtPrice(props.price)}</p>
                         </div>}
                         {<div className="note success text-margin">
                             <p className="heading-success text-margin">Fee </p>
-                            <p className="text-success text-margin">{PLATFORM_FEE + "%"}</p>
+                            <p className="text-success text-margin">{props.price && PLATFORM_FEE + "%"}</p>
                         </div>}
                         {<div className="note success text-margin">
                             <p className="heading-success text-margin"><hr className="line"/>You will get </p>
-                            <p className="text-success text-margin"><hr className="line"/>{BillingAmount(props.price) + " USDT"}</p>
+                            <p className="text-success text-margin"><hr className="line"/>{props.price && BillingAmount(props.price)}</p>
                         </div>}
                     </>
                 }

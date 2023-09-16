@@ -22,6 +22,7 @@ export function OffchainAgreement(){
     const [allowanceLoading, setallowanceLoading] = useState(false);
     const [cancelLoading, setCancelLoading] = useState(false);
     const [signLoading, setSignLoading] = useState(false);
+    const [usdPrice, setUsdPrice] = useState(0);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -71,6 +72,7 @@ export function OffchainAgreement(){
         try{
             console.log(details)
             setSignLoading(true);
+            (allowance < details?.price) && approveTokens();
             let skills_hash = details.skills_hash;
             if(!details.mode){
                 skills_hash = await storeSkills(skills);
@@ -100,7 +102,7 @@ export function OffchainAgreement(){
             navigate(`/sbt/${details.agreement}/${tokenId}`);
         }catch(e){
             console.log(e)
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch));
         }
 
         // Redirect to onchain agreement
@@ -120,7 +122,7 @@ export function OffchainAgreement(){
             
         } catch (e) {
             console.log(e)
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch));
         }
         setallowanceLoading(false)
     }
@@ -163,6 +165,7 @@ export function OffchainAgreement(){
           
           transak.init();
     }
+    console.log(balance)
 
     return (
         <>
@@ -171,24 +174,17 @@ export function OffchainAgreement(){
                 : <>
                     <h1 className="heading"> Agreement </h1>
 
-                   <AgreementDetails {...details} showProgressBar={false} />
+                   <AgreementDetails {...details} showProgressBar={false} usdPrice={usdPrice} setUsdPrice={setUsdPrice} />
 
                     <div>
                         {isConnected && checkifClient() && (
                             <div className="flexBetween">
                                 {(balance.raw >= details.price) ?
                                     (details?.mode &&
-                                        ((allowance < details?.price)? 
-                                            (<div className="btn withPadding withMargin" onClick={() => !allowanceLoading && approveTokens()}>
-                                                {allowanceLoading && <div className="loading"><div className="bar"></div></div>}
-                                                Approve Tokens and Sign 
-                                            </div>)
-                                        :
-                                            (<div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
+                                        (<div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
                                                 {signLoading && <div className="loading"><div className="bar"></div></div>}
                                                 Sign & Proceed
-                                            </div>
-                                        ))
+                                        </div>)
                                     ) :
                                     <div className="btn withPadding" onClick={addFunds}>Add Funds</div>
                                 }

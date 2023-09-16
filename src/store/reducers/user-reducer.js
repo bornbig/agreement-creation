@@ -35,7 +35,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 balance: {
-                    raw: action.balance,
+                    raw: action.raw,
                     humanReadable: action.humanReadableBalance,
                     usdBalance: action.usdBalance
                 }

@@ -111,7 +111,7 @@ export function AgreementDetails(props){
     const getPriceInUSD = async (price) => {
         const usdResponse = await getUSDQuote(price);
 
-        props.setUsdPrice(usdResponse.response.fiatAmount);
+        props.setUsdPrice(usdResponse?.response?.fiatAmount);
     }
     
     return (

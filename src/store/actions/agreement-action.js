@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Moralis from "moralis";
 import lighthouse from '@lighthouse-web3/sdk';
-import { API_ENDPOINT, LIGHTHOSE_API_KEY } from '../../config/config';
+import { API_ENDPOINT, LIGHTHOSE_API_KEY, MORALIS_API_KEY } from '../../config/config';
 
 
 export async function storeDetails(details, delivery){
@@ -32,7 +32,7 @@ async function saveToIPFS(content){
 
   if(!Moralis.Core.isStarted){
     await Moralis.start({
-      apiKey: "CLtJpRFrCkxHvgDcy9mewuod1qG9iIsG3TL8MLdrreCEwtCpUwU79fKxRRbCPBpA",
+      apiKey: MORALIS_API_KEY,
       // ...and any other configuration
     });
   }

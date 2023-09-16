@@ -76,7 +76,7 @@ export function AgreementDetails(props){
     }
 
     const getClient = () => {
-        if(isConnected && props.client != undefined)
+        if(isConnected && props.client != "")
             return <a target="_blank" href={"https://testnets.opensea.io/" + props.client}><span className="address">{props.client}</span></a>;
 
         if(isConnected && props.client_email)
@@ -84,7 +84,7 @@ export function AgreementDetails(props){
     }
 
     const getServiceProvider = () => {
-        if(isConnected && props.service_provider != undefined)
+        if(isConnected && props.service_provider != "")
             return <a target="_blank" href={"https://testnets.opensea.io/" + props.service_provider}><span className="address">{props.service_provider}</span></a>;
 
         if(isConnected && props.service_provider_email)

@@ -11,6 +11,7 @@ import { Skills } from "../components/sign-agreement/skills";
 import EscrowABI from "../data/abi/Escrow.json";
 import ERC20ABI from "../data/abi/ERC20.json";
 import ProofABI from "../data/abi/Proof.json";
+import transakSDK from '@transak/transak-sdk';
 
 export function OffchainAgreement(){
     const [details, setDetails] = useState({});
@@ -26,7 +27,7 @@ export function OffchainAgreement(){
 
     let params = useParams();
 
-    const { wallet, web3, userInfo, isConnected } = useSelector((state) => state.user);
+    const { wallet, web3, userInfo, isConnected, balance } = useSelector((state) => state.user);
 
     useEffect(() => {
         getAgreementDetails();
@@ -144,6 +145,25 @@ export function OffchainAgreement(){
         return false;
     }
 
+    const addFunds = async () => {
+        //default Crypto amount is wrong
+        let transak = new transakSDK({
+            apiKey: 'a7193b71-7510-4225-9df0-c3e31343577b', // (Required)
+            environment: 'STAGING', // (Required)
+            network: 'polygon',
+            cryptoCurrencyCode: "USDT",
+            productsAvailed: "BUY",
+            fiatCurrency: "USD",
+            defaultCryptoAmount	: details.price,
+            defaultPaymentMethod: "pm_jwire",
+            widgetHeight: "80%",
+            walletAddress: wallet,
+            email: userInfo.email
+          });
+          
+          transak.init();
+    }
+
     return (
         <>
             {detailsLoading
@@ -156,18 +176,21 @@ export function OffchainAgreement(){
                     <div>
                         {isConnected && checkifClient() && (
                             <div className="flexBetween">
-                                {details?.mode &&
-                                    ((allowance < details?.price)? 
-                                        (<div className="btn withPadding withMargin" onClick={() => !allowanceLoading && approveTokens()}>
-                                            {allowanceLoading && <div className="loading"><div className="bar"></div></div>}
-                                            Approve Tokens and Sign 
-                                        </div>)
-                                    :
-                                        (<div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
-                                            {signLoading && <div className="loading"><div className="bar"></div></div>}
-                                            Sign & Proceed
-                                        </div>
-                                    ))
+                                {(balance.raw >= details.price) ?
+                                    (details?.mode &&
+                                        ((allowance < details?.price)? 
+                                            (<div className="btn withPadding withMargin" onClick={() => !allowanceLoading && approveTokens()}>
+                                                {allowanceLoading && <div className="loading"><div className="bar"></div></div>}
+                                                Approve Tokens and Sign 
+                                            </div>)
+                                        :
+                                            (<div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
+                                                {signLoading && <div className="loading"><div className="bar"></div></div>}
+                                                Sign & Proceed
+                                            </div>
+                                        ))
+                                    ) :
+                                    <div className="btn withPadding" onClick={addFunds}>Add Funds</div>
                                 }
                             </div>
                         )}

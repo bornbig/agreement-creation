@@ -125,6 +125,8 @@ a{
 
 .footer .links a{
   font-size: 14px;
+  color: #6d6d6d;
+  font-weight: lighter;
 }
 
 .flexBetween{

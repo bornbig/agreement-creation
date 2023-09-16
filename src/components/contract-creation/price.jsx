@@ -8,20 +8,20 @@ import { showNotification } from "../../store/actions/notification-action";
 export function Price(props){
     const dispatch = useDispatch();
     const { decimals, ticker } = props.selectedToken;
-    const bnDecimals = new BigNumber(100).pow(new BigNumber(decimals));
+    const bnDecimals = new BigNumber(10).pow(new BigNumber(decimals));
 
-    const formatPrice = (price) => {
+    // const formatPrice = (price) => {
 
-        let regexp = /^[0-9.]+$/;
+    //     let regexp = /^[0-9.]+$/;
 
-        if(regexp.test(price)){
-            props.setViewPrice(price)
-            props.setPrice(new BigNumber(price).mul(bnDecimals).toString());
-        }else if(price == ""){
-            props.setViewPrice("")
-            props.setPrice(0);
-        }
-    }
+    //     if(regexp.test(price)){
+    //         props.setViewPrice(price)
+    //         props.setPrice(new BigNumber(price).mul(bnDecimals).toString());
+    //     }else if(price == ""){
+    //         props.setViewPrice("")
+    //         props.setPrice(0);
+    //     }
+    // }
 
     const updateFiat = async (usdPrice) => {
         try {
@@ -70,7 +70,9 @@ export function Price(props){
             const usdtReposnse = await getUSDTQuote(usdPrice , dispatch);
 
             if(usdtReposnse){
-            props.setPrice(new BigNumber(usdtReposnse.response.cryptoAmount).mul(bnDecimals).toString());
+                props.setPrice(new BigNumber(usdtReposnse.response.cryptoAmount).mul(bnDecimals).toString());
+            }else{
+                props.setPrice(new BigNumber(usdPrice).mul(bnDecimals).toString());
             }
             
         } catch (e) {
@@ -84,13 +86,14 @@ export function Price(props){
             const reducedPrice = price - (price * (PLATFORM_FEE / 100));
             const formattedPrice = (reducedPrice / bnDecimals).toFixed(2)
 
-
-        return formattedPrice;
+            return formattedPrice;
         } catch (e) {
             console.log(e)
         }
         
     }
+
+    console.log(props.price)
 
     return (
         <>
@@ -100,40 +103,26 @@ export function Price(props){
                 </div>
                 <div className="note">( Ex: $320 )</div>
 
-                {/* <div className="price-box">
-                    <input type="text" onChange={(e) => formatPrice(e.target.value)} value={props.viewPrice} />
-                    <div className="token-drop-down">
-                        <div className="selected-token">{ticker} <i className="arrow down"></i></div>
-                        <div className="drop-down-list">
-                            {props.tokens.map((token, index) => (
-                                <div className="item selected" onClick={() => props.setSelectedToken(token)}>{token.ticker}</div>
-                            ))}
-                        </div>
-                    </div>
-                </div> */}
-
-                
-                
-
                 <div className="price-box">
                     <div className="dollar">$</div>
                     <input type="text" className="fiat-text" onChange={(e) => updateFiat(e.target.value)} value={props.viewPrice} autoFocus/>
                 </div>
                 {props.userType == 1 && checkPriceInput(props.viewPrice) !== " disabled" && !(props.viewPrice < 0.01) && 
-                <>
-                {<div className="note success text-margin">
-                <p className="heading-success text-margin">Client will be charged for</p>
-                <p className="text-success text-margin">{props.price && (props.price /bnDecimals).toFixed(2) + " USDT"}</p>
-                </div>}
-                {<div className="note success text-margin">
-                <p className="heading-success text-margin">Fee </p>
-                <p className="text-success text-margin">{PLATFORM_FEE + "%"}</p>
-                </div>}
-                {<div className="note success text-margin">
-                <p className="heading-success text-margin"><hr className="line"/>You will get </p>
-                <p className="text-success text-margin"><hr className="line"/>{BillingAmount(props.price) + " USDT"}</p>
-                </div>}
-                </>}
+                    <>
+                        {<div className="note success text-margin">
+                            <p className="heading-success text-margin">Client will be charged for</p>
+                            <p className="text-success text-margin">{props.price && (props.price /bnDecimals).toFixed(2) + " USDT"}</p>
+                        </div>}
+                        {<div className="note success text-margin">
+                            <p className="heading-success text-margin">Fee </p>
+                            <p className="text-success text-margin">{PLATFORM_FEE + "%"}</p>
+                        </div>}
+                        {<div className="note success text-margin">
+                            <p className="heading-success text-margin"><hr className="line"/>You will get </p>
+                            <p className="text-success text-margin"><hr className="line"/>{BillingAmount(props.price) + " USDT"}</p>
+                        </div>}
+                    </>
+                }
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
                 {props.userType == 1 ? <div className={"btn bottom-right " + checkPriceInput(props.viewPrice)} onClick={() => props.nextStep(props.step + 1)}>Next</div>

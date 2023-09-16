@@ -177,7 +177,7 @@ function Header() {
     <div className='header'>
       <div className="logo">
         <a href="/">
-          <img src="/images/logo.png" alt="" />
+          <img src="/images/Woople logo-02.png" alt="" />
         </a>
       </div>
       {isConnected ? (

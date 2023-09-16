@@ -9,6 +9,7 @@ body{
 .container{
     max-width: 800px;
     margin: auto;
+    padding: 0 10px;
 }
 
 .bg{
@@ -94,12 +95,10 @@ a{
 }
 
 .btn.withMargin{
-  margin: 0 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.btn.cancel{
-  background-color: #9d96ff !important;
-}
 
 .address{
     display: inline-block;
@@ -112,7 +111,7 @@ a{
 }
 
 .footer{
-  margin-top: 200px;
+  margin-top: 120px;
 }
 
 .footer .links{
@@ -125,8 +124,7 @@ a{
 
 .footer .links a{
   font-size: 14px;
-  color: #6d6d6d;
-  font-weight: lighter;
+  color: #2c2c2c;
 }
 
 .flexBetween{
@@ -337,16 +335,16 @@ a{
 
   @media screen and (max-width : 890px) {
     body{
-      background-size: 1700px;
+      background-size: 1750px;
     }
 
     .header{
       display: flex;
-      padding: 30px 50px;
+      padding: 30px 0px;
     }
 
     .header .logo{
-    margin-left: 30px;
+    margin-left: 17px;
     width: 20%;
     }
 
@@ -399,9 +397,6 @@ a{
       flex-direction: column;
     }
     
-    .btn.withMargin {
-      margin: 6px 5px;
-    }
     .btn.withPadding {
         min-width: 160px;
         padding: 0 40px;
@@ -450,7 +445,6 @@ a{
     } 
     
     .header .logo{
-      margin-left: 5px;
       width: 21%;
     }
     .btn.connect{

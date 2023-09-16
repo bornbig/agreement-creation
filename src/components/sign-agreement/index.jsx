@@ -127,7 +127,7 @@ export function SignAgreement (props){
                             <div className="btn withPadding" onClick={addFunds}>Add Funds</div>
                         )
                     }
-                    <div className="btn withPadding withMargin cancel" onClick={() => !cancelLoading && rejectByClient()}>
+                    <div className="btn withPadding withMargin" onClick={() => !cancelLoading && rejectByClient()}>
                         {cancelLoading && <div className="loading"><div className="bar"></div></div>}
                         Cancel
                     </div>
@@ -144,7 +144,7 @@ export function SignAgreement (props){
                             Sign & Proceed
                             </div>
                             }
-                        <div className="btn withPadding withMargin cancel" onClick={() => !cancelLoading && rejectByServiceProvider()}>
+                        <div className="btn withPadding withMargin" onClick={() => !cancelLoading && rejectByServiceProvider()}>
                             {cancelLoading && <div className="loading"><div className="bar"></div></div>}
                             Cancel
                         </div>

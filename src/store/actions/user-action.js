@@ -50,20 +50,15 @@ export async function updateUserBalance(wallet){
   return {
     type: SET_USER_BALANCE,
     raw: balanceResponse.result,
-    humanReadableBalance: humanReadableBalance,
+    humanReadableBalance: humanReadableBalance || 0,
     usdBalance: usdBalance?.response?.fiatAmount || 0
   };
 }
 
 export async function sendToken(web3, token, wallet, amount) {
-  try{
     let contract = new web3.eth.Contract(ERC20ABI, token);
     
     await contract.methods.transfer(wallet, amount).call();
-  }catch(e){
-    console.log(e);
-    return false;
-  }
 
   return true;
 }

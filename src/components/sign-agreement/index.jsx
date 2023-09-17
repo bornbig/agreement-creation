@@ -44,7 +44,7 @@ export function SignAgreement (props){
             }
         } catch (e) {
             console.log(e)
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch));
         }
         setallowanceLoading(false)
     }
@@ -64,7 +64,7 @@ export function SignAgreement (props){
 
         } catch(e){
             console.log(e);
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch));
         }
 
         props.refresh();
@@ -74,16 +74,28 @@ export function SignAgreement (props){
     const rejectByClient = async () => {
         setCancelLoading(true);
         const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
-        await contract.methods.cancelAgreement(props.agreementAddress, params.id).send({from: wallet});
-        props.refresh();
+        try {
+            await contract.methods.cancelAgreement(props.agreementAddress, params.id).send({from: wallet});
+            props.refresh();
+
+        } catch(e){
+            dispatch(showNotification("Unable to Cancel: Insuficient Gas Fee", dispatch));
+            console.log(e)
+        }
         setCancelLoading(false);
     }
 
     const rejectByServiceProvider = async () => {
         setCancelLoading(true);
         const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
-        await contract.methods.rejectAgreement(props.agreementAddress, params.id).send({from: wallet});
-        props.refresh();
+        try {
+            await contract.methods.rejectAgreement(props.agreementAddress, params.id).send({from: wallet});
+            props.refresh();
+            
+        } catch (e) {
+            dispatch(showNotification("Unable to Cancel: Insuficient Gas Fee", dispatch));
+            console.log(e)
+        }
         setCancelLoading(false);
     }
 

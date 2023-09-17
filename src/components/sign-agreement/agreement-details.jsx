@@ -54,10 +54,11 @@ export function AgreementDetails(props){
     }
 
     const setTymstamp = async () => {
-        const blockNumber = await web3.eth.getBlockNumber();
-        const timestamp = (await web3.eth.getBlock(blockNumber)).timestamp;
-
-        setTimestamp(timestamp);
+        const blockNumber = await web3?.eth.getBlockNumber();
+        const timestamp = (await web3?.eth.getBlock(blockNumber))?.timestamp;
+        if(timestamp){
+            setTimestamp(timestamp);
+        }
     }
 
     const getRemainingTime = () => {
@@ -143,9 +144,9 @@ export function AgreementDetails(props){
                     {props.showProgressBar && (
                     <div className="wrapper-progressBar">
                         <ul className="progressBar">
-                            <li className={props.status >= 100 && "active"}>Agreement Created</li>
-                            <li className={props.status >= 101 && "active"}>Agreement Signed</li>
-                            <li className={props.status >= 105 && "active"}>Agreement Closed</li>
+                        <li className={props.status >= 100 ? "active" : ""}>Agreement Created</li>
+                        <li className={props.status >= 101 ? "active" : ""}>Agreement Signed</li>
+                        <li className={props.status >= 105 ? "active" : ""}>Agreement Closed</li>
                         </ul>
                     </div>
                     )}

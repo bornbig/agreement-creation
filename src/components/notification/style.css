@@ -18,6 +18,11 @@
     animation-duration: 1s;
 }
 
+.notification.danger{
+  background-color: #e3003b;
+  color: #ffbdce;
+}
+
 @keyframes run {
     0% {
       right: -25%;

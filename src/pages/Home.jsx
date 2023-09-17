@@ -22,7 +22,7 @@ export function Home(){
 
     const createAgreement = () => {
         if(!isConnected){
-            dispatch(showNotification("Please connect your wallet first", dispatch));
+            dispatch(showNotification("Please connect your wallet first", dispatch, "danger"));
             return;
         }
         setCanStartContractCreation(true);

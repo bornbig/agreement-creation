@@ -31,7 +31,7 @@ export function CloseAgreement(props){
             
         } catch (e) {
             console.log(e)
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Please try again", dispatch, "danger"));
         }
     }
 
@@ -46,7 +46,7 @@ export function CloseAgreement(props){
             
         } catch (e) {
             console.log(e)
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Please try again", dispatch, "danger"));
         }
         setRelaseFundsLoading(false);
     }
@@ -60,7 +60,7 @@ export function CloseAgreement(props){
             
         } catch (e) {
             console.log(e)
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Please try again", dispatch, "danger"));
         }
         setDisputeLoading(false)
     }
@@ -81,7 +81,7 @@ export function CloseAgreement(props){
             props.refresh()
         }catch(e){
             console.log(e)
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Please try again", dispatch, "danger"));
         }
         setSubmitDeliveryLoading(false);
     }

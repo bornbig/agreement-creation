@@ -11,7 +11,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isNotificationActive: true,
-                message: action.data.message
+                message: action.data.message,
+                type: action.data.type
             }
         case HIDE_NOTIFICATION:
             return {

@@ -9,6 +9,7 @@ import "./style.css"
 import { Skills } from "./skills";
 import { storeSkills } from "../../store/actions/agreement-action";
 import transakSDK from '@transak/transak-sdk';
+import { estimateAndExecute } from "../../helpers/utils";
 
 export function SignAgreement (props){
     const dispatch = useDispatch();
@@ -37,14 +38,20 @@ export function SignAgreement (props){
             setallowanceLoading(true);
         let contract = new web3.eth.Contract(ERC20ABI, props.details.token);
 
-        let approved = await contract.methods.approve(props.escrowAddress, props.details.price).send({from: wallet});
+        let approved = await contract.methods.approve(props.escrowAddress, props.details.price);
+
+        await estimateAndExecute(web3, approved, wallet)
 
             if(approved){
                 setAllowance(props.details.price);
             }
         } catch (e) {
+            if(e == "GASFEE_ERROR"){
+                dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
+            }else{
             console.log(e)
             dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch, "danger"));
+            }
         }
         setallowanceLoading(false)
     }
@@ -60,11 +67,17 @@ export function SignAgreement (props){
                 }
 
                 const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
-                await contract.methods.signAgreement(props.agreementAddress, params.id, skills_hash).send({from: wallet});
+                const signagreement = await contract.methods.signAgreement(props.agreementAddress, params.id, skills_hash);
+
+                await estimateAndExecute(web3, signagreement, wallet)
 
         } catch(e){
+            if(e == "GASFEE_ERROR"){
+                dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
+            }else{
             console.log(e);
             dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch, "danger"));
+            }
         }
 
         props.refresh();
@@ -75,12 +88,19 @@ export function SignAgreement (props){
         setCancelLoading(true);
         const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
         try {
-            await contract.methods.cancelAgreement(props.agreementAddress, params.id).send({from: wallet});
+            const cancelagreement = await contract.methods.cancelAgreement(props.agreementAddress, params.id);
+
+            await estimateAndExecute(web3, cancelagreement, wallet)
+
             props.refresh();
 
         } catch(e){
+            if(e == "GASFEE_ERROR"){
+                dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
+            }else{
             dispatch(showNotification("Unable to Cancel: Insuficient Gas Fee", dispatch, "danger"));
             console.log(e)
+            }
         }
         setCancelLoading(false);
     }
@@ -89,12 +109,19 @@ export function SignAgreement (props){
         setCancelLoading(true);
         const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
         try {
-            await contract.methods.rejectAgreement(props.agreementAddress, params.id).send({from: wallet});
+            const rejectagreement = await contract.methods.rejectAgreement(props.agreementAddress, params.id);
+
+            await estimateAndExecute(web3, rejectagreement, wallet)
+
             props.refresh();
             
         } catch (e) {
+            if(e == "GASFEE_ERROR"){
+                dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
+            }else{
             dispatch(showNotification("Unable to Cancel: Insuficient Gas Fee", dispatch, "danger"));
             console.log(e)
+            }
         }
         setCancelLoading(false);
     }

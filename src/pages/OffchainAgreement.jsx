@@ -12,6 +12,7 @@ import EscrowABI from "../data/abi/Escrow.json";
 import ERC20ABI from "../data/abi/ERC20.json";
 import ProofABI from "../data/abi/Proof.json";
 import transakSDK from '@transak/transak-sdk';
+import { estimateAndExecute } from "../helpers/utils";
 
 export function OffchainAgreement(){
     const [details, setDetails] = useState({});
@@ -92,17 +93,25 @@ export function OffchainAgreement(){
                 details.price,
                 details.token,
                 details.deadline
-                ).send({from: wallet});
-            
+            );
+
+            await estimateAndExecute(web3, agreementTrx, wallet);
+
             const tokenId = agreementTrx.events.Transfer[0].returnValues.tokenId;
             
             const contract = new web3.eth.Contract(EscrowABI, escrowAddress);
-            await contract.methods.signAgreement(details.agreement, tokenId, skills_hash).send({from: wallet});
+            const signagreement = await contract.methods.signAgreement(details.agreement, tokenId, skills_hash);
+
+            await estimateAndExecute(web3, signagreement, wallet);
 
             navigate(`/sbt/${details.agreement}/${tokenId}`);
         }catch(e){
+            if(e == "GASFEE_ERROR"){
+                dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
+            }else{
             console.log(e)
             dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch), "danger");
+            }
         }
 
         // Redirect to onchain agreement
@@ -114,15 +123,21 @@ export function OffchainAgreement(){
             setallowanceLoading(true);
             let contract = new web3.eth.Contract(ERC20ABI, details.token);
     
-            let approved = await contract.methods.approve(escrowAddress, details.price).send({from: wallet});
-    
+            let approved = await contract.methods.approve(escrowAddress, details.price);
+
+            await estimateAndExecute(web3, approved, wallet);
+
             if(approved){
                 setAllowance(details.price);
             }
             
         } catch (e) {
+            if(e == "GASFEE_ERROR"){
+                dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
+            }else{
             console.log(e)
             dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch), "danger");
+            }
         }
         setallowanceLoading(false)
     }

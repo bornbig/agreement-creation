@@ -5,6 +5,7 @@ import EscrowABI from "../../data/abi/Escrow.json";
 import { storeSkills } from "../../store/actions/agreement-action";
 import { uploadDeliveres, decryptDelivery } from "../../store/actions/agreement-action";
 import { showNotification } from "../../store/actions/notification-action";
+import { estimateAndExecute } from "../../helpers/utils";
 
 export function CloseAgreement(props){
     const dispatch = useDispatch();
@@ -41,12 +42,20 @@ export function CloseAgreement(props){
             const skills_hash = await storeSkills(props.skills);
             const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
             
-            await contract.methods.releaseFunds(props.agreementAddress, params.id, skills_hash).send({from: wallet});
+            const releasefund = await contract.methods.releaseFunds(props.agreementAddress, params.id, skills_hash);
+
+            await estimateAndExecute(web3, releasefund, wallet);
+
             props.refresh()
             
         } catch (e) {
-            console.log(e)
-            dispatch(showNotification("Unable to release fund right now", dispatch, "danger"));
+            if(e == "GASFEE_ERROR"){
+                dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
+            }else{
+                console.log(e)
+                dispatch(showNotification("Unable to release fund right now", dispatch, "danger"));
+            }
+            
         }
         setRelaseFundsLoading(false);
     }
@@ -55,12 +64,18 @@ export function CloseAgreement(props){
         try {
             setDisputeLoading(true)
             const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
-            await contract.methods.raiseDispute(props.agreementAddress, params.id).send({from: wallet});
+            const raiseDispute = await contract.methods.raiseDispute(props.agreementAddress, params.id);
+
+            await estimateAndExecute(web3, raiseDispute, wallet);
             props.refresh()
             
         } catch (e) {
+            if(e == "GASFEE_ERROR"){
+                dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
+            }else{
             console.log(e)
             dispatch(showNotification("Unable to raise Dispute right now", dispatch, "danger"));
+            }
         }
         setDisputeLoading(false)
     }
@@ -77,11 +92,18 @@ export function CloseAgreement(props){
     
             const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
             
-            await contract.methods.submitDelivery(props.agreementAddress, params.id, delivery).send({from: wallet});
+            const submitdelivery = await contract.methods.submitDelivery(props.agreementAddress, params.id, delivery);
+            
+            await estimateAndExecute(web3, submitdelivery, wallet)
+
             props.refresh()
         }catch(e){
-            console.log(e)
-            dispatch(showNotification("Unable to Submit Delivery right now", dispatch, "danger"));
+            if(e == "GASFEE_ERROR"){
+                dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
+            }else{
+                console.log(e)
+                dispatch(showNotification("Unable to Submit Delivery right now", dispatch, "danger"));
+            }
         }
         setSubmitDeliveryLoading(false);
     }

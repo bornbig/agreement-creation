@@ -25,9 +25,9 @@ export function CloseAgreement(props){
     const getDelivery = async () => {
         try {
             const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
-           const delivery = await contract.methods.deliveries(props.agreementAddress, params.id).call({from: wallet});
+            const delivery = await contract.methods.deliveries(props.agreementAddress, params.id).call({from: wallet});
     
-           setDeliveryHash(delivery);
+            setDeliveryHash(delivery);
             
         } catch (e) {
             console.log(e)

@@ -141,7 +141,7 @@ export function ContractCreation(props){
                 deadline
             );
                 
-            const transaction = await estimateAndExecute(web3, mintCall, wallet, dispatch);
+            const transaction = await estimateAndExecute(web3, mintCall, wallet);
 
             const tokenId = transaction.events.Transfer[0].returnValues.tokenId;
 
@@ -173,13 +173,19 @@ export function ContractCreation(props){
             setNextLoading(true)
             let contract = new web3.eth.Contract(CONTRACT[chainId].tokenAbi, selectedToken.contract);
 
-            let approved = await contract.methods.approve(CONTRACT[chainId].escrow.contract, price).send({from: wallet});
+            let approve = await contract.methods.approve(CONTRACT[chainId].escrow.contract, price);
+
+            let approved = await estimateAndExecute(web3, approve, wallet);
 
             if(approved){
                 setAllowance(price); // for client
             }
-        } catch (error) {
-            dispatch(showNotification("Unable to approve tokens", dispatch, "danger"));
+        } catch (e) {
+            if(e == "GASFEE_ERROR"){
+                dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
+            }else{
+                dispatch(showNotification("Unable to approve tokens", dispatch, "danger"));
+            }
         }
         setNextLoading(false)
     }

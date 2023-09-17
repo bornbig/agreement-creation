@@ -60,19 +60,27 @@ export function AgreementDetails(props){
         setTimestamp(timestamp);
     }
 
-    const getRaminingTime = () => {
-
+    const getRemainingTime = () => {
         const diffTimestamp = (props.deadline - timestamp) / 60;
+        let isNegative = diffTimestamp < 0;
+        let days = Math.floor(Math.abs(diffTimestamp) / (24 * 60));
+        let hours = Math.floor((Math.abs(diffTimestamp) % (24 * 60)) / 60);
+        let minutes = Math.floor(Math.abs(diffTimestamp) % 60);
 
-        // console.log(diffTimestamp < 60 * 60);
-
-        if(diffTimestamp < 60){
-            return (diffTimestamp.toFixed(2)) + " Minutes";
-        }else if(diffTimestamp < 60 * 60){
-            return ((diffTimestamp / 60).toFixed(2))  + " Hours";
-        }else{
-            return ((diffTimestamp / (60 * 24)).toFixed(2)) + " Days";
+        let timeLeftStr = "";
+        if (isNegative) {
+            timeLeftStr += "-";
         }
+        if (days > 0) {
+            timeLeftStr += `${days} day${days > 1 ? 's' : ''} `;
+        }
+        if (hours > 0 || days > 0) {
+            timeLeftStr += `${hours} hour${hours > 1 ? 's' : ''} `;
+        }
+        if (minutes > 0 || (hours === 0 && days === 0)) {
+            timeLeftStr += `${minutes} minute${minutes > 1 ? 's' : ''}`;
+        }
+        return timeLeftStr.trim();
     }
 
     const getClient = () => {
@@ -128,7 +136,7 @@ export function AgreementDetails(props){
                     {isConnected && <div className="agreement-price">~${ props.usdPrice } <span>({ humanReadableTokenAmount } {ticker})</span>
                         {props.status != 105 && wallet?.toLowerCase() == props.client?.toLowerCase() &&
                         <div>Release the funds only when the Service Provider has delivered: <b>{ipfsJson.delivery}</b></div>} <br></br>
-                        <div>Time Left: <b>{(getRaminingTime())}</b></div> 
+                        <div>Time Left: <b>{(getRemainingTime())}</b></div> 
                         {/* Have to work on */}
                     </div>}
                     

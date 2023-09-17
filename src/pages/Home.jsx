@@ -5,6 +5,7 @@ import { showNotification } from "../store/actions/notification-action";
 import { AddNotification } from "../components/add-notification";
 import { getAgreements } from "../store/actions/agreement-action";
 import { useNavigate } from "react-router-dom";
+import { CONTRACT } from "../config/config";
 
 export function Home(){
     const dispatch = useDispatch();
@@ -34,8 +35,8 @@ export function Home(){
         }
     }
 
-    const takeMeToAgreement = (contract, tokenid) => {
-        navigate(`/sbt/${contract}/${tokenid}`);
+    const takeMeToAgreement = (tokenid) => {
+        navigate(`/sbt/${CONTRACT[chainId].serviceProvider.contract}/${tokenid}`);
     }
 
     return (
@@ -48,7 +49,7 @@ export function Home(){
                 {(agreements !== null)  && <h2>My Agreements</h2>}
                 <div className="d-flex-between">
                     {agreements?.map((agreement, index) => (
-                        <div className="box-agreemet" onClick={() => takeMeToAgreement(agreement.contract_address, agreement.token_id)}>
+                        <div className="box-agreemet" onClick={() => takeMeToAgreement(agreement.token_id)}>
                             <img src={agreement.previews.image_small_url} alt="" />
                         </div>
                     ))}

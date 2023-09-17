@@ -31,7 +31,7 @@ export function CloseAgreement(props){
             
         } catch (e) {
             console.log(e)
-            dispatch(showNotification("Please try again", dispatch, "danger"));
+            dispatch(showNotification("Unable to get Delivery right now", dispatch, "danger"));
         }
     }
 
@@ -46,7 +46,7 @@ export function CloseAgreement(props){
             
         } catch (e) {
             console.log(e)
-            dispatch(showNotification("Please try again", dispatch, "danger"));
+            dispatch(showNotification("Unable to release fund right now", dispatch, "danger"));
         }
         setRelaseFundsLoading(false);
     }
@@ -60,7 +60,7 @@ export function CloseAgreement(props){
             
         } catch (e) {
             console.log(e)
-            dispatch(showNotification("Please try again", dispatch, "danger"));
+            dispatch(showNotification("Unable to raise Dispute right now", dispatch, "danger"));
         }
         setDisputeLoading(false)
     }
@@ -81,7 +81,7 @@ export function CloseAgreement(props){
             props.refresh()
         }catch(e){
             console.log(e)
-            dispatch(showNotification("Please try again", dispatch, "danger"));
+            dispatch(showNotification("Unable to Submit Delivery right now", dispatch, "danger"));
         }
         setSubmitDeliveryLoading(false);
     }
@@ -92,7 +92,7 @@ export function CloseAgreement(props){
             const durl = await decryptDelivery(deliveryHash, web3)
             window.open(durl, '_blank');
         }catch(e){
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Unable to download delivery right now", dispatch, "danger"));
         }
         setDownloadLoading(false);
     }

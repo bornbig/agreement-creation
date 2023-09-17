@@ -28,7 +28,7 @@ export function Verify(props){
                 navigate(`/`);
             }
         }catch(e){
-            showNotification("Error: Please try again", dispatch)
+            showNotification("Can't add Notification bot right now", dispatch, "danger")
         }
         setLoading(false)
     }

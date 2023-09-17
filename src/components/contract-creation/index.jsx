@@ -93,7 +93,7 @@ export function ContractCreation(props){
             
         }catch(e){
             console.log(e);
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Unable to Create Agreement", dispatch, "danger"));
         }
         setNextLoading                         (false);
     }
@@ -154,7 +154,7 @@ export function ContractCreation(props){
 
             setAllowance(approvedAmount);
         }catch(e){
-            dispatch(showNotification("Don't have enough balance", dispatch));
+            dispatch(showNotification("Unable to approve amount", dispatch, "danger"));
         }
         
     }
@@ -170,7 +170,7 @@ export function ContractCreation(props){
                 setAllowance(price); // for client
             }
         } catch (error) {
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Unable to approve tokens", dispatch, "danger"));
         }
         setNextLoading(false)
     }
@@ -209,7 +209,7 @@ export function ContractCreation(props){
             {(step == 4) && <Deliverables nextStep={setStep} step={step} delivery={delivery} setDelivery={setDelivery}  />}
             {(step == 5) && <Price approveTokens={approveTokens} nextLoading={nextLoading} setNextLoading={setNextLoading} nextStep={setStep} step={step}
                                  sign={createAndSignAgreement} allowance={allowance} price={price}
-                                  setPrice={setPrice} userType={userType} tokens={CONTRACT[chainId].tokens} setSelectedToken={setSelectedToken}
+                                  setPrice={setPrice} userType={userType} setSelectedToken={setSelectedToken}
                                   selectedToken={selectedToken} setViewPrice={setViewPrice} viewPrice={viewPrice}/>}
             {(step == 6) && <Skills nextLoading={nextLoading} nextStep={setStep} step={step} sign={createAndSignAgreement} skills={skills} setSkills={setSkills}  />}
         </> ) }

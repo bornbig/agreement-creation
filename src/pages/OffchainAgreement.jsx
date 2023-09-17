@@ -55,7 +55,7 @@ export function OffchainAgreement(){
                 setDetailsLoading(false);
             }
         } catch (e) {
-            dispatch(showNotification("Please try again", dispatch));
+            dispatch(showNotification("Error while fetching data", dispatch), "danger");
         }
     }
 
@@ -102,7 +102,7 @@ export function OffchainAgreement(){
             navigate(`/sbt/${details.agreement}/${tokenId}`);
         }catch(e){
             console.log(e)
-            dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch));
+            dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch), "danger");
         }
 
         // Redirect to onchain agreement
@@ -122,7 +122,7 @@ export function OffchainAgreement(){
             
         } catch (e) {
             console.log(e)
-            dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch));
+            dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch), "danger");
         }
         setallowanceLoading(false)
     }

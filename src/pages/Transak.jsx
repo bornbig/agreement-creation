@@ -51,7 +51,7 @@ export function Transak(props){
           });
       } catch (e) {
         console.log("wrong")
-        dispatch(showNotification("Please try again", dispatch));
+        dispatch(showNotification("Error while Integrating transak", dispatch, "danger"));
       }
       
     }

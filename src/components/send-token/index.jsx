@@ -18,7 +18,7 @@ export function SendToken(props){
             dispatch(showNotification("Success", dispatch));
 
         } catch(e) {
-            dispatch(showNotification("Invalid Input", dispatch));
+            dispatch(showNotification("Invalid Input", dispatch, "danger"));
         }
     }
 

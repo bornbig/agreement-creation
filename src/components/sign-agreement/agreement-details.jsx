@@ -48,7 +48,7 @@ export function AgreementDetails(props){
             }
             
         } catch (e) {
-            dispatch(showNotification("Unable to Get details", dispatch));
+            dispatch(showNotification("Unable to Get details", dispatch, "danger"));
         }
         
     }

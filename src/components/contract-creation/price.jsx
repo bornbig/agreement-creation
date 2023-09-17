@@ -10,19 +10,6 @@ export function Price(props){
     const { decimals, ticker } = props.selectedToken;
     const bnDecimals = new BigNumber(10).pow(new BigNumber(decimals));
 
-    // const formatPrice = (price) => {
-
-    //     let regexp = /^[0-9.]+$/;
-
-    //     if(regexp.test(price)){
-    //         props.setViewPrice(price)
-    //         props.setPrice(new BigNumber(price).mul(bnDecimals).toString());
-    //     }else if(price == ""){
-    //         props.setViewPrice("")
-    //         props.setPrice(0);
-    //     }
-    // }
-
     const updateFiat = async (usdPrice) => {
         try {
             let regexp = /^[0-9.]+$/;
@@ -34,34 +21,21 @@ export function Price(props){
                 props.setViewPrice("")
                 props.setPrice(0);
             }
-            
         } catch (e) {
             console.log("Entered wrong price")
         }
     }
 
     function checkPriceInput(viewPrice) {
-
         const numberPattern = /^\d+(\.\d{1,5})?$/;
     
         if (!viewPrice || viewPrice == 0) {
-
             return " disabled";
         }
-    
         if (!numberPattern.test(viewPrice)) {
-
-            dispatch(showNotification("Please enter a valid price", dispatch));
+            dispatch(showNotification("Please enter a valid price", dispatch, "danger"));
             return " disabled";
         }
-    
-        // if (parseFloat(viewPrice) > 10000) {
-            
-        //     dispatch(showNotification("Please place an order of less than 10000", dispatch));
-        //     return " disabled";
-        // }
-    
-        // return "";
     }
     
 
@@ -74,7 +48,6 @@ export function Price(props){
             }else{
                 props.setPrice(new BigNumber(usdPrice).mul(bnDecimals).toString());
             }
-            
         } catch (e) {
             console.log("Something went wrong")
         }
@@ -82,7 +55,6 @@ export function Price(props){
 
     const BillingAmount = (price) => {
         try {
-
             const reducedPrice = price - (price * (PLATFORM_FEE / 100));
             const formattedPrice = (reducedPrice / bnDecimals)
             if(formattedPrice >= 0.01){

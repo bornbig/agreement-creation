@@ -39,7 +39,7 @@ export function Agreement(){
             }
             
         } catch (e) {
-            dispatch(showNotification("Unable to get details", dispatch));
+            dispatch(showNotification("Unable to get Agreement Details", dispatch, "danger"));
         }
         setDetailsLoading(false);
     }

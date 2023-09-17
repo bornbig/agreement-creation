@@ -44,7 +44,7 @@ export function SignAgreement (props){
             }
         } catch (e) {
             console.log(e)
-            dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch));
+            dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch, "danger"));
         }
         setallowanceLoading(false)
     }
@@ -64,7 +64,7 @@ export function SignAgreement (props){
 
         } catch(e){
             console.log(e);
-            dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch));
+            dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch, "danger"));
         }
 
         props.refresh();
@@ -79,7 +79,7 @@ export function SignAgreement (props){
             props.refresh();
 
         } catch(e){
-            dispatch(showNotification("Unable to Cancel: Insuficient Gas Fee", dispatch));
+            dispatch(showNotification("Unable to Cancel: Insuficient Gas Fee", dispatch, "danger"));
             console.log(e)
         }
         setCancelLoading(false);
@@ -93,7 +93,7 @@ export function SignAgreement (props){
             props.refresh();
             
         } catch (e) {
-            dispatch(showNotification("Unable to Cancel: Insuficient Gas Fee", dispatch));
+            dispatch(showNotification("Unable to Cancel: Insuficient Gas Fee", dispatch, "danger"));
             console.log(e)
         }
         setCancelLoading(false);

@@ -154,7 +154,7 @@ function Header() {
       dispatch(await updateUserBalance(_accounts[0]));
 
     }catch(e){
-      // dispatch(showNotification("Network Error", dispatch));
+      dispatch(showNotification("Error while integrating Web3Auth", dispatch, "danger"));
     }
   }
 

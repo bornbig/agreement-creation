@@ -5,11 +5,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 280px;
-    min-height: 80px;
+    min-width: 160px;
+    min-height: 70px;
     top: 100px;
     right: 2%;
-    padding: 0 5px;
+    padding: 0 12px;
     box-shadow: 0px 8px 15px rgb(0 0 0 / 10%);
     background-color: #18f6ba;
     color: #34730a;
@@ -19,8 +19,10 @@
 }
 
 .notification.danger{
-  background-color: #e3003b;
-  color: #ffbdce;
+  background-color: #ff8282;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 300;
 }
 
 @keyframes run {
@@ -34,14 +36,14 @@
 
 @media screen and (max-width : 890px) {
   .notification{
-    top: 200px;
+    top: 170px;
     animation-duration: 2s;
   }
 }
 
 @media screen and (max-width : 620px){
   .notification{
-    top: 140px;
+    top: 114px;
     animation-duration: 2s;
   }
 }

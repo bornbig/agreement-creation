@@ -13,6 +13,7 @@ import { Deliverables } from "./deliverables";
 import { Price } from "./price";
 import { Skills } from "./skills";
 import { Deadline } from "./deadline";
+import { estimateAndExecute } from "../../helpers/utils";
 
 export function ContractCreation(props){
     const dispatch = useDispatch();
@@ -61,8 +62,7 @@ export function ContractCreation(props){
             valueInMinutes = deadlineValue * 60;
         }
         const newTimestamp = timestamp + valueInMinutes;
-
-        console.log(valueInMinutes);
+        
         return newTimestamp;
     }
 
@@ -127,23 +127,32 @@ export function ContractCreation(props){
     }
 
     const createOnchainAgreement = async (ipfs_hash, skills_hash, deadline) => {
+        try{
+            let contract = new web3.eth.Contract(CONTRACT[chainId].serviceProvider.abi, CONTRACT[chainId].serviceProvider.contract);
+            const mintCall = await contract.methods.mint(
+                CONTRACT[chainId].escrow.contract,
+                client,
+                serviceProvider,
+                wallet == serviceProvider,
+                ipfs_hash,
+                skills_hash,
+                price,
+                selectedToken.contract,
+                deadline
+            );
+                
+            const transaction = await estimateAndExecute(web3, mintCall, wallet, dispatch);
 
-        let contract = new web3.eth.Contract(CONTRACT[chainId].serviceProvider.abi, CONTRACT[chainId].serviceProvider.contract);
-        const transaction = await contract.methods.mint(
-            CONTRACT[chainId].escrow.contract,
-            client,
-            serviceProvider,
-            wallet == serviceProvider,
-            ipfs_hash,
-            skills_hash,
-            price,
-            selectedToken.contract,
-            deadline
-            ).send({from: wallet});
+            const tokenId = transaction.events.Transfer[0].returnValues.tokenId;
 
-        const tokenId = transaction.events.Transfer[0].returnValues.tokenId;
-
-        return tokenId;
+            return tokenId;
+        }catch(e){
+            if(e == "GASFEE_ERROR"){
+                dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
+            }else{
+                dispatch(showNotification("Unknown Error", dispatch, "danger"));
+            }
+        }
     }
 
     const checkIfAmountApproved = async () => {

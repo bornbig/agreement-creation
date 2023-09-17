@@ -31,12 +31,12 @@ export function Skills(props){
                 </div>
                 <div className="note">( Ex: Adobe Photoshop, 3D Logo. Agreement will be converted into an SBT with the rating of these skills once the agreement is closed.)</div>
                 <div className="add-skill-btn model-skill-btn" onClick={addEmptySkill}>ADD SKILL</div>
-                {props.skills.map((skill, index) => (<>
-                    <div className="skill-box" key={index}>
+                {props.skills.map((skill, index) => (
+                    <div className="skill-box" key={index + "skill"}>
                         <input type="text" onChange={(e) => setSkillName(e.target.value, index)} value={skill.name} autoFocus/>
                         <div className="remove" onClick={() => removeSkill(index)}>x</div>
                     </div>
-                </>))}
+                ))}
 
                 <div className="btn bottom-left" onClick={() => props.nextStep(props.step - 1)}>Previous</div>
                 <div className={"btn bottom-right " + (!props.skills[0]?.name && ' disabled')} onClick={() => props.sign()}>

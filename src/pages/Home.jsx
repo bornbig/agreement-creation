@@ -49,7 +49,7 @@ export function Home(){
                 {(agreements !== null)  && <h2>My Agreements</h2>}
                 <div className="d-flex-between">
                     {agreements?.map((agreement, index) => (
-                        <div className="box-agreemet" onClick={() => takeMeToAgreement(agreement.token_id)}>
+                        <div className="box-agreemet" onClick={() => takeMeToAgreement(agreement.token_id)} key={index}>
                             <img src={agreement.previews.image_small_url} alt="" />
                         </div>
                     ))}

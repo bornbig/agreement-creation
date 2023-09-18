@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ContractCreation } from "../components/contract-creation";
 import { showNotification } from "../store/actions/notification-action";
-import { AddNotification } from "../components/add-notification";
 import { getAgreements } from "../store/actions/agreement-action";
 import { useNavigate } from "react-router-dom";
 import { CONTRACT } from "../config/config";
@@ -46,7 +45,7 @@ export function Home(){
             <ContractCreation isOpen={canStartContractCreation} closeModal={setCanStartContractCreation}/>
 
             <section className="mt-4">
-                {(agreements !== null)  && <h2>My Agreements</h2>}
+                {(agreements)  && <h2>My Agreements</h2>}
                 <div className="d-flex-between">
                     {agreements?.map((agreement, index) => (
                         <div className="box-agreemet" onClick={() => takeMeToAgreement(agreement.token_id)} key={index}>

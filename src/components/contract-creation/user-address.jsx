@@ -36,7 +36,7 @@ export function UserAddress(props){
             }
         }catch(e){
             console.log(e);
-            dispatch(showNotification("Unable to get email info right now", dispatch), "danger");
+            dispatch(showNotification("Unable to get email info right now", dispatch, "danger"));
         }
 
         props.setNextLoading(false)

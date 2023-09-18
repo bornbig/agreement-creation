@@ -49,7 +49,7 @@ export function Price(props){
                 props.setPrice(new BigNumber(usdPrice).mul(bnDecimals).toString());
             }
         } catch (e) {
-            console.log("Something went wrong")
+            // console.log("Something went wrong")
         }
     }
 

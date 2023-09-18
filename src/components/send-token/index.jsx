@@ -15,7 +15,7 @@ export function SendToken(props){
     const sendUSDT = async () => {
         try {
             await sendToken(web3, CONTRACT[chainId]?.tokens[0].contract, toAddress, amount);
-            dispatch(showNotification("Success", dispatch));
+            dispatch(showNotification("Successfully sent!", dispatch));
 
         } catch(e) {
             dispatch(showNotification("Invalid Input", dispatch, "danger"));

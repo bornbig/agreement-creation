@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUSDTBalance, setUserNetwork, setUserWalletConnection, setWalletDisconnect, submitIdToken, updateUserBalance } from '../../store/actions/user-action';
 import { showNotification } from '../../store/actions/notification-action';
-import { NETWORK, NETWORK_LIST } from '../../config/network';
 import "./style.css";
 import { Modal } from '../modal';
 import { Web3Auth } from '@web3auth/modal';

@@ -1,12 +1,9 @@
-import { SignAgreement } from "../components/sign-agreement";
 import { AgreementDetails } from "../components/sign-agreement/agreement-details";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { CloseAgreement } from "../components/close-agreement";
 import { showNotification } from "../store/actions/notification-action";
 import { getDetails, getOffchainAgreement, storeSkills } from "../store/actions/agreement-action";
-import { AddNotification } from "../components/add-notification";
 import { Skills } from "../components/sign-agreement/skills";
 import EscrowABI from "../data/abi/Escrow.json";
 import ERC20ABI from "../data/abi/ERC20.json";
@@ -56,7 +53,7 @@ export function OffchainAgreement(){
                 setDetailsLoading(false);
             }
         } catch (e) {
-            dispatch(showNotification("Error while fetching data", dispatch), "danger");
+            dispatch(showNotification("Error while fetching data", dispatch, "danger"));
         }
     }
 
@@ -110,7 +107,7 @@ export function OffchainAgreement(){
                 dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
             }else{
             console.log(e)
-            dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch), "danger");
+            dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch, "danger"));
             }
         }
 
@@ -136,7 +133,7 @@ export function OffchainAgreement(){
                 dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
             }else{
             console.log(e)
-            dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch), "danger");
+            dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch, "danger"));
             }
         }
         setallowanceLoading(false)

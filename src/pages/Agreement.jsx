@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { CloseAgreement } from "../components/close-agreement";
 import { getDetails } from "../store/actions/agreement-action";
-import { AddNotification } from "../components/add-notification";
 import { showNotification } from "../store/actions/notification-action";
 
 export function Agreement(){

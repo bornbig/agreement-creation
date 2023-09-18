@@ -18,21 +18,15 @@ export function SendToken(props){
             dispatch(showNotification("Successfully sent!", dispatch));
 
         } catch(e) {
-            dispatch(showNotification("Invalid Input", dispatch, "danger"));
+            dispatch(showNotification("Error while sending token", dispatch, "danger"));
         }
     }
 
     const checkInputfield = () => {
-        const numberPattern = /^\d+(\.\d{1,5})?$/;
         
         if ((amount > balance.humanReadable || amount == 0)) {
             return " disabled"
-        }
-        if (!numberPattern.test(amount)) {
-            dispatch(showNotification("Please enter a valid price", dispatch, "danger"));
-            return " disabled";
-        }
-        if (toAddress.length != 42){
+        }else if (toAddress.length != 42){
             return " disabled"
         }
         return "";
@@ -47,7 +41,7 @@ export function SendToken(props){
                 </div>
 
                 <div className="input">
-                    <input type="text" onChange={(e) => setAmount(e.target.value)} placeholder="100" autoFocus/>
+                    <input type="number" className="no-spinner" onChange={(e) => setAmount(e.target.value)} placeholder="100" autoFocus/>
                 </div>
 
                 <div className="input">

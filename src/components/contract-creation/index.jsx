@@ -93,37 +93,41 @@ export function ContractCreation(props){
             
         }catch(e){
             console.log(e);
-            dispatch(showNotification("Unable to Create Agreement", dispatch, "danger"));
+            dispatch(showNotification("Error: Unable to Create Agreement", dispatch, "danger"));
         }
         setNextLoading                         (false);
     }
 
     const createOffChainAgreement = async (ipfs_hash, skills_hash, deadline) => {
-        const mode = wallet == serviceProvider;
-        let secondPartyEmail;
-        if(userInput.match(
-            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          )){
-            secondPartyEmail = userInput;
-          }
-        const service_provider_email = mode? userInfo?.email : secondPartyEmail;
-        const client_email = !mode? userInfo?.email : secondPartyEmail;
+        try {
+            const mode = wallet == serviceProvider;
+            let secondPartyEmail;
+            if(userInput.match(
+                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            )){
+                secondPartyEmail = userInput;
+            }
+            const service_provider_email = mode? userInfo?.email : secondPartyEmail;
+            const client_email = !mode? userInfo?.email : secondPartyEmail;
 
-        const tokenId = createOfflineAgreement(chainId, CONTRACT[chainId].serviceProvider.contract, {
-            escrow: CONTRACT[chainId].escrow.contract,
-            client,
-            service_provider: serviceProvider,
-            mode,
-            ipfs_hash,
-            skills_hash,
-            price,
-            token: selectedToken.contract,
-            deadline,
-            service_provider_email,
-            client_email,
-        });
+            const tokenId = createOfflineAgreement(chainId, CONTRACT[chainId].serviceProvider.contract, {
+                escrow: CONTRACT[chainId].escrow.contract,
+                client,
+                service_provider: serviceProvider,
+                mode,
+                ipfs_hash,
+                skills_hash,
+                price,
+                token: selectedToken.contract,
+                deadline,
+                service_provider_email,
+                client_email,
+            });
 
-        return tokenId;
+            return tokenId;
+        } catch (e) {
+            dispatch(showNotification("Unable To Creating Agreement", dispatch, "danger"));
+        }
     }
 
     const createOnchainAgreement = async (ipfs_hash, skills_hash, deadline) => {
@@ -150,7 +154,7 @@ export function ContractCreation(props){
             if(e == "GASFEE_ERROR"){
                 dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
             }else{
-                dispatch(showNotification("Unknown Error", dispatch, "danger"));
+                dispatch(showNotification("Unable to creating agreement", dispatch, "danger"));
             }
         }
     }

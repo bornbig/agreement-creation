@@ -325,7 +325,7 @@ a{
   }
 
   .transak_modal-overlay {
-    width: 110%;
+    width: 110% !important;
   }
 
   .error-404 {
@@ -350,6 +350,15 @@ a{
   .error-404 p {
     font-size: 1.5rem;
     color: #333;
+  }
+  
+  .no-spinner::-webkit-inner-spin-button,
+  .no-spinner::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .no-spinner {
+    -moz-appearance: textfield;
   }
   
   @media screen and (max-width : 890px) {

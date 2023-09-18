@@ -172,6 +172,11 @@ function Header() {
     setShowPrivateKeyModel(true);
   }
 
+  const textcopying = () => {
+    navigator.clipboard.writeText(wallet)
+    dispatch(showNotification("Copied to clipBoard", dispatch));
+  }
+
   return (
     <div className='header'>
       <div className="logo">
@@ -188,7 +193,7 @@ function Header() {
           
           <div className='connected'  >
               <div className='wallet'>
-                <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={() => navigator.clipboard.writeText(wallet)} />
+                <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={() => textcopying()} />
                 <span>{wallet}</span>
                 
               </div>

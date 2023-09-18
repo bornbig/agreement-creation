@@ -33,7 +33,6 @@ export function Price(props){
             return " disabled";
         }
         if (!numberPattern.test(viewPrice)) {
-            dispatch(showNotification("Please enter a valid price", dispatch, "danger"));
             return " disabled";
         }
     }
@@ -87,7 +86,7 @@ export function Price(props){
 
                 <div className="price-box">
                     <div className="dollar">$</div>
-                    <input type="text" className="fiat-text" onChange={(e) => updateFiat(e.target.value)} value={props.viewPrice} autoFocus/>
+                    <input type="number" className="fiat-text no-spinner" onChange={(e) => updateFiat(e.target.value)} value={props.viewPrice} autoFocus/>
                 </div>
                 {props.userType == 1 && checkPriceInput(props.viewPrice) !== " disabled" && 
                     <>

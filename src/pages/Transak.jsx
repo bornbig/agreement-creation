@@ -60,7 +60,7 @@ export function Transak(props){
         <> 
             <h1 className="heading"> Add Funds </h1>
             <div className="fund-box">
-              <input type="text" className="" onChange={(e) => setCryptoAmount(e.target.value)} defaultValue={0} />
+              <input type="number" className="no-spinner" onChange={(e) => setCryptoAmount(e.target.value)} defaultValue={0} />
             </div>
             
             <div className="btn small" onClick={initializeTransak}>Add Funds</div>

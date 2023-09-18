@@ -229,7 +229,7 @@ export function ContractCreation(props){
             {(step == 6) && <Skills nextLoading={nextLoading} nextStep={setStep} step={step} sign={createAndSignAgreement} skills={skills} setSkills={setSkills}  />}
         </> ) }
         {activeModel === "Payment" && (<>
-            <h1 class='developer-lines'>Coming soon...</h1>
+            <h1 className='developer-lines'>Coming soon...</h1>
         </>)}
        
             

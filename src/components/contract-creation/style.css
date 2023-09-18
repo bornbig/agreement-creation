@@ -24,7 +24,7 @@
     overflow: auto;
     margin-bottom: 40px;
     opacity: 0; 
-    animation: fadeIn .4s ease-in-out .6s forwards;
+    animation: fadeIn .8s ease-in-out 0.1s forwards;
 }
 @keyframes fadeIn {
     to {

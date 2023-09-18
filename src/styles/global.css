@@ -42,9 +42,6 @@ body{
   line-height: 44px;
 }
 
-
-
-
 .fund-box input{
   max-width: 80%;
   width: 400px;
@@ -55,7 +52,6 @@ body{
   font-size: 32px;
   padding: 12px;
 }
-
 
 .btn{
     position: relative;
@@ -98,7 +94,6 @@ a{
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
 
 .address{
     display: inline-block;
@@ -186,6 +181,7 @@ a{
     left: 0;
     right: 0;
 }
+
   .bar {
     background-color: rgb(164, 164, 252);
     min-width: 100%;
@@ -296,10 +292,6 @@ a{
     background-color: #918afd;
   }
 
-  .signVerify{
-    width: 50%;
-  }
-
   .skill-container .question{
     margin: 10px 0;
   }
@@ -332,7 +324,33 @@ a{
     background-color: #e7e7e7 !important;
   }
 
+  .transak_modal-overlay {
+    width: 110%;
+  }
 
+  .error-404 {
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    background-color: #f4f4f4;
+  }
+  
+  .error-404 h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #d9534f;
+  }
+  
+  .error-404 p {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
   @media screen and (max-width : 890px) {
     body{
       background-size: 2000px;
@@ -478,8 +496,8 @@ a{
       width: 275px;
       margin-right: -20px !important;
     }
-    .transak_close {
-      right: -3px !important;
-      top: -20px !important;
+    .transak_modal{
+      width: 85% !important;
     }
+    
 }

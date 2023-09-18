@@ -31,7 +31,7 @@ export default function (state = initialState, action) {
                 ...initialState
             }
         case SET_USER_BALANCE:
-            console.log("changed");
+            // console.log("changed");
             return {
                 ...state,
                 balance: {

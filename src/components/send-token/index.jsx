@@ -23,8 +23,14 @@ export function SendToken(props){
     }
 
     const checkInputfield = () => {
+        const numberPattern = /^\d+(\.\d{1,5})?$/;
+        
         if ((amount > balance.humanReadable || amount == 0)) {
             return " disabled"
+        }
+        if (!numberPattern.test(amount)) {
+            dispatch(showNotification("Please enter a valid price", dispatch, "danger"));
+            return " disabled";
         }
         if (toAddress.length != 42){
             return " disabled"

@@ -9,7 +9,7 @@ export function PrivateKeyModel(props){
             <br />
             <div className="modal-title">Your Private Key</div>
             <div className="privateKey">
-                <input type={ isPrivateKeyHidden ? "password" : "text"} value={props.privateKey} />
+                <input type={ isPrivateKeyHidden ? "password" : "text"} value={props.privateKey} readOnly/>
                 <div onClick={() => setIsPrivateKeyHidden(!isPrivateKeyHidden)}>
                     {isPrivateKeyHidden ? <img src="/images/hide.png" /> : <img src="/images/visible.png" />}
                 </div>

@@ -12,7 +12,7 @@ export function AgreementDetails(props){
     const [decimals, setDecimals] = useState(0);
     const [ticker, setTicker] = useState("");
     const [humanReadableTokenAmount, setHumanReadableTokenAmount] = useState(0);
-    const [detailsLoading, setDetailsLoading] = useState(false);
+    const [detailsLoading, setDetailsLoading] = useState(true);
     const { wallet, web3, isConnected, chainId } = useSelector((state) => state.user);
     const [timestamp, setTimestamp] = useState();
 
@@ -41,7 +41,6 @@ export function AgreementDetails(props){
             }
     
             if(ipfs_hash){
-                setDetailsLoading(true)
                 const ipfsDetails = await getDetails(ipfs_hash);
                 setIpfsJson(ipfsDetails);
                 setDetailsLoading(false)
@@ -51,6 +50,7 @@ export function AgreementDetails(props){
             dispatch(showNotification("Unable to Get details", dispatch, "danger"));
         }
         
+        setDetailsLoading(false)
     }
 
     const setTymstamp = async () => {

@@ -69,7 +69,7 @@ export function Agreement(){
                         {(details.status == 101 || details.status == 102) && <CloseAgreement details={details} refresh={getAgreementDetails} skills={skills} rateSkill={rateSkill} escrowAddress={escrowAddress} agreementAddress={params.contract} />}
 
                         {details.status == 98 && <h1>Service Provider Rejected it</h1>}
-                        {details.status == 98 && <h1>Client Cancelled it</h1>}
+                        {details.status == 99 && <h1>Client Cancelled it</h1>}
                         {details.status == 90 && <h1>Wait for dispute to be resolved.</h1>}
                         {details.status == 201 && <h1>The dispute is resolved.</h1>}
                         

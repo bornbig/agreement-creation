@@ -107,7 +107,7 @@ export function OffchainAgreement(){
                 dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
             }else{
             console.log(e)
-            dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch, "danger"));
+            dispatch(showNotification("Unable to Sign agreement", dispatch, "danger"));
             }
         }
 
@@ -133,7 +133,7 @@ export function OffchainAgreement(){
                 dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
             }else{
             console.log(e)
-            dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch, "danger"));
+            dispatch(showNotification("Unable to Approve Token", dispatch, "danger"));
             }
         }
         setallowanceLoading(false)

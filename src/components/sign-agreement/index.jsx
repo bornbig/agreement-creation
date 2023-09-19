@@ -76,7 +76,7 @@ export function SignAgreement (props){
                 dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
             }else{
             console.log(e);
-            dispatch(showNotification("Unable to Sign agreement: Insuficient Gas Fee", dispatch, "danger"));
+                dispatch(showNotification("Unable to Sign agreement", dispatch, "danger"));
             }
         }
 
@@ -98,8 +98,8 @@ export function SignAgreement (props){
             if(e == "GASFEE_ERROR"){
                 dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
             }else{
-            dispatch(showNotification("Unable to Cancel: Insuficient Gas Fee", dispatch, "danger"));
-            console.log(e)
+                dispatch(showNotification("Unable to Cancel", dispatch, "danger"));
+                console.log(e)
             }
         }
         setCancelLoading(false);
@@ -108,6 +108,7 @@ export function SignAgreement (props){
     const rejectByServiceProvider = async () => {
         setCancelLoading(true);
         const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
+        console.log(props.agreementAddress);
         try {
             const rejectagreement = await contract.methods.rejectAgreement(props.agreementAddress, params.id);
 
@@ -119,8 +120,8 @@ export function SignAgreement (props){
             if(e == "GASFEE_ERROR"){
                 dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
             }else{
-            dispatch(showNotification("Unable to Cancel: Insuficient Gas Fee", dispatch, "danger"));
-            console.log(e)
+                dispatch(showNotification("Unable to Cancel", dispatch, "danger"));
+                console.log(e)
             }
         }
         setCancelLoading(false);

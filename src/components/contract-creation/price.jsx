@@ -3,7 +3,6 @@ import { useState } from "react";
 import { getUSDTQuote } from "../../store/actions/price-discovery";
 import { PLATFORM_FEE } from "../../config/config";
 import { useDispatch } from "react-redux";
-import { showNotification } from "../../store/actions/notification-action";
 
 export function Price(props){
     const dispatch = useDispatch();

@@ -47,7 +47,7 @@ export function Home(){
             <section className="mt-4">
                 {(agreements)  && <h2>My Agreements</h2>}
                 <div className="d-flex-between">
-                    {agreements?.map((agreement, index) => (
+                    {agreements?.slice(0, 12)?.map((agreement, index) => (
                         <div className="box-agreemet" onClick={() => takeMeToAgreement(agreement.token_id)} key={index}>
                             <img src={agreement.previews.image_small_url} alt="" />
                         </div>

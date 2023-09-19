@@ -1,7 +1,5 @@
-import { showNotification } from "../store/actions/notification-action";
-
 export async function estimateAndExecute(web3, method, wallet){
-    const gasFee = await method.estimateGas();
+    const gasFee = await method.estimateGas({from: wallet});
     const gasPrice = await web3.eth.getGasPrice();
     const gasValue = gasFee * gasPrice;
     const userGasBalance = await web3.eth.getBalance(wallet);

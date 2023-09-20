@@ -360,10 +360,36 @@ a{
   .no-spinner {
     -moz-appearance: textfield;
   }
+
+  .div-cancel{
+    display: flex;
+    padding: 30px 0px;
+    justify-content: start;
+    align-items: center;
+    text-align: left;
+    color: #393939;
+    font-weight: 600;
+  }
   
+  .btn-cancel{
+    background-color: rgb(249, 249, 255);
+    width: 350px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    border-radius: 5px;
+    
+  }
+
   @media screen and (max-width : 890px) {
     body{
       background-size: 2000px;
+    }
+
+    .div-cancel{
+      justify-content: center;
     }
 
     .header{
@@ -509,5 +535,10 @@ a{
     .transak_modal{
       width: 85% !important;
     }
-    
+    .p-relative {
+      padding: 15px 40px;
+    }
+    .lockscreen img {
+      height: 20%;
+    }
 }

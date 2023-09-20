@@ -7,12 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { CloseAgreement } from "../components/close-agreement";
 import { getDetails } from "../store/actions/agreement-action";
 import { showNotification } from "../store/actions/notification-action";
+import { LockScreen } from "../components/sign-agreement/LockScreen";
 
 export function Agreement(){
     const dispatch = useDispatch();
     const [details, setDetails] = useState({});
     const [skills, setSkills] = useState([]);
-    const [detailsLoading, setDetailsLoading] = useState(false);
+    const [detailsLoading, setDetailsLoading] = useState(true);
     const [escrowAddress, setEscrowAddress] = useState(false);
     let params = useParams();
     const { wallet, web3, isConnected } = useSelector((state) => state.user);
@@ -26,7 +27,6 @@ export function Agreement(){
     const getAgreementDetails = async () => {
         try {
             if(web3){
-                setDetailsLoading(true);
                 let contract = new web3.eth.Contract(ProofABI, params.contract);
                 let details = await contract.methods.getAgreementDetails(params.id).call({from: wallet});
                 let escrow = await contract.methods.escrowUsed(params.id).call({from: wallet});
@@ -57,6 +57,13 @@ export function Agreement(){
         localSkill[index].rating = value;
         setSkills(localSkill);
     }
+    
+    const agreementCancelled = () => {
+        if((details.status == 98) || (details.status == 99) || (details.status == 90) || (details.status == 201)){
+            return false;
+        }
+        return true;
+    }
 
     return (
         <>
@@ -64,15 +71,18 @@ export function Agreement(){
                 ? <><div className="lds-ring"><div></div><div></div><div></div><div></div></div></>
                 : <>
                     <h1 className="heading"> Agreement </h1>
-                    <AgreementDetails {...details} showProgressBar={true} usdPrice={usdPrice} setUsdPrice={setUsdPrice}/>
+                    <div className={!isConnected ? "p-relative" : ""}>
+                    {!isConnected && <LockScreen />}
+                    <AgreementDetails {...details} showProgressBar={agreementCancelled()} usdPrice={usdPrice} setUsdPrice={setUsdPrice}/>
                         {details.status == 100 && <SignAgreement details={details} refresh={getAgreementDetails} escrowAddress={escrowAddress} agreementAddress={params.contract} usdPrice={usdPrice}/>}
                         {(details.status == 101 || details.status == 102) && <CloseAgreement details={details} refresh={getAgreementDetails} skills={skills} rateSkill={rateSkill} escrowAddress={escrowAddress} agreementAddress={params.contract} />}
-
-                        {details.status == 98 && <h1>Service Provider Rejected it</h1>}
-                        {details.status == 99 && <h1>Client Cancelled it</h1>}
-                        {details.status == 90 && <h1>Wait for dispute to be resolved.</h1>}
-                        {details.status == 201 && <h1>The dispute is resolved.</h1>}
-                        
+                        <div className="div-cancel">
+                        {details.status == 98 && <p className="btn-cancel">Service Provider Rejected It</p>}
+                        {details.status == 99 && <p className="btn-cancel">Client Cancelled It</p>}
+                        {details.status == 90 && <p className="btn-cancel">Wait for dispute to be resolved</p>}
+                        {details.status == 201 && <p className="btn-cancel">The dispute is resolved</p>}
+                        </div>
+                   </div>     
                 </>
             }
         </>

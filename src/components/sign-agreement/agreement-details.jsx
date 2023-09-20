@@ -69,24 +69,24 @@ export function AgreementDetails(props){
         let minutes = Math.floor(Math.abs(diffTimestamp) % 60);
 
         let timeLeftStr = "";
-        if (isNegative) {
-            timeLeftStr += "-";
-        }
         if (days > 0) {
             timeLeftStr += `${days} day${days > 1 ? 's' : ''} `;
         }
-        if (hours > 0 || days > 0) {
+        if (hours > 0) {
             timeLeftStr += `${hours} hour${hours > 1 ? 's' : ''} `;
         }
-        if (minutes > 0 || (hours === 0 && days === 0)) {
+        if (minutes > 0) {
             timeLeftStr += `${minutes} minute${minutes > 1 ? 's' : ''}`;
         }
-        return timeLeftStr.trim();
+        if (isNegative) {
+            timeLeftStr = "Expired";
+        }
+        return timeLeftStr;
     }
 
     const getClient = () => {
         if(isConnected && props.client)
-            return <a target="_blank" href={"https://testnets.opensea.io/" + props.client}><span className="address">{props.client}</span></a>;
+            return <a target="_blank" rel="noreferrer noopener" href={"https://testnets.opensea.io/" + props.client}><span className="address">{props.client}</span></a>;
 
         if(isConnected && props.client_email)
             return <span className="address">{props.client_email}</span>;
@@ -94,7 +94,7 @@ export function AgreementDetails(props){
 
     const getServiceProvider = () => {
         if(isConnected && props.service_provider)
-            return <a target="_blank" href={"https://testnets.opensea.io/" + props.service_provider}><span className="address">{props.service_provider}</span></a>;
+            return <a target="_blank" rel="noreferrer noopener" href={"https://testnets.opensea.io/" + props.service_provider}><span className="address">{props.service_provider}</span></a>;
 
         if(isConnected && props.service_provider_email)
             return <span className="address">{props.service_provider_email}</span>;

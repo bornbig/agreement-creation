@@ -10,11 +10,12 @@ import ERC20ABI from "../data/abi/ERC20.json";
 import ProofABI from "../data/abi/Proof.json";
 import transakSDK from '@transak/transak-sdk';
 import { estimateAndExecute } from "../helpers/utils";
+import { LockScreen } from "../components/sign-agreement/LockScreen";
 
 export function OffchainAgreement(){
     const [details, setDetails] = useState({});
     const [skills, setSkills] = useState([]);
-    const [detailsLoading, setDetailsLoading] = useState(false);
+    const [detailsLoading, setDetailsLoading] = useState(true);
     const [escrowAddress, setEscrowAddress] = useState(false);
     const [allowance, setAllowance] = useState(0);
     const [allowanceLoading, setallowanceLoading] = useState(false);
@@ -37,7 +38,6 @@ export function OffchainAgreement(){
             console.log("called")
             if(web3){
                 console.log("called NEt")
-                setDetailsLoading(true);
                 
                 const details = await getOffchainAgreement(params.id)
     
@@ -55,15 +55,16 @@ export function OffchainAgreement(){
         } catch (e) {
             dispatch(showNotification("Error while fetching data", dispatch, "danger"));
         }
+        setDetailsLoading(false);
     }
 
     const updateSkills = async (skills_hash) => {
         if(skills_hash){
-            setDetailsLoading(true)
             const ipfsDetails = await getDetails(skills_hash);
             setSkills(ipfsDetails);
             setDetailsLoading(false)
         }
+        setDetailsLoading(false);
     }
 
     const signAndProceed = async () => {
@@ -185,7 +186,8 @@ export function OffchainAgreement(){
                 ? <><div className="lds-ring"><div></div><div></div><div></div><div></div></div></>
                 : <>
                     <h1 className="heading"> Agreement </h1>
-
+                    <div className={!isConnected ? "p-relative" : ""}>
+                    {!isConnected && <LockScreen />}
                    <AgreementDetails {...details} showProgressBar={false} usdPrice={usdPrice} setUsdPrice={setUsdPrice} />
 
                     <div>
@@ -215,7 +217,7 @@ export function OffchainAgreement(){
                             </>
                         )}
                      </div>
-                        
+                    </div>  
                 </>
             }
         </>

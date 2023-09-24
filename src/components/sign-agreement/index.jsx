@@ -36,11 +36,11 @@ export function SignAgreement (props){
     const approveTokens = async () => {
         try {
             setallowanceLoading(true);
-        let contract = new web3.eth.Contract(ERC20ABI, props.details.token);
+            let contract = new web3.eth.Contract(ERC20ABI, props.details.token);
 
-        let approved = await contract.methods.approve(props.escrowAddress, props.details.price);
+            let approved = await contract.methods.approve(props.escrowAddress, props.details.price);
 
-        await estimateAndExecute(web3, approved, wallet)
+            await estimateAndExecute(web3, approved, wallet)
 
             if(approved){
                 setAllowance(props.details.price);
@@ -49,8 +49,8 @@ export function SignAgreement (props){
             if(e == "GASFEE_ERROR"){
                 dispatch(showNotification("Gas Fee Error", dispatch, "danger"));
             }else{
-            console.log(e)
-            dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch, "danger"));
+                console.log(e)
+                dispatch(showNotification("Unable to Approve Token: Insufficient Gas Fee", dispatch, "danger"));
             }
         }
         setallowanceLoading(false)
@@ -60,16 +60,18 @@ export function SignAgreement (props){
     const signAndProceed = async () => {
         try{
             setSignLoading(true);
-                
-                let skills_hash = "";
-                if(!props.details.mode){
+
+            (allowance < props.details?.price) && await approveTokens();
+
+            let skills_hash = "";
+            if(!props.details.mode){
                 skills_hash = await storeSkills(skills);
-                }
+            }
 
-                const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
-                const signagreement = await contract.methods.signAgreement(props.agreementAddress, params.id, skills_hash);
+            const contract = new web3.eth.Contract(EscrowABI, props.escrowAddress);
+            const signagreement = await contract.methods.signAgreement(props.agreementAddress, params.id, skills_hash);
 
-                await estimateAndExecute(web3, signagreement, wallet)
+            await estimateAndExecute(web3, signagreement, wallet)
 
         } catch(e){
             if(e == "GASFEE_ERROR"){
@@ -141,9 +143,9 @@ export function SignAgreement (props){
             widgetHeight: "80%",
             walletAddress: wallet,
             email: userInfo.email
-          });
+        });
           
-          transak.init();
+        transak.init();
     }
 
     return (
@@ -153,16 +155,10 @@ export function SignAgreement (props){
                 <div className="flexBetween">
                     {props.details?.mode &&
                         ((balance.raw >= props.details.price) ?
-                            ((allowance < props.details?.price)? 
-                                (<div className="btn withPadding" onClick={() => !allowanceLoading && approveTokens()}>
-                                    Approve Tokens and Sign 
-                                </div>)
-                            :
-                                (<div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
-                                    {signLoading && <div className="loading"><div className="bar"></div></div>}
-                                    Sign & Proceed
-                                </div>)
-                            )
+                           (<div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
+                                {signLoading && <div className="loading"><div className="bar"></div></div>}
+                                Sign & Proceed
+                            </div>)
                             :
                             <div className="btn withPadding" onClick={addFunds}>Add Funds</div>
                         )

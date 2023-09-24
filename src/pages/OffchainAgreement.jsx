@@ -71,7 +71,7 @@ export function OffchainAgreement(){
         try{
             console.log(details)
             setSignLoading(true);
-            (allowance < details?.price) && approveTokens();
+            (allowance < details?.price) && await approveTokens();
             let skills_hash = details.skills_hash;
             if(!details.mode){
                 skills_hash = await storeSkills(skills);

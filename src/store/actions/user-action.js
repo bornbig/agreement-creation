@@ -1,7 +1,10 @@
 import axios from "axios";
-import { API_ENDPOINT } from "../../config/config";
+import { API_ENDPOINT, CONTRACT } from "../../config/config";
 import ERC20ABI from "../../data/abi/ERC20.json";
 import { getUSDQuote } from "./price-discovery";
+import Cookies from 'universal-cookie';
+
+const network = '0x13881';
 
 export const SET_USER_DATA = 'SET_USER_DATA';
 export function setUserWalletConnection(wallet, chainId, web3, userInfo) {
@@ -33,7 +36,9 @@ export function setWalletDisconnect() {
 }
 
 export async function getUSDTBalance(wallet) {
-  const url = `https://api.polygonscan.com/api?module=account&action=tokenbalance&contractaddress=0xc2132d05d31c914a87c6611c10748aeb04b58e8f&address=${wallet}&tag=latest`
+  const tokenAddress = CONTRACT[network].tokens[0].contract;
+  const host = network == '0x13881' ? 'api-testnet.polygonscan.com' : 'api.polygonscan.com';
+  const url = `https://${host}/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${wallet}&tag=latest`
   const balanceResponse = (await axios(url)).data;
 
   return balanceResponse;
@@ -43,7 +48,7 @@ export const SET_USER_BALANCE = 'SET_USER_BALANCE';
 export async function updateUserBalance(wallet){
   const balanceResponse = await getUSDTBalance(wallet);
 
-  const humanReadableBalance = balanceResponse.result / (10 ** 6);
+  const humanReadableBalance = balanceResponse.result / (10 ** CONTRACT[network].tokens[0].decimals);
   const usdBalance = await getUSDQuote(humanReadableBalance);
 
 
@@ -71,6 +76,8 @@ export async function submitIdToken(token, wallet) {
     wallet: wallet
   })).data;
 
+  const cookies = new Cookies();
+  cookies.set('user_auth_token', `Bearer ${saveDataResponse?.token}`, { path: '*' });
   console.log(saveDataResponse)
 }
 
@@ -79,13 +86,16 @@ export async function getUserWallet(email) {
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   )){
 
+    const cookies = new Cookies();
+    const token = cookies.get('user_auth_token');
+
     const url = `${API_ENDPOINT}/user/user-wallet?email=${email}`
-    const userWallet = (await axios(url)).data;
+    const userWallet = (await axios(url, {headers: {"Authorization":  token}})).data;
 
     if(userWallet.wallet){
       return userWallet.wallet
     }else{
-      return null;
+      return email;
     }
   }
 

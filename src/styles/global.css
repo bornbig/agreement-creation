@@ -364,7 +364,7 @@ a{
   .div-cancel{
     display: flex;
     padding: 30px 0px;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     text-align: left;
     color: #393939;
@@ -372,14 +372,15 @@ a{
   }
   
   .btn-cancel{
-    background-color: rgb(249, 249, 255);
+    background-color: #e6e6fa;
+    color: #70709f;
     width: 350px;
-    height: 55px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: left;
-    border-radius: 5px;
+    border-radius: 8px;
     
   }
 

@@ -85,19 +85,19 @@ export function AgreementDetails(props){
     }
 
     const getClient = () => {
-        if(isConnected && props.client)
+        if(props.client && !props.emails?.client)
             return <a target="_blank" rel="noreferrer noopener" href={"https://testnets.opensea.io/" + props.client}><span className="address">{props.client}</span></a>;
 
-        if(isConnected && props.client_email)
-            return <span className="address">{props.client_email}</span>;
+        if(props.client_email || props.emails?.client)
+            return <span className="address">{props.client_email || props.emails.client}</span>;
     }
 
     const getServiceProvider = () => {
-        if(isConnected && props.service_provider)
+        if(props.service_provider && !props.emails?.service_provider)
             return <a target="_blank" rel="noreferrer noopener" href={"https://testnets.opensea.io/" + props.service_provider}><span className="address">{props.service_provider}</span></a>;
 
-        if(isConnected && props.service_provider_email)
-            return <span className="address">{props.service_provider_email}</span>;
+        if(props.service_provider_email || props.emails?.service_provider)
+            return <span className="address">{props.service_provider_email || props.emails.service_provider}</span>;
     }
 
     const formatNumber = (number) => {
@@ -128,8 +128,9 @@ export function AgreementDetails(props){
             {detailsLoading
                 ? <><div className="lds-ring"><div></div><div></div><div></div><div></div></div></>
                 : <>
+                {isConnected &&
                     <div className="type">The Agreement is between Client ( {getClient()} ) and Service Provider ( {getServiceProvider()} )</div>
-
+                }
                     <div className="agreement-details">
                         {ipfsJson.details}
                     </div>

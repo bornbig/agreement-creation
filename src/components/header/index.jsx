@@ -192,14 +192,15 @@ function Header() {
           </div>
           
           <div className='connected'  >
-              <div className='wallet'>
-                <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={() => textcopying()} />
-                <span>{wallet}</span>
-                
-              </div>
+              <div className="email">{userInfo.email}</div>
               <div className="info">
                 <div className="balance">${balance.usdBalance}</div>
                 <div className="label">Balance</div>
+                <div className='wallet'>
+                  <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={() => textcopying()} />
+                  <span>{wallet}</span>
+                  
+                </div>
                 <a className='btnPrivateKey' href="/add-funds">Add Funds</a>
 
                 <div className='logout b' onClick={() => setIsSendTokenOpen(true)}>Send Token</div>

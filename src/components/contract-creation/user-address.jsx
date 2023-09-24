@@ -20,6 +20,7 @@ export function UserAddress(props){
             props.setNextLoading(true)
             const wallet = await getUserWallet(value);
 
+            console.log(wallet);
             if(Web3.utils.isAddress(wallet)){
                 if(props.userType == 1){
                     props.setClient(wallet);

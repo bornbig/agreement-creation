@@ -173,7 +173,7 @@ export function CloseAgreement(props){
                             <div className="btn withPadding withMargin">
                             {submitDeliveryLoading && <div className="loading"><div className="bar"></div></div>}
                                 <span>Submit Delivery</span>
-                                <input type="file" onChange={(e) => submitDelivery(e)}  />
+                                <input type="file" onChange={(e) => submitDelivery(e)} accept=".zip" />
                             </div>
 
 

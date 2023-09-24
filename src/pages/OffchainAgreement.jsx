@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { showNotification } from "../store/actions/notification-action";
-import { getDetails, getOffchainAgreement, storeSkills } from "../store/actions/agreement-action";
+import { getAgreementEmails, getDetails, getOffchainAgreement, storeSkills } from "../store/actions/agreement-action";
 import { Skills } from "../components/sign-agreement/skills";
 import EscrowABI from "../data/abi/Escrow.json";
 import ERC20ABI from "../data/abi/ERC20.json";

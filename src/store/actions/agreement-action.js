@@ -2,6 +2,7 @@ import axios from 'axios';
 import Moralis from "moralis";
 import lighthouse from '@lighthouse-web3/sdk';
 import { API_ENDPOINT, LIGHTHOSE_API_KEY, MORALIS_API_KEY } from '../../config/config';
+import Cookies from 'universal-cookie';
 
 
 export async function storeDetails(details, delivery){
@@ -180,14 +181,27 @@ export async function getAgreements(wallet){
 
 export async function createOfflineAgreement(chain, agreement, agreement_object){
   const url = `${API_ENDPOINT}/agreement/offline/create`;
-  const creation = (await axios.post(url, {chain, agreement, agreement_object})).data;
+  const cookies = new Cookies();
+  const token = cookies.get('user_auth_token');
+  const creation = (await axios.post(url, {chain, agreement, agreement_object},  {headers: {"Authorization": token}})).data;
 
   return creation._id;
 }
 
 export async function getOffchainAgreement(id){
   const url = `${API_ENDPOINT}/agreement/${id}`;
-  const agreementDetails = (await axios.get(url)).data;
+  const cookies = new Cookies();
+  const token = cookies.get('user_auth_token');
+  const agreementDetails = (await axios.get(url, {headers: {"Authorization": token}})).data;
 
   return agreementDetails;
+}
+
+export async function getAgreementEmails(chain, agreement, id){
+  const url = `${API_ENDPOINT}/agreement/${parseInt(chain)}/${agreement}/${id}`;
+  const cookies = new Cookies();
+  const token = cookies.get('user_auth_token');
+  const agreementEmails = (await axios.get(url, {headers: {"Authorization": token}})).data;
+
+  return agreementEmails;
 }

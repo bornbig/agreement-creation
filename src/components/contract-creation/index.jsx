@@ -80,15 +80,16 @@ export function ContractCreation(props){
 
             const deadline = await getDeadlineTimestamp();
 
-            let tokenId;
+            let uri;
             if(serviceProvider != "" && client != ""){
-                tokenId = await createOnchainAgreement(ipfs_hash, skills_hash, deadline);
-                dispatch(showNotification("Agreement is created", dispatch));
-                navigate(`/sbt/${CONTRACT[chainId].serviceProvider.contract}/${tokenId}`);
+                uri = await createOnchainAgreement(ipfs_hash, skills_hash, deadline);
             }else{
-                tokenId = await createOffChainAgreement(ipfs_hash, skills_hash, deadline);
+                uri = await createOffChainAgreement(ipfs_hash, skills_hash, deadline);
+            }
+
+            if(uri){
                 dispatch(showNotification("Agreement is created", dispatch));
-                navigate(`/offchain/${tokenId}`);
+                navigate(uri);
             }
             
         }catch(e){
@@ -110,7 +111,7 @@ export function ContractCreation(props){
             const service_provider_email = mode? userInfo?.email : secondPartyEmail;
             const client_email = !mode? userInfo?.email : secondPartyEmail;
 
-            const tokenId = createOfflineAgreement(chainId, CONTRACT[chainId].serviceProvider.contract, {
+            const tokenId = await createOfflineAgreement(chainId, CONTRACT[chainId].serviceProvider.contract, {
                 escrow: CONTRACT[chainId].escrow.contract,
                 client,
                 service_provider: serviceProvider,
@@ -124,7 +125,7 @@ export function ContractCreation(props){
                 client_email,
             });
 
-            return tokenId;
+            return `/offchain/${tokenId}`;
         } catch (e) {
             dispatch(showNotification("Unable To Creating Agreement", dispatch, "danger"));
         }
@@ -149,7 +150,7 @@ export function ContractCreation(props){
 
             const tokenId = transaction.events.Transfer[0].returnValues.tokenId;
 
-            return tokenId;
+            return `/sbt/${CONTRACT[chainId].serviceProvider.contract}/${tokenId}`;
         }catch(e){
             if(e == "GASFEE_ERROR"){
                 dispatch(showNotification("Gas Fee Error", dispatch, "danger"));

@@ -42,9 +42,9 @@ function Header() {
       },
       adapterSettings: {
         whiteLabel: {
-          name: "Pentonium",
-          logoLight: "https://pentonium.com/images/logo.png",
-          logoDark: "https://pentonium.com/images/logo.png",
+          name: "woople",
+          logoLight: "https://app.woople.io/images/Woople%20logo-02.png",
+          logoDark: "https://app.woople.io/images/Woople%20logo-02.png",
           defaultLanguage: "en",
           dark: false, // whether to enable dark mode. defaultValue: false
         },
@@ -146,13 +146,14 @@ function Header() {
       let _accounts = await web3.eth.getAccounts();
 
       if(info.idToken){
-        submitIdToken(info.idToken, _accounts[0])
+        await submitIdToken(info.idToken, _accounts[0]);
       }
 
       dispatch(setUserWalletConnection(_accounts[0], "0x13881", web3, info));
       dispatch(await updateUserBalance(_accounts[0]));
 
     }catch(e){
+      console.log(e);
       dispatch(showNotification("Error while integrating Web3Auth", dispatch, "danger"));
     }
   }
@@ -191,16 +192,24 @@ function Header() {
             <span className='balance'>${balance.usdBalance}</span>
           </div>
           
-          <div className='connected'  >
+          <div className='connected'>
+            {userInfo.email ?
               <div className="email">{userInfo.email}</div>
+              :
+              <div className='wallet p20px'>
+                  <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={() => textcopying()} />
+                  <span>{wallet}</span>
+              </div>
+            }
               <div className="info">
                 <div className="balance">${balance.usdBalance}</div>
                 <div className="label">Balance</div>
-                <div className='wallet'>
-                  <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={() => textcopying()} />
-                  <span>{wallet}</span>
-                  
-                </div>
+                {userInfo.email &&
+                  <div className='wallet'>
+                    <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={() => textcopying()} />
+                    <span>{wallet}</span>
+                  </div>
+                }
                 <a className='btnPrivateKey' href="/add-funds">Add Funds</a>
 
                 <div className='logout b' onClick={() => setIsSendTokenOpen(true)}>Send Token</div>

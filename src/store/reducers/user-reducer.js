@@ -1,8 +1,9 @@
-import { SET_ON_NETWORK_CHANGE, SET_USD_QUOTE, SET_USER_BALANCE, SET_USER_DATA, SET_WALLET_DISCONNECT } from "../actions/user-action";
+import { SET_ON_NETWORK_CHANGE, SET_USD_QUOTE, SET_USER_BALANCE, SET_USER_DATA, SET_USER_TOKEN, SET_WALLET_DISCONNECT } from "../actions/user-action";
 
 const initialState = {
     userLoading: false,
     isConnected: false,
+    token: null,
     wallet: null,
     chainId: null,
     web3: null,
@@ -39,6 +40,11 @@ export default function (state = initialState, action) {
                     humanReadable: action.humanReadableBalance,
                     usdBalance: action.usdBalance
                 }
+            }
+        case SET_USER_TOKEN:
+            return {
+                ...state,
+                token: action.token
             }
         default:
             return state;

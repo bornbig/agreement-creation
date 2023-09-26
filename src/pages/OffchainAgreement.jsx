@@ -188,7 +188,9 @@ export function OffchainAgreement(){
                     <h1 className="heading"> Agreement </h1>
                     <div className={!isConnected ? "p-relative" : ""}>
                     {!isConnected && <LockScreen />}
-                   <AgreementDetails {...details} showProgressBar={false} usdPrice={usdPrice} setUsdPrice={setUsdPrice} />
+                    {details.ipfs_hash &&
+                        <AgreementDetails {...details} emails={{client: details.client_email, service_provider: details.service_provider_email}} showProgressBar={false} usdPrice={usdPrice} setUsdPrice={setUsdPrice} />
+                    }
 
                     <div>
                         {isConnected && checkifClient() && (

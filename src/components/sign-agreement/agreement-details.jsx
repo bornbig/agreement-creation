@@ -13,17 +13,13 @@ export function AgreementDetails(props){
     const [ticker, setTicker] = useState("");
     const [humanReadableTokenAmount, setHumanReadableTokenAmount] = useState(0);
     const [detailsLoading, setDetailsLoading] = useState(true);
+    const [remainingTime, setRemainingTime] = useState(0);
     const { wallet, web3, isConnected, chainId } = useSelector((state) => state.user);
-    const [timestamp, setTimestamp] = useState();
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         updateDetails(props.ipfs_hash);
-        if(!timestamp){
-            setTymstamp();
-        }
-        setIpfsJson({})
     }, [])
 
     const updateDetails = async (ipfs_hash) => {
@@ -38,8 +34,9 @@ export function AgreementDetails(props){
                 setTicker(ticker);
                 setHumanReadableTokenAmount(cryptoAmount);
                 getPriceInUSD(cryptoAmount)
+                getRemainingTime();
             }
-    
+
             if(ipfs_hash){
                 const ipfsDetails = await getDetails(ipfs_hash);
                 setIpfsJson(ipfsDetails);
@@ -53,15 +50,11 @@ export function AgreementDetails(props){
         setDetailsLoading(false)
     }
 
-    const setTymstamp = async () => {
+
+    const getRemainingTime = async() => {
         const blockNumber = await web3?.eth.getBlockNumber();
         const timestamp = (await web3?.eth.getBlock(blockNumber))?.timestamp;
-        if(timestamp){
-            setTimestamp(timestamp);
-        }
-    }
 
-    const getRemainingTime = () => {
         const diffTimestamp = (props.deadline - timestamp) / 60;
         let isNegative = diffTimestamp < 0;
         let days = Math.floor(Math.abs(diffTimestamp) / (24 * 60));
@@ -81,7 +74,8 @@ export function AgreementDetails(props){
         if (isNegative) {
             timeLeftStr = "Expired";
         }
-        return timeLeftStr;
+        // return timeLeftStr;
+        setRemainingTime(timeLeftStr);
     }
 
     const getClient = () => {
@@ -138,7 +132,7 @@ export function AgreementDetails(props){
                     {isConnected && <div className="agreement-price">~${ props.usdPrice } <span>({ humanReadableTokenAmount } {ticker})</span>
                         {props.status != 105 && wallet?.toLowerCase() == props.client?.toLowerCase() &&
                         <div>Release the funds only when the Service Provider has delivered: <b>{ipfsJson.delivery}</b></div>} <br></br>
-                        <div>Time Left: <b>{(getRemainingTime())}</b></div> 
+                        <div>Time Left: <b>{(remainingTime)}</b></div> 
                         {/* Have to work on */}
                     </div>}
                     

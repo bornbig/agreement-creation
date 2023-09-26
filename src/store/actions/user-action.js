@@ -69,16 +69,20 @@ export async function sendToken(web3, token, wallet, amount) {
 }
 
 
+export const SET_USER_TOKEN = 'SET_USER_TOKEN';
 export async function submitIdToken(token, wallet) {
   const url = `${API_ENDPOINT}/user/verify`
   const saveDataResponse = (await axios.post(url, {
     token: token,
-    wallet: wallet
+    wallet: wallet,
   })).data;
 
   const cookies = new Cookies();
   cookies.set('user_auth_token', `Bearer ${saveDataResponse?.token}`, { path: '*' });
-  console.log(saveDataResponse)
+
+  return {
+    token: saveDataResponse?.token
+  }
 }
 
 export async function getUserWallet(email) {

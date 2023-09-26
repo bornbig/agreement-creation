@@ -351,6 +351,10 @@ a{
     font-size: 1.5rem;
     color: #333;
   }
+
+  .p20px{
+    padding: 20px !important;
+  }
   
   .no-spinner::-webkit-inner-spin-button,
   .no-spinner::-webkit-outer-spin-button {

@@ -69,7 +69,7 @@ export function ContractCreation(props){
 
     const createAndSignAgreement = async () => {
         try{
-            setNextLoading                         (true);
+            setNextLoading(true);
             const ipfs_hash = await storeDetails(details, delivery)
 
             let skills_hash = "";
@@ -96,7 +96,7 @@ export function ContractCreation(props){
             console.log(e);
             dispatch(showNotification("Error: Unable to Create Agreement", dispatch, "danger"));
         }
-        setNextLoading                         (false);
+        setNextLoading(false);
     }
 
     const createOffChainAgreement = async (ipfs_hash, skills_hash, deadline) => {

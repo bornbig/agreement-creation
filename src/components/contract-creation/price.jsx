@@ -38,16 +38,13 @@ export function Price(props){
     
 
     const updateUsdtPrice = async (usdPrice) => {
-        try {
+        try {     
             const usdtReposnse = await getUSDTQuote(usdPrice , dispatch);
+            const roundedNumber = parseFloat((usdtReposnse.response.cryptoAmount).toFixed(decimals));
+            props.setPrice(new BigNumber(roundedNumber).mul(bnDecimals).toString());
 
-            if(usdtReposnse){
-                props.setPrice(new BigNumber(usdtReposnse.response.cryptoAmount).mul(bnDecimals).toString());
-            }else{
-                props.setPrice(new BigNumber(usdPrice).mul(bnDecimals).toString());
-            }
         } catch (e) {
-            // console.log("Something went wrong")
+            props.setPrice(new BigNumber(usdPrice*0.986).mul(bnDecimals).toString());
         }
     }
 

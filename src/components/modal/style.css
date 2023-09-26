@@ -68,11 +68,11 @@
 }
 
 .modal .toggle-btn {
-  display: flex;
-  width: 100%;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  overflow: hidden;
+    display: flex;
+    width: 100%;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    overflow: hidden;
 }
   
 .modal .toggle-btn div {

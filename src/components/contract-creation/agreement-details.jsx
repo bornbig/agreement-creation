@@ -5,7 +5,7 @@ export function AgreementDetails(props){
     
     useEffect(() => {
       // When the component mounts, set the cursor position to the end
-      textareaRef.current.selectionStart = textareaRef.current.selectionEnd = textareaRef.current.value.length;
+    textareaRef.current.selectionStart = textareaRef.current.selectionEnd = textareaRef.current.value.length;
     }, []);
 
     return (

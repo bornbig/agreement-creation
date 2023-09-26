@@ -3,7 +3,6 @@ import { getDetails } from "../../store/actions/agreement-action"
 import { useDispatch, useSelector } from "react-redux";
 import { CONTRACT } from "../../config/config";
 import { showNotification } from '../../store/actions/notification-action'
-import BigNumber from "bignumber.js";
 import "./style.css"
 import { getUSDQuote } from "../../store/actions/price-discovery";
 

@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react"
 import { getUserWallet } from "../../store/actions/user-action"
 import Web3 from "web3";
-import { useDispatch } from "react-redux";
 
 
 export function UserAddress(props){
-    const dispatch = useDispatch();
 
     const [isValidInput, setIsValidInput] = useState(false);
 
@@ -44,11 +42,11 @@ export function UserAddress(props){
     const updateValidInput = (value) => {
         if(value.match(
             /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          ) || Web3.utils.isAddress(value)){
+            ) || Web3.utils.isAddress(value)){
             setIsValidInput(true)
-          }else{
+        }else{
             setIsValidInput(false)
-          }
+        }
     }
 
     const getUserWalletText = () => {
@@ -63,7 +61,7 @@ export function UserAddress(props){
 
     return (
         <>
-          <div className="contract-creation">
+            <div className="contract-creation">
                 <div className="question">
                     As the {props.userType == 1 && "Service Provider"}{props.userType == 2 && "Client"}, kindly provide the email address or wallet address of the  
                     {props.userType == 2 && " Service Provider."} {props.userType == 1 && "Client."}

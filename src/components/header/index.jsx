@@ -1,10 +1,9 @@
 import Web3 from 'web3';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUSDTBalance, setUserNetwork, setUserWalletConnection, setWalletDisconnect, submitIdToken, updateUserBalance } from '../../store/actions/user-action';
+import { setUserWalletConnection, setWalletDisconnect, submitIdToken, updateUserBalance } from '../../store/actions/user-action';
 import { showNotification } from '../../store/actions/notification-action';
 import "./style.css";
-import { Modal } from '../modal';
 import { Web3Auth } from '@web3auth/modal';
 import { CHAIN_NAMESPACES, WALLET_ADAPTERS } from "@web3auth/base";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";

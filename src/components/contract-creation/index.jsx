@@ -228,24 +228,18 @@ export function ContractCreation(props){
             {(step == 3) && <AgreementDetails nextStep={setStep} step={step} details={details} setDetails={setDetails} />}
             {(step == 4) && <Deliverables nextStep={setStep} step={step} delivery={delivery} setDelivery={setDelivery}  />}
             {(step == 5) && <Price approveTokens={approveTokens} nextLoading={nextLoading} setNextLoading={setNextLoading} nextStep={setStep} step={step}
-                                 sign={createAndSignAgreement} allowance={allowance} price={price}
-                                  setPrice={setPrice} userType={userType} setSelectedToken={setSelectedToken}
-                                  selectedToken={selectedToken} setViewPrice={setViewPrice} viewPrice={viewPrice}/>}
+                                sign={createAndSignAgreement} allowance={allowance} price={price}
+                                setPrice={setPrice} userType={userType} setSelectedToken={setSelectedToken}
+                                selectedToken={selectedToken} setViewPrice={setViewPrice} viewPrice={viewPrice}/>}
             {(step == 6) && <Skills nextLoading={nextLoading} nextStep={setStep} step={step} sign={createAndSignAgreement} skills={skills} setSkills={setSkills}  />}
         </> ) }
         {activeModel === "Payment" && (<>
             <h1 className='developer-lines'>Coming soon...</h1>
         </>)}
-       
-            
-            </>
+
+
+        </>
         </Modal> 
-       
-        {/* {
-            (userType == 2 && allowance < price)?
-                <div className="btn" onClick={approveTokens}>Approve Tokens</div>
-            :
-                <div className="btn" onClick={createAndSignAgreement}>Create Contract</div>
-        }  */}
+
     </>)
 }

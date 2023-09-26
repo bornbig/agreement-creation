@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector  } from "react-redux";
 import { showNotification } from "../../store/actions/notification-action";
-import { Navigate} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import EscrowABI from "../../data/abi/Escrow.json";
 import ERC20ABI from "../../data/abi/ERC20.json";

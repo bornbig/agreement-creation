@@ -113,7 +113,9 @@
     cursor: pointer;
     font-size: 22px;
 }
+
 .p-relative {
+    height: 190px;
     z-index: 10;
     position: relative;
     padding: 30px 40px;

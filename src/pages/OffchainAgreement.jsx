@@ -174,9 +174,9 @@ export function OffchainAgreement(){
             widgetHeight: "80%",
             walletAddress: wallet,
             email: userInfo.email
-          });
-          
-          transak.init();
+        });
+        
+        transak.init();
     }
     console.log(balance)
 
@@ -218,7 +218,7 @@ export function OffchainAgreement(){
                                 </div>
                             </>
                         )}
-                     </div>
+                    </div>
                     </div>  
                 </>
             }

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 export function Deadline(props){
 
     function CheckDeadlineValue(deadlineValue) {
-       
+    
         const validValueRegex = /^(?!0+$)\d+$/; 
     
         if (!validValueRegex.test(deadlineValue)) {
@@ -29,12 +29,12 @@ export function Deadline(props){
                 <div className="price-box">
                     <input type="number" className="no-spinner" onChange={(e) => props.setDeadlineValue(e.target.value)} value={props.deadlineValue || ''} autoFocus/>
                     <div className="token-drop-down">
-                        <div className="selected-token">{props.deadlineRange} <i className="arrow down"></i></div>
-                        <div className="drop-down-list">
-                            <div className={"item " + (props.deadlineRange === "Days" && " selected" )} onClick={() => props.setDeadlineRange("Days")}>Days</div>
-                            <div className={"item " + (props.deadlineRange === "Hours" && " selected" )} onClick={() => props.setDeadlineRange("Hours")}>Hours</div>
-                            <div className={"item " + (props.deadlineRange === "Minutes" && " selected" )} onClick={() => props.setDeadlineRange("Minutes")}>Minutes</div>
-                        </div>
+                        {/* <div className="selected-token">{props.deadlineRange} <i className="arrow down"></i></div> */}
+                        <select className="drop-down-list">
+                            <option className={"item " + (props.deadlineRange === "Days" && " selected" )} onClick={() => props.setDeadlineRange("Days")}>Days</option>
+                            <option className={"item " + (props.deadlineRange === "Hours" && " selected" )} onClick={() => props.setDeadlineRange("Hours")}>Hours</option>
+                            <option className={"item " + (props.deadlineRange === "Minutes" && " selected" )} onClick={() => props.setDeadlineRange("Minutes")}>Minutes</option>
+                        </select>
                     </div>
                 </div>
 

@@ -115,7 +115,7 @@ hr.line{
 
 .modal .agreement-details{
     border: none;
-    overflow: scroll;
+    overflow: hidden;
 }
 
 .modal .address-box input{ 
@@ -189,36 +189,10 @@ hr.line{
 }
 
 .modal .price-box .token-drop-down .drop-down-list{
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
+    font-size: 19px;
     width: 100%;
     text-align: center;
-    background-color: white;
-    box-shadow: 0px 10px 15px rgb(0 0 0 / 10%);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.modal .price-box .token-drop-down:hover .drop-down-list, .modal .price-box .drop-down-list:hover{
-    display: initial;
-}
-
-.modal .price-box .token-drop-down .drop-down-list .item{
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-.modal .price-box .token-drop-down .drop-down-list .item:hover{
-    background-color: #f9f9f9;
-}
-
-.modal .price-box .token-drop-down .drop-down-list .item.selected{
-    background-color: #e8ddf9;
+    border: none !important;
 }
 
 .modal .agreement-details textarea{

@@ -60,10 +60,9 @@ export async function updateUserBalance(wallet){
   };
 }
 
-export async function sendToken(web3, token, wallet, amount) {
+export async function sendToken(web3, token, wallet, owner, amount) {
     let contract = new web3.eth.Contract(ERC20ABI, token);
-    
-    await contract.methods.transfer(wallet, amount).call();
+    await contract.methods.transfer(wallet, amount).send({from: owner});
 
   return true;
 }

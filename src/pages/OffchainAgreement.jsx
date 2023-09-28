@@ -69,9 +69,8 @@ export function OffchainAgreement(){
 
     const signAndProceed = async () => {
         try{
-            console.log(details)
             setSignLoading(true);
-            (allowance < details?.price) && await approveTokens();
+
             let skills_hash = details.skills_hash;
             if(!details.mode){
                 skills_hash = await storeSkills(skills);
@@ -93,9 +92,13 @@ export function OffchainAgreement(){
                 details.deadline
             );
 
-            await estimateAndExecute(web3, agreementTrx, wallet);
+            const trx = await estimateAndExecute(web3, agreementTrx, wallet);
 
-            const tokenId = agreementTrx.events.Transfer[0].returnValues.tokenId;
+            const tokenId = trx.events.Transfer[0].returnValues.tokenId;
+
+            if(wallet == client){
+                (allowance < details?.price) && await approveTokens();
+            }
             
             const contract = new web3.eth.Contract(EscrowABI, escrowAddress);
             const signagreement = await contract.methods.signAgreement(details.agreement, tokenId, skills_hash);

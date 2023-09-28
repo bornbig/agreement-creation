@@ -69,7 +69,7 @@ export function ContractCreation(props){
 
     const createAndSignAgreement = async () => {
         try{
-            setNextLoading                         (true);
+            setNextLoading(true);
             const ipfs_hash = await storeDetails(details, delivery)
 
             let skills_hash = "";
@@ -79,6 +79,10 @@ export function ContractCreation(props){
             }
 
             const deadline = await getDeadlineTimestamp();
+
+            if(wallet == client){
+                (allowance < price) && await approveTokens()
+            }
 
             let uri;
             if(serviceProvider != "" && client != ""){

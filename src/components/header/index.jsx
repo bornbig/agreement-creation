@@ -149,12 +149,16 @@ function Header() {
       }
 
       dispatch(setUserWalletConnection(_accounts[0], "0x13881", web3, info));
-      dispatch(await updateUserBalance(_accounts[0]));
+      triggerUpdateBalance(_accounts[0]);
 
     }catch(e){
       console.log(e);
       dispatch(showNotification("Error while integrating Web3Auth", dispatch, "danger"));
     }
+  }
+
+  const triggerUpdateBalance = async (wallet) => {
+    dispatch(await updateUserBalance(wallet));
   }
 
   const logout = async () => {
@@ -221,7 +225,7 @@ function Header() {
         ) : (
           <div onClick={openModel} className="btn connect">Login</div>
         )}
-        <SendToken isOpen={isSendTokenOpen} closeModal={setIsSendTokenOpen} />
+        <SendToken isOpen={isSendTokenOpen} closeModal={setIsSendTokenOpen} triggerUpdateBalance={triggerUpdateBalance} />
         <PrivateKeyModel privateKey={privateKey} isOpen={showPrivateKeyModel} closeModal={setShowPrivateKeyModel} />
     </div>
   );

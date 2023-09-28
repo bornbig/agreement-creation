@@ -20,7 +20,7 @@ export const CONTRACT = {
             "abi" : proofABI
         },
         "escrow": {
-            "contract": "0xaBe726AD6f812935476e768D9b949eaF847390a5",
+            "contract": "0xbeb3109b7762E0bFc5c83300c4Ef40E7aAD389F8",
             "abi": escrowABI
         },
         "tokens": tokens80001,

@@ -60,7 +60,7 @@ export function SignAgreement (props){
         try{
             setSignLoading(true);
 
-            (allowance < props.details?.price) && await approveTokens();
+            (wallet == props.client, allowance < props.details?.price) && await approveTokens();
 
             let skills_hash = "";
             if(!props.details.mode){

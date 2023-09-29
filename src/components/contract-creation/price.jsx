@@ -44,7 +44,7 @@ export function Price(props){
             props.setPrice(new BigNumber(roundedNumber).mul(bnDecimals).toString());
 
         } catch (e) {
-            props.setPrice(new BigNumber(usdPrice*0.986).mul(bnDecimals).toString());
+            props.setPrice(new BigNumber(usdPrice).mul(bnDecimals).toString());
         }
     }
 
@@ -53,9 +53,9 @@ export function Price(props){
             const reducedPrice = price - (price * (PLATFORM_FEE / 100));
             const formattedPrice = (reducedPrice / bnDecimals)
             if(formattedPrice >= 0.01){
-                return formattedPrice.toFixed(2) + " USDT";
+                return formattedPrice.toFixed(2) + ` ${ticker}`;
             }else{
-                return formattedPrice + " USDT";
+                return formattedPrice + ` ${ticker}`;
             }
         } catch (e) {
             console.log(e)
@@ -66,9 +66,9 @@ export function Price(props){
     const usdtPrice = (price) => {
         const usdt = price / bnDecimals
         if (usdt >= 0.01) {
-            return usdt.toFixed(2) + " USDT";
+            return usdt.toFixed(2) + ` ${ticker}`;
         } else {
-            return usdt + " USDT";
+            return usdt + ` ${ticker}`;
         }
     }
 
@@ -110,11 +110,10 @@ export function Price(props){
                         //         Approve Tokens
                         //       </div>)
                         //     :
-                           (<div className={"btn bottom-right " + (!props.viewPrice && " disabled")} onClick={() => !props.nextLoading && props.sign()}>
-                                {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
-                                Create
-                            </div>
-                    )
+                        (<div className={"btn bottom-right " + (!props.viewPrice && " disabled")} onClick={() => !props.nextLoading && props.sign()}>
+                            {props.nextLoading && <div className="loading"><div className="bar"></div></div>}
+                            Create
+                        </div>)
                 }
             </div> 
         </>

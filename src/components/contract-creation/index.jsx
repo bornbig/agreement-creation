@@ -14,6 +14,7 @@ import { Price } from "./price";
 import { Skills } from "./skills";
 import { Deadline } from "./deadline";
 import { estimateAndExecute } from "../../helpers/utils";
+import BigNumber from "bignumber.js";
 
 export function ContractCreation(props){
     const dispatch = useDispatch();
@@ -81,7 +82,7 @@ export function ContractCreation(props){
             const deadline = await getDeadlineTimestamp();
 
             if(wallet == client){
-                (allowance < price) && await approveTokens()
+                (new BigNumber(allowance).lt(new BigNumber(price))) && await approveTokens()
             }
 
             let uri;
@@ -122,7 +123,7 @@ export function ContractCreation(props){
                 mode,
                 ipfs_hash,
                 skills_hash,
-                price,
+                price: price.toString(),
                 token: selectedToken.contract,
                 deadline,
                 service_provider_email,

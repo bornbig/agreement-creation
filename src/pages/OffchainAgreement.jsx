@@ -11,6 +11,7 @@ import ProofABI from "../data/abi/Proof.json";
 import transakSDK from '@transak/transak-sdk';
 import { estimateAndExecute } from "../helpers/utils";
 import { LockScreen } from "../components/sign-agreement/LockScreen";
+import BigNumber from "bignumber.js";
 
 export function OffchainAgreement(){
     const [details, setDetails] = useState({});
@@ -97,7 +98,7 @@ export function OffchainAgreement(){
             const tokenId = trx.events.Transfer[0].returnValues.tokenId;
 
             if(wallet == client){
-                (allowance < details?.price) && await approveTokens();
+                (new BigNumber(allowance).lt(new BigNumber(details.price))) && await approveTokens();
             }
             
             const contract = new web3.eth.Contract(EscrowABI, escrowAddress);
@@ -198,7 +199,7 @@ export function OffchainAgreement(){
                     <div>
                         {isConnected && checkifClient() && (
                             <div className="flexBetween">
-                                {(balance.raw >= details.price) ?
+                                {balance.raw && details.price && (new BigNumber(balance.raw).gte(new BigNumber(details.price))) ?
                                     (details?.mode &&
                                         (<div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
                                                 {signLoading && <div className="loading"><div className="bar"></div></div>}

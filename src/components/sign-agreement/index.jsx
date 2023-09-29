@@ -9,6 +9,7 @@ import { Skills } from "./skills";
 import { storeSkills } from "../../store/actions/agreement-action";
 import transakSDK from '@transak/transak-sdk';
 import { estimateAndExecute } from "../../helpers/utils";
+import BigNumber from "bignumber.js";
 
 export function SignAgreement (props){
     const dispatch = useDispatch();
@@ -60,7 +61,7 @@ export function SignAgreement (props){
         try{
             setSignLoading(true);
 
-            (wallet == props.client, allowance < props.details?.price) && await approveTokens();
+            (wallet == props.client && new BigNumber(allowance).lt(new BigNumber(props.details?.price))) && await approveTokens();
 
             let skills_hash = "";
             if(!props.details.mode){
@@ -153,7 +154,7 @@ export function SignAgreement (props){
             {isConnected && wallet?.toLowerCase() == props.details?.client?.toLowerCase() && (
                 <div className="flexBetween">
                     {props.details?.mode &&
-                        ((balance.raw >= props.details.price) ?
+                        ((balance.raw && props.details.price && (new BigNumber(balance.raw).gte(new BigNumber(props.details.price)))) ?
                            (<div className="btn withPadding withMargin" onClick={() => !signLoading && signAndProceed()}>
                                 {signLoading && <div className="loading"><div className="bar"></div></div>}
                                 Sign & Proceed

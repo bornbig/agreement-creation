@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Moralis from "moralis";
 import lighthouse from '@lighthouse-web3/sdk';
-import { API_ENDPOINT, LIGHTHOSE_API_KEY, MORALIS_API_KEY } from '../../config/config';
+import { API_ENDPOINT, DEFAULT_NETWORK_STRING, LIGHTHOSE_API_KEY, MORALIS_API_KEY } from '../../config/config';
 import Cookies from 'universal-cookie';
 
 
@@ -172,7 +172,7 @@ export async function decryptDelivery (cid, web3){
 }
 
 export async function getAgreements(wallet){
-  const url = `${API_ENDPOINT}/agreement/list?wallet_addresses=${wallet}&chain=polygon-mumbai`;
+  const url = `${API_ENDPOINT}/agreement/list?wallet_addresses=${wallet}&chain=${DEFAULT_NETWORK_STRING}`;
   const agreements = (await axios.get(url)).data;
 
   return agreements.nfts;

@@ -8,10 +8,10 @@ import { Skills } from "../components/sign-agreement/skills";
 import EscrowABI from "../data/abi/Escrow.json";
 import ERC20ABI from "../data/abi/ERC20.json";
 import ProofABI from "../data/abi/Proof.json";
-import transakSDK from '@transak/transak-sdk';
 import { estimateAndExecute } from "../helpers/utils";
 import { LockScreen } from "../components/sign-agreement/LockScreen";
 import BigNumber from "bignumber.js";
+import Transak from "../components/transak";
 
 export function OffchainAgreement(){
     const [details, setDetails] = useState({});
@@ -164,26 +164,6 @@ export function OffchainAgreement(){
         return false;
     }
 
-    const addFunds = async () => {
-        //default Crypto amount is wrong
-        let transak = new transakSDK({
-            apiKey: 'a7193b71-7510-4225-9df0-c3e31343577b', // (Required)
-            environment: 'STAGING', // (Required)
-            network: 'polygon',
-            cryptoCurrencyCode: "USDT",
-            productsAvailed: "BUY",
-            fiatCurrency: "USD",
-            defaultCryptoAmount	: details.price,
-            defaultPaymentMethod: "pm_jwire",
-            widgetHeight: "80%",
-            walletAddress: wallet,
-            email: userInfo.email
-        });
-        
-        transak.init();
-    }
-    console.log(balance)
-
     return (
         <>
             {detailsLoading
@@ -206,7 +186,7 @@ export function OffchainAgreement(){
                                                 Sign & Proceed
                                         </div>)
                                     ) :
-                                    <div className="btn withPadding" onClick={addFunds}>Add Funds</div>
+                                    <Transak className="btn withPadding" email={userInfo.email} wallet={wallet} amount={details.price}>Add Funds</Transak>
                                 }
                             </div>
                         )}

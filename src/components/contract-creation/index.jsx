@@ -123,7 +123,7 @@ export function ContractCreation(props){
                 mode,
                 ipfs_hash,
                 skills_hash,
-                price: price.toString(),
+                price: price,
                 token: selectedToken.contract,
                 deadline,
                 service_provider_email,

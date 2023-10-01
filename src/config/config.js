@@ -5,9 +5,6 @@ import proofABI from "../data/abi/Proof.json"
 import escrowABI from "../data/abi/Escrow.json";
 import tokenABI from "../data/abi/ERC20.json";
 
-// export const AGREEMENT = "0xA276f40147a8C4d66fc0A63895DfC4d329Aaba1c";
-// export const ESCROW = "0x70c86f7df65DeE83406f02fBa2D9FD6520E3d2D0";
-// export const TOKEN = "0xfe4f5145f6e09952a5ba9e956ed0c25e3fa4c7f1";
 
 export const CONTRACT = {
     "0x13881" : {
@@ -26,6 +23,22 @@ export const CONTRACT = {
         "tokens": tokens80001,
         "tokenAbi": tokenABI
     },
+    "0x89" : {
+        "client": {
+            "contract": "0xdb5A33e85Fc502CC39d333bCd9A204DA8D804843",
+            "abi" : proofABI
+        },
+        "serviceProvider": {
+            "contract": "0x7561640fD76ECAB53613193EB975a9fC8A695da9",
+            "abi" : proofABI
+        },
+        "escrow": {
+            "contract": "0xaFB396A5B6A80EaCf5DCe56a24FF3574430fb498",
+            "abi": escrowABI
+        },
+        "tokens": tokens137,
+        "tokenAbi": tokenABI
+    },
     "0xa869" : {
         "agreement": {
             "contract": "0x3c1C6AA9f440E5298b7891C911be396F2d82B40E",
@@ -42,7 +55,9 @@ export const CONTRACT = {
 
 export const PLATFORM_FEE = 2;
 export const API_ENDPOINT = "https://api.woople.io/api";
-export const LIGHTHOSE_API_KEY = "8449756f.64556c4559ba41e2b00707e597bf8a2b";
-export const WEB3AUTH_KEY = "BKg7EUhTp6i5JKLvfkuPBSCDAZrI_Ipe829otL5QYNGccZgLON75bRgtQVGpLXBQJIZgIF7o87vjA69WBiPj0HU";
+export const LIGHTHOSE_API_KEY = "0a97ff49.016a385fb12b4d77b185f05e8109ad36";
+export const WEB3AUTH_KEY = "BBr9TrVqhjPWSpGoEMvqoOVT7WdIkddUEtUydRXuCGGATFpcMURVLCyYZHddVUXKpqYiQ-JiwiIjPPvKDr7ZPSY";
 export const MORALIS_API_KEY = "CLtJpRFrCkxHvgDcy9mewuod1qG9iIsG3TL8MLdrreCEwtCpUwU79fKxRRbCPBpA";
-export const TRANSAK_API_KEY = "";
+export const TRANSAK_API_KEY = "a7193b71-7510-4225-9df0-c3e31343577b" //"295ba884-3204-42e4-8a64-924e080e25de";
+export const DEFAULT_NETWORK = "0x89";
+export const DEFAULT_NETWORK_STRING = (DEFAULT_NETWORK == "0x13881") ? "polygon-mumbai" : "polygon";

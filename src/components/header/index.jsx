@@ -7,7 +7,7 @@ import "./style.css";
 import { Web3Auth } from '@web3auth/modal';
 import { CHAIN_NAMESPACES, WALLET_ADAPTERS } from "@web3auth/base";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
-import { WEB3AUTH_KEY } from '../../config/config';
+import { DEFAULT_NETWORK, WEB3AUTH_KEY } from '../../config/config';
 import { SendToken } from '../send-token';
 import { PrivateKeyModel } from './private-key';
 
@@ -22,11 +22,11 @@ function Header() {
   const web3AuthInit = async () => {
     web3auth = new Web3Auth({
       clientId: WEB3AUTH_KEY, // Get your Client ID from Web3Auth Dashboard
-      web3AuthNetwork: "testnet", // mainnet, aqua,  cyan or testnet
+      web3AuthNetwork: "mainnet", // mainnet, aqua,  cyan or testnet
       chainConfig: {
         chainNamespace: CHAIN_NAMESPACES.EIP155,
-        chainId: "0x13881",
-        rpcTarget: "https://polygon-mumbai.g.alchemy.com/v2/BhT_VC37fxArcOzOvI9VxwDwPiOjoleR", // This is the public RPC we have added, please pass on your own endpoint while creating an app
+        chainId: DEFAULT_NETWORK,
+        rpcTarget: "https://polygon-mainnet.g.alchemy.com/v2/ip-A-N0sVOSyjzTrDSODvODdTAzBvK-4", // This is the public RPC we have added, please pass on your own endpoint while creating an app
       },
       uiConfig: {
         theme: "light",
@@ -148,7 +148,7 @@ function Header() {
         await submitIdToken(info.idToken, _accounts[0]);
       }
 
-      dispatch(setUserWalletConnection(_accounts[0], "0x13881", web3, info));
+      dispatch(setUserWalletConnection(_accounts[0], "0x89", web3, info));
       triggerUpdateBalance(_accounts[0]);
 
     }catch(e){
@@ -191,7 +191,7 @@ function Header() {
       {isConnected ? (
         <div className='btn-wrap'>
           <div className="preview">
-            <img src="https://cdn-icons-png.flaticon.com/512/482/482541.png" alt="" />
+            <img src="/images/wallet.png" alt="" />
             <span className='balance'>${balance.usdBalance}</span>
           </div>
           
@@ -200,7 +200,7 @@ function Header() {
               <div className="email">{userInfo.email}</div>
               :
               <div className='wallet p20px'>
-                  <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={() => textcopying()} />
+                  <img src="/images/copy.png" alt="" onClick={() => textcopying()} />
                   <span>{wallet}</span>
               </div>
             }
@@ -209,7 +209,7 @@ function Header() {
                 <div className="label">Balance</div>
                 {userInfo.email &&
                   <div className='wallet'>
-                    <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="" onClick={() => textcopying()} />
+                    <img src="/images/copy.png" alt="" onClick={() => textcopying()} />
                     <span>{wallet}</span>
                   </div>
                 }

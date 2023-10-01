@@ -7,9 +7,9 @@ import ERC20ABI from "../../data/abi/ERC20.json";
 import "./style.css"
 import { Skills } from "./skills";
 import { storeSkills } from "../../store/actions/agreement-action";
-import transakSDK from '@transak/transak-sdk';
 import { estimateAndExecute } from "../../helpers/utils";
 import BigNumber from "bignumber.js";
+import Transak from "../transak";
 
 export function SignAgreement (props){
     const dispatch = useDispatch();
@@ -129,25 +129,6 @@ export function SignAgreement (props){
         setCancelLoading(false);
     }
 
-    const addFunds = async () => {
-        //default Crypto amount is wrong
-        let transak = new transakSDK({
-            apiKey: 'a7193b71-7510-4225-9df0-c3e31343577b', // (Required)
-            environment: 'STAGING', // (Required)
-            network: 'polygon',
-            cryptoCurrencyCode: "USDT",
-            productsAvailed: "BUY",
-            fiatCurrency: "USD",
-            defaultCryptoAmount	: props.details.price,
-            defaultPaymentMethod: "pm_jwire",
-            widgetHeight: "80%",
-            walletAddress: wallet,
-            email: userInfo.email
-        });
-          
-        transak.init();
-    }
-
     return (
         <div>
             {/** If Client needs to sign */}
@@ -160,7 +141,7 @@ export function SignAgreement (props){
                                 Sign & Proceed
                             </div>)
                             :
-                            <div className="btn withPadding" onClick={addFunds}>Add Funds</div>
+                            <Transak className="btn withPadding" email={userInfo.email} wallet={wallet} amount={props.details.price}>Add Funds</Transak>
                         )
                     }
                     <div className="btn withPadding withMargin" onClick={() => !cancelLoading && rejectByClient()}>

@@ -2,8 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { Agreement } from "../pages/Agreement";
 import { OffchainAgreement } from "../pages/OffchainAgreement";
-import { Transak } from "../pages/Transak";
 import Error404 from "../error/Error404";
+import AddFundsPage from "../pages/AddFunds";
 
 export const router = createBrowserRouter([
     {
@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/add-funds",
-        element: <Transak />,
+        element: <AddFundsPage />,
     },
     {
         path: "*",

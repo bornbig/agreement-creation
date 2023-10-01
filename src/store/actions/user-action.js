@@ -1,10 +1,9 @@
 import axios from "axios";
-import { API_ENDPOINT, CONTRACT } from "../../config/config";
+import { API_ENDPOINT, CONTRACT, DEFAULT_NETWORK } from "../../config/config";
 import ERC20ABI from "../../data/abi/ERC20.json";
 import { getUSDQuote } from "./price-discovery";
 import Cookies from 'universal-cookie';
 
-const network = '0x13881';
 
 export const SET_USER_DATA = 'SET_USER_DATA';
 export function setUserWalletConnection(wallet, chainId, web3, userInfo) {
@@ -36,8 +35,8 @@ export function setWalletDisconnect() {
 }
 
 export async function getUSDTBalance(wallet) {
-  const tokenAddress = CONTRACT[network].tokens[0].contract;
-  const host = network == '0x13881' ? 'api-testnet.polygonscan.com' : 'api.polygonscan.com';
+  const tokenAddress = CONTRACT[DEFAULT_NETWORK].tokens[0].contract;
+  const host = DEFAULT_NETWORK == '0x13881' ? 'api-testnet.polygonscan.com' : 'api.polygonscan.com';
   const url = `https://${host}/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${wallet}&tag=latest`
   const balanceResponse = (await axios(url)).data;
 
@@ -48,7 +47,7 @@ export const SET_USER_BALANCE = 'SET_USER_BALANCE';
 export async function updateUserBalance(wallet){
   const balanceResponse = await getUSDTBalance(wallet);
 
-  const humanReadableBalance = balanceResponse.result / (10 ** CONTRACT[network].tokens[0].decimals);
+  const humanReadableBalance = balanceResponse.result / (10 ** CONTRACT[DEFAULT_NETWORK].tokens[0].decimals);
   const usdBalance = await getUSDQuote(humanReadableBalance);
 
 

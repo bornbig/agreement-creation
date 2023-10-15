@@ -21,7 +21,7 @@ export function Home(){
 
     const createAgreement = () => {
         if(!isConnected){
-            dispatch(showNotification("Please Logint first", dispatch, "danger"));
+            dispatch(showNotification("Please Login first", dispatch, "danger"));
             return;
         }
         setCanStartContractCreation(true);

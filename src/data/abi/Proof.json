@@ -302,19 +302,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "clientProof",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -337,11 +324,30 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "getApproved",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "id",
 				"type": "uint256"
 			}
 		],
-		"name": "getAgreementDetails",
+		"name": "getPaymentDetails",
 		"outputs": [
 			{
 				"components": [
@@ -361,11 +367,6 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "uint256",
-						"name": "deadline",
-						"type": "uint256"
-					},
-					{
 						"internalType": "string",
 						"name": "ipfs_hash",
 						"type": "string"
@@ -382,12 +383,12 @@
 					},
 					{
 						"internalType": "address",
-						"name": "client",
+						"name": "sender",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "service_provider",
+						"name": "receiver",
 						"type": "address"
 					},
 					{
@@ -396,28 +397,9 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct IEscrow.AgreementDetails",
+				"internalType": "struct IEscrow.PaymentDetails",
 				"name": "",
 				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "getApproved",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -573,12 +555,12 @@
 			},
 			{
 				"internalType": "address",
-				"name": "client",
+				"name": "sender",
 				"type": "address"
 			},
 			{
 				"internalType": "address",
-				"name": "service_provider",
+				"name": "receiver",
 				"type": "address"
 			},
 			{
@@ -605,11 +587,6 @@
 				"internalType": "address",
 				"name": "token",
 				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "deadline",
-				"type": "uint256"
 			}
 		],
 		"name": "mint",
@@ -783,6 +760,19 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "senderReceipt",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -803,12 +793,12 @@
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "_clientProof",
-				"type": "address"
+				"internalType": "string",
+				"name": "token_uri",
+				"type": "string"
 			}
 		],
-		"name": "setClientProof",
+		"name": "setTokenURI",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -816,12 +806,12 @@
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "token_uri",
-				"type": "string"
+				"internalType": "address",
+				"name": "_senderReceipt",
+				"type": "address"
 			}
 		],
-		"name": "setTokenURI",
+		"name": "setsenderReceipt",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

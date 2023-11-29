@@ -45,7 +45,7 @@ export function SendToken(props){
         <Modal big={true} isOpen={props.isOpen} closeModal={props.closeModal}>
             <div className="send-token">
                 <div className="balance">
-                    ${balance.usdBalance} <div>{balance.humanReadable} USDT</div>
+                    ${balance.humanReadable} <div>{balance.humanReadable} USDT</div>
                 </div>
 
                 <div className="input">

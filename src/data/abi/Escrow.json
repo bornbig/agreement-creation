@@ -8,37 +8,6 @@
 		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "agreement",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "agreementId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "client",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "service_provider",
-				"type": "address"
-			}
-		],
-		"name": "AgreementUpdated",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
 				"indexed": true,
 				"internalType": "address",
 				"name": "previousOwner",
@@ -52,6 +21,37 @@
 			}
 		],
 		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "receiverReceipt",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "paymentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "reciver",
+				"type": "address"
+			}
+		],
+		"name": "PaymentUpdated",
 		"type": "event"
 	},
 	{
@@ -108,7 +108,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "DISPUTE_RESOLVED",
+		"name": "DISPUTE_RESOLVED_BOTH_WON",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -121,7 +121,20 @@
 	},
 	{
 		"inputs": [],
-		"name": "REJECTED",
+		"name": "DISPUTE_RESOLVED_CLIENT_WON",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "DISPUTE_RESOLVED_SERVICE_WON",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -162,16 +175,21 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "agreement",
+				"name": "receiverReceipt",
 				"type": "address"
 			},
 			{
 				"internalType": "uint256",
-				"name": "agreementId",
+				"name": "paymentId",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "skills",
+				"type": "string"
 			}
 		],
-		"name": "cancelAgreement",
+		"name": "acceptReceipt",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -180,22 +198,40 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "agreement",
+				"name": "receiverReceipt",
 				"type": "address"
 			},
 			{
 				"internalType": "uint256",
-				"name": "agreementId",
+				"name": "paymentId",
+				"type": "uint256"
+			}
+		],
+		"name": "cancelPayment",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "receiverReceipt",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "paymentId",
 				"type": "uint256"
 			},
 			{
 				"internalType": "address",
-				"name": "client",
+				"name": "sender",
 				"type": "address"
 			},
 			{
 				"internalType": "address",
-				"name": "service_provider",
+				"name": "receiver",
 				"type": "address"
 			},
 			{
@@ -222,14 +258,9 @@
 				"internalType": "address",
 				"name": "token",
 				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "deadline",
-				"type": "uint256"
 			}
 		],
-		"name": "createAgreement",
+		"name": "createPayment",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -275,16 +306,16 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "agreement",
+				"name": "receiverReceipt",
 				"type": "address"
 			},
 			{
 				"internalType": "uint256",
-				"name": "id",
+				"name": "paymentId",
 				"type": "uint256"
 			}
 		],
-		"name": "getAgreementDetails",
+		"name": "getPaymentDetails",
 		"outputs": [
 			{
 				"components": [
@@ -304,11 +335,6 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "uint256",
-						"name": "deadline",
-						"type": "uint256"
-					},
-					{
 						"internalType": "string",
 						"name": "ipfs_hash",
 						"type": "string"
@@ -325,12 +351,12 @@
 					},
 					{
 						"internalType": "address",
-						"name": "client",
+						"name": "sender",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "service_provider",
+						"name": "receiver",
 						"type": "address"
 					},
 					{
@@ -339,7 +365,7 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct IEscrow.AgreementDetails",
+				"internalType": "struct IEscrow.PaymentDetails",
 				"name": "",
 				"type": "tuple"
 			}
@@ -351,12 +377,12 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "agreement",
+				"name": "receiverReceipt",
 				"type": "address"
 			},
 			{
 				"internalType": "uint256",
-				"name": "id",
+				"name": "paymentId",
 				"type": "uint256"
 			},
 			{
@@ -406,12 +432,12 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "agreement",
+				"name": "receiverReceipt",
 				"type": "address"
 			},
 			{
 				"internalType": "uint256",
-				"name": "agreementId",
+				"name": "paymentId",
 				"type": "uint256"
 			}
 		],
@@ -424,30 +450,12 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "agreement",
+				"name": "receiverReceipt",
 				"type": "address"
 			},
 			{
 				"internalType": "uint256",
-				"name": "agreementId",
-				"type": "uint256"
-			}
-		],
-		"name": "rejectAgreement",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "agreement",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "agreementId",
+				"name": "paymentId",
 				"type": "uint256"
 			},
 			{
@@ -472,12 +480,12 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "agreement",
+				"name": "receiverReceipt",
 				"type": "address"
 			},
 			{
 				"internalType": "uint256",
-				"name": "agreementId",
+				"name": "paymentId",
 				"type": "uint256"
 			},
 			{
@@ -495,35 +503,12 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "agreement",
+				"name": "receiverReceipt",
 				"type": "address"
 			},
 			{
 				"internalType": "uint256",
-				"name": "agreementId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "skills",
-				"type": "string"
-			}
-		],
-		"name": "signAgreement",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "agreement",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "agreementId",
+				"name": "paymentId",
 				"type": "uint256"
 			},
 			{

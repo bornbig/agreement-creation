@@ -20,3 +20,16 @@ export function PrivateKeyModel(props){
         </Modal>
     );
 }
+
+// aggregateVerifier: "tkey-google"
+// appState: ""
+// dappShare: ""
+// email: "abhiaurhai@gmail.com"
+// name: "Abhishek Tiwari"
+// oAuthAccessToken: ""
+// oAuthIdToken: ""
+// profileImage: "https://lh3.googleusercontent.com/a/ACg8ocJL50bxBQBGKHG6TiUDjOMyLmZGwUQGP2M2IGK0fewj=s96-c"
+// touchIDPreference: "unset"
+// typeOfLogin: "google"
+// verifier: "torus"
+// verifierId: "abhiaurhai@gmail.com"

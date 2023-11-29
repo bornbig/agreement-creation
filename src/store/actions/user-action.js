@@ -1,31 +1,23 @@
 import axios from "axios";
-import { API_ENDPOINT, CONTRACT, DEFAULT_NETWORK } from "../../config/config";
+import { CONTRACT, DEFAULT_NETWORK } from "../../config/config";
 import ERC20ABI from "../../data/abi/ERC20.json";
 import { getUSDQuote } from "./price-discovery";
-import Cookies from 'universal-cookie';
+import apiRequest from "../../config/api-request";
 
-
+export const SET_USER = 'SET_USER';
 export const SET_USER_DATA = 'SET_USER_DATA';
-export function setUserWalletConnection(wallet, chainId, web3, userInfo) {
+export function setUserWalletConnection(wallet, chainId, web3, smartAccount, userInfo) {
     return {
       type: SET_USER_DATA,
       data: {
         wallet,
         chainId,
         web3,
+        smartAccount,
         userInfo
       }
     };
 }
-
-export const SET_ON_NETWORK_CHANGE = 'SET_ON_NETWORK_CHANGE';
-export function setUserNetwork(chainId) {
-    return {
-      type: SET_ON_NETWORK_CHANGE,
-      chainId: chainId
-    };
-}
-
 
 export const SET_WALLET_DISCONNECT = 'SET_WALLET_DISCONNECT';
 export function setWalletDisconnect() {
@@ -37,7 +29,7 @@ export function setWalletDisconnect() {
 export async function getUSDTBalance(wallet) {
   const tokenAddress = CONTRACT[DEFAULT_NETWORK].tokens[0].contract;
   const host = DEFAULT_NETWORK == '0x13881' ? 'api-testnet.polygonscan.com' : 'api.polygonscan.com';
-  const url = `https://${host}/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${wallet}&tag=latest`
+  const url = `https://${host}/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${wallet}&tag=latest&apikey=5AKV6BEQ79MDKQCB3X8BZ4IVXSQW94KMUZ`
   const balanceResponse = (await axios(url)).data;
 
   return balanceResponse;
@@ -45,17 +37,17 @@ export async function getUSDTBalance(wallet) {
 
 export const SET_USER_BALANCE = 'SET_USER_BALANCE';
 export async function updateUserBalance(wallet){
-  const balanceResponse = await getUSDTBalance(wallet);
+  const request = apiRequest.utility.getUSDTBalance(wallet);
+  const balanceResponse = (await axios(request)).data
 
-  const humanReadableBalance = balanceResponse.result / (10 ** CONTRACT[DEFAULT_NETWORK].tokens[0].decimals);
-  const usdBalance = await getUSDQuote(humanReadableBalance);
-
+  const humanReadableBalance = balanceResponse.data.balance / (10 ** CONTRACT[DEFAULT_NETWORK].tokens[0].decimals);
+  const inDollar = await getUSDQuote(humanReadableBalance);
 
   return {
     type: SET_USER_BALANCE,
-    raw: balanceResponse.result,
-    humanReadableBalance: humanReadableBalance || 0,
-    usdBalance: usdBalance?.response?.fiatAmount || 0
+    raw: balanceResponse.data.balance,
+    humanReadableBalance: parseFloat(humanReadableBalance || 0).toPrecision(4),
+    usdBalance: parseFloat(inDollar || 0).toPrecision(4)
   };
 }
 
@@ -67,39 +59,31 @@ export async function sendToken(web3, token, wallet, owner, amount) {
 }
 
 
-export const SET_USER_TOKEN = 'SET_USER_TOKEN';
-export async function submitIdToken(token, wallet) {
-  const url = `${API_ENDPOINT}/user/verify`
-  const saveDataResponse = (await axios.post(url, {
-    token: token,
-    wallet: wallet,
-  })).data;
+export async function initiateAccount(message, signature){
+  const request = apiRequest.user.initiateAccount(message, signature);
+  const response = (await axios(request)).data;
 
-  const cookies = new Cookies();
-  cookies.set('user_auth_token', `Bearer ${saveDataResponse?.token}`, { path: '*' });
-
-  return {
-    token: saveDataResponse?.token
-  }
+  return response.data;
 }
 
-export async function getUserWallet(email) {
-  if(email.match(
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  )){
+export async function sendEmailCode(email, signature){
+  const request = apiRequest.user.sendEmailCode(email, signature);
+  const response = (await axios(request)).data;
 
-    const cookies = new Cookies();
-    const token = cookies.get('user_auth_token');
-
-    const url = `${API_ENDPOINT}/user/user-wallet?email=${email}`
-    const userWallet = (await axios(url, {headers: {"Authorization":  token}})).data;
-
-    if(userWallet.wallet){
-      return userWallet.wallet
-    }else{
-      return email;
-    }
-  }
-
-  return email;
+  return response.data;
 }
+
+export async function verifyEmailCode(code, signature){
+  const request = apiRequest.user.verifyEmailCode(code, signature);
+  const response = (await axios(request)).data;
+
+  return response.data;
+}
+
+export async function verifyWeb3Auth(token){
+  const request = apiRequest.user.verifyWeb3Auth(token);
+  const response = (await axios(request)).data;
+
+  return response.data;
+}
+

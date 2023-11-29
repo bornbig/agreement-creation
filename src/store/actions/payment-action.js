@@ -1,65 +1,23 @@
 import axios from 'axios';
 import Moralis from "moralis";
 import lighthouse from '@lighthouse-web3/sdk';
-import { API_ENDPOINT, DEFAULT_NETWORK_STRING, LIGHTHOSE_API_KEY, MORALIS_API_KEY } from '../../config/config';
-import Cookies from 'universal-cookie';
+import { LIGHTHOSE_API_KEY, MORALIS_API_KEY } from '../../config/config';
+import apiRequest from '../../config/api-request';
 
 
-export async function storeDetails(details, delivery){
-  const writtenAgreement = {
-      details,
-      delivery
-  }
+export async function saveToIPFS(content){
+  const request = apiRequest.utility.uploadToIPFS(content);
+  const response = (await axios(request)).data;
 
-  const hash = await saveToIPFS(writtenAgreement);
-
-  return hash;
-}
-
-export async function storeSkills(skills){
-  const hash = await saveToIPFS(skills);
-
-  return hash;
+  return response.data.ipfashHash;
 }
 
 
-async function saveToIPFS(content){
-  const abi = [
-    {
-        path: "metadata.json",
-        content: content
-    }
-  ]
+export async function getIPFSContent(ipfsHash){
+  const request = apiRequest.utility.getIPFSContent(ipfsHash);
+  const response = (await axios(request)).data;
 
-  if(!Moralis.Core.isStarted){
-    await Moralis.start({
-      apiKey: MORALIS_API_KEY,
-      // ...and any other configuration
-    });
-  }
-
-  const response = await Moralis.EvmApi.ipfs.uploadFolder({ abi });
-
-  const jsonResponse = response.toJSON();
-
-  const { path } = jsonResponse[0];
-
-  const splitPath = path.split("/ipfs/");
-
-  return splitPath[1];
-}
-
-
-export async function getDetails(ipfs_hash){
-  const url = `https://ipfs.moralis.io:2053/ipfs/${ipfs_hash}`;
-
-  const data = (await axios.get(url)).data
-
-  if(data){
-    return data;
-  }
-
-  return {}
+  return response.data.content;
 }
 
 
@@ -101,7 +59,7 @@ const applyAccessConditions = async(web3, cid, escrow, agreement, agreementId) =
   const conditions = [
     {
       id: 1,
-      chain: "Mumbai",
+      chain: "polygon",
       method: "hasAccessToDelivery",
       standardContractType: "Custom",
       contractAddress: escrow,
@@ -171,37 +129,47 @@ export async function decryptDelivery (cid, web3){
   return url;
 }
 
-export async function getAgreements(wallet){
-  const url = `${API_ENDPOINT}/agreement/list?wallet_addresses=${wallet}&chain=${DEFAULT_NETWORK_STRING}`;
-  const agreements = (await axios.get(url)).data;
+export async function getPaymentList(user){
+  const request = apiRequest.payment.list(user);
+  const response = (await axios(request)).data;
 
-  return agreements.nfts;
+  return response.data;
 }
 
 
-export async function createOfflineAgreement(chain, agreement, agreement_object){
-  const url = `${API_ENDPOINT}/agreement/offline/create`;
-  const cookies = new Cookies();
-  const token = cookies.get('user_auth_token');
-  const creation = (await axios.post(url, {chain, agreement, agreement_object},  {headers: {"Authorization": token}})).data;
+export async function createPayment(agreement_object){
+  const request = apiRequest.payment.create(agreement_object);
+  const response = (await axios(request)).data;
 
-  return creation._id;
+  return response.data;
 }
 
-export async function getOffchainAgreement(id){
-  const url = `${API_ENDPOINT}/agreement/${id}`;
-  const cookies = new Cookies();
-  const token = cookies.get('user_auth_token');
-  const agreementDetails = (await axios.get(url, {headers: {"Authorization": token}})).data;
 
-  return agreementDetails;
+export async function createOnchainPayment(agreement_object){
+  const request = apiRequest.payment.createOnChain(agreement_object);
+  const response = (await axios(request)).data;
+
+  return response.data;
 }
 
-export async function getAgreementEmails(chain, agreement, id){
-  const url = `${API_ENDPOINT}/agreement/${parseInt(chain)}/${agreement}/${id}`;
-  const cookies = new Cookies();
-  const token = cookies.get('user_auth_token');
-  const agreementEmails = (await axios.get(url, {headers: {"Authorization": token}})).data;
+export async function deleteOffChainPayment(message, signature, paymentid){
+  const request = apiRequest.payment.deleteOffChain(message, signature, paymentid);
+  const response = (await axios(request)).data;
 
-  return agreementEmails;
+  return response.data;
+}
+
+export const UPDATE_AGREEMENT = "UPDATE_AGREEMENT";
+export async function getPaymentById(id){
+  const request = apiRequest.payment.getSingleById(id);
+  const agreementDetails = (await axios(request)).data;
+
+  return agreementDetails.data;
+}
+
+export async function getOnchainPayment(chain, agreement, id){
+  const request = apiRequest.payment.getSingleOnChain(chain, agreement, id);
+  const response = (await axios(request)).data;
+
+  return response.data;
 }

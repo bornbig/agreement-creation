@@ -32,21 +32,3 @@
       right: 2%;    
     }
 }
-
-@media screen and (max-width : 890px) {
-  .notification{
-    top: 150px;
-    animation-duration: 2s;
-  }
-}
-
-@media screen and (max-width : 620px){
-  .notification{
-    top: 114px;
-    min-width: 150px;
-    animation-duration: 2s;
-  }
-  .notification.danger{
-    font-size: 14px;
-  }
-}

@@ -1,0 +1,9 @@
+export const CREATED = 100;
+export const CANCELLED = 99;
+export const SIGNED = 101;
+export const DELIVERD = 102;
+export const RELEASED = 105;
+export const DISPUTE_RESOLVED_BOTH_WON = 201;
+export const DISPUTE_RESOLVED_CLIENT_WON = 202;
+export const DISPUTE_RESOLVED_SERVICE_WON = 203;
+export const DISPUTED = 200;

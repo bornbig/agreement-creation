@@ -6,8 +6,7 @@ import { router } from "./config/routes";
 function App() {
 
   return (
-    <div className="container">
-      <Header />
+    <>
       <RouterProvider router={router} />
       <Notification />
       <div className="footer">
@@ -17,7 +16,7 @@ function App() {
           <a href="https://lopsided-border-0d6.notion.site/Privacy-Policy-37155fe5a7fe4c70b2d6758cce02b4b6?pvs=4"target="_blank" rel="noreferrer noopener">Privacy Policy</a>
         </div>
       </div>
-    </div>
+    </>
   ); 
 }
 

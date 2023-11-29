@@ -1,0 +1,224 @@
+.circle {
+    position: relative;
+    background: #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+
+input::placeholder{
+    color: #bbbbd5;
+}
+
+.checkmark {
+    position: absolute;
+    transform: rotate(45deg) translate(-50%, -50%);
+    left: 35%;
+    top: 45%;
+    height: 20px;
+    width: 10px;
+    border-bottom: 3px solid #8cc63e;
+    border-right: 3px solid #8cc63e;
+}
+
+.payment{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    background-color: lavender;
+    color: #776dff;
+    padding: 20px;
+    font-weight: bolder;
+    text-transform: lowercase;
+    font-size: 14px;
+}
+
+.cancelled, .released, .disputed{
+    padding: 20px;
+    z-index: -1;
+    position: relative;
+    border-radius: 16px;
+}
+
+.cancelled{
+    background-color: #fcb3e0;
+}
+
+.released{
+    background-color: #99d086;
+}
+
+.disputed{
+    background-color: #efe9e0;
+}
+
+.cancelled .transaction, .released .transaction, .disputed .transaction{
+    margin-top: 20px;
+}
+
+.amount{
+    padding-top: 40px;
+    font-size: 80px;
+    font-weight: bolder;
+    color: #776dff;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.amount.small{
+    padding-top: 20px;
+    font-size: 20px;
+}
+
+.transaction{
+    background-color: white;
+    box-shadow: 0px 0px 15px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 80px;
+}
+
+.conversion{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    color: #776dff;
+    font-weight: bold;
+    text-transform: uppercase;
+    min-height: 200px;
+}
+
+.payment-details{
+    box-shadow: 0px 0px 15px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    z-index: -1;
+    background-color: white;
+    width: 50%;
+}
+
+.pbflex{
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.conditions{
+    padding: 20px;
+}
+
+.payment-details .condition+.condition{
+    margin-top: 20px;
+}
+
+.payment-details .head{
+    font-size: 12px;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+.payment-details p{
+    font-size: 12px;
+    margin: 4px 0;
+}
+
+.btn-foot-msg{
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bolder;
+    padding-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-foot{
+    display: flex;
+    gap: 1px;
+    box-shadow: 0px 0px 15px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+}
+.btn-foot .btn{
+    width: auto;
+    height: 60px;
+    text-transform: uppercase;
+    font-weight: bolder;
+    flex: 1;
+}
+
+.btn-foot .bottom-left{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.btn-foot .bottom-right{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.delivery{
+    box-shadow: 0px 0px 15px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 40px;
+}
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+@media screen and (max-width: 768px) {
+    .pbflex{
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .pbflex .payment-details{
+        width: 80%;
+    }
+
+  }

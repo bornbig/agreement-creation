@@ -1,29 +1,29 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Home } from "../pages/Home";
-import { Agreement } from "../pages/Agreement";
-import { OffchainAgreement } from "../pages/OffchainAgreement";
+import { PaymentReceipt } from "../pages/PaymentReceipt";
 import Error404 from "../error/Error404";
-import AddFundsPage from "../pages/AddFunds";
+import Header from "../components/header";
+import Wallet from "../pages/Wallet";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home />,
+        element: <><Header /><Home /></>,
     },
     {
-        path: "/sbt/:contract/:id",
-        element: <Agreement />,
+        path: "/:chainid/:contract/:id",
+        element: <><Header /><PaymentReceipt /></>,
     },
     {
-        path: "/offchain/:id",
-        element: <OffchainAgreement />,
+        path: "/payment/:id",
+        element: <><Header /><PaymentReceipt /></>,
     },
     {
         path: "/add-funds",
-        element: <AddFundsPage />,
+        element: <><Header /><Wallet /></>,
     },
     {
         path: "*",
-        element: <Error404 />,
+        element: <><Header /><Error404 /></>,
     }
 ]);

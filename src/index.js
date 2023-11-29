@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "./styles/global.css";
+import "./styles/payment.css";
 import { Provider } from 'react-redux'
 import store from './store'
 

@@ -2,18 +2,29 @@
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     position: relative;
     min-height: 60px;
-    margin: 30px 0;
 }
 
 .header .logo img{
     max-height: 56px;
 }
 
+.header .link-flex{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.header .link-flex .link{
+    text-transform: uppercase;
+    color: #776dff;
+}
+
 .header .btn-wrap{
-    position: absolute;
-    right: 3%;
+    position: relative;
+    right: 0%;
     z-index: 1;
     width: 360px;
     display: flex;
@@ -29,7 +40,7 @@
     overflow: hidden;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     background: #f0f0f0;
-    position: absolute;
+    position: relative;
     width: 200px;
     right: 0;
     animation: slide-right 500ms ease-in-out forwards;
@@ -56,6 +67,7 @@
     margin-bottom: 15px;
     outline: none;
     border: 1px solid #000000;
+    text-transform: uppercase;
 }
 
 .btnPrivateKey span {
@@ -107,6 +119,10 @@
     height: 20px;
     vertical-align: middle;
     margin-right: 8px;
+}
+
+.header .btn-wrap:hover .connected{
+    position: absolute;
 }
 
 .header .btn-wrap:hover .info{
@@ -199,7 +215,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
-    width: 94px;
+    width: 100%;
+    max-width: 70px;
     font-weight: 600;
 }
 
@@ -273,105 +290,40 @@
     to {width: 200px; }
 }
 
-@media screen and (max-width : 890px){
-    .header{
-        margin: 10px 0;
-    }
-    .close{
-        display: block;
-        top: 52px;
-        right: 11px;
-    }
-    .header .connected{
-        width: 0;
-    }
-    .header .connected .info .balance{
-        font-size: 25px;
-    }
-    .header .connected .wallet{
-        padding-right: 13px;
-    }
-    .header .connected .info .btnPrivateKey{
-        font-size: 12px;
-        padding: 0 0;
-    }
-    .header .connected .info .btnPrivateKey img{
-        height: 14px;
-    }
-    .preview{
-        font-size: 19px;
-        /* width: 30%; */
-    }
-    .preview img{
-        width: 20%;
-        height: 40%;
-    }
-    .header .btn-wrap:hover .connected{
-        /* animation-name: slide-left;
-        animation-duration: 1s; */
-        animation: slide-left 500ms ease-in-out forwards;
-        width: 100%;
-    }
+.links-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
 
-    .header .btn-wrap:hover .info{
-        display: block;
+@media screen and (max-width: 768px) {
+    .links-top{
+        position: fixed;
+        bottom: 8px;
+        height: 52px;
+        /* gap: 40px; */
+        width: calc(100% - 120px);
+        left: 0;
+        right: 0;
+        margin: auto;
+        background: white;
+        box-shadow: 0px 0px 15px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 32px;
+        padding: 0 40px;
+        z-index: 10;
     }
 
     .header .btn-wrap{
-        width: 340px;      
-    }
-    
-
-    @keyframes slide-left {
-        from { width: 190px;}
-        to {width: 100%; }
-    }
-    @keyframes slide-right {
-        from { width: 100%;}
-        to {width: 190px; }
+        width: 150px;
     }
 
-}
-
-@media screen and (max-width : 620px){
-    
-    .close{
-        top: 42px;
-        right: 6px;
-    }
-    .header .connected .wallet{
-        font-size: 12px;
-        padding: 21px 10px;
-    }
-    .preview{
+    .header .btn-wrap .connected{
         display: none;
-        font-size: 0;
-        margin-left: 15px;
-    }
-    .preview img{
-        width: 23%;
-        height: 35%;
-        margin: 0;
-    }
-    .header .btn-wrap{
-        width: 207px;   
-        background-color: #ffffff;  
-    }
-    .header .connected .wallet img {
-        margin-right: 2px;
-    }
-    .preview .balance{
-        width: 73px;
     }
 
-    @keyframes slide-left {
-        from { width: 150px;}
-        to {width: 100%; }
-    }
-    @keyframes slide-right {
-        from { width: 100%;}
-        to {width: 150px; }
+    .header .btn-wrap:hover .connected{
+        display: initial;
+        min-width: 320px;
     }
 }
-
-

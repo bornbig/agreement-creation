@@ -89,18 +89,22 @@ hr.line{
 .modal .btn.bottom-right, .modal .btn.bottom-left{
     position: absolute;
     bottom: 0;
-    width: 50%;
+    width: calc(50% - 1px);
     border-radius: 0;
 }
 
 .modal .btn.bottom-right{
-    border-bottom-right-radius: 16px;
+    font-weight: bolder;
     right: 0;
+    border-bottom-right-radius: 16px;
+    border-left: 0.5px solid white;
 }
 
 .modal .btn.bottom-left{
-    border-bottom-left-radius: 16px;
+    border-right: 0.5px solid white;
+    font-weight: bolder;
     left: 0;
+    border-bottom-left-radius: 16px;
 }
 
 .modal .address-box{
@@ -116,6 +120,7 @@ hr.line{
 .modal .agreement-details{
     border: none;
     overflow: hidden;
+    border-radius: 8px;
 }
 
 .modal .address-box input{ 
@@ -130,7 +135,6 @@ hr.line{
     width: calc(100% - 20px);
     height: 40px;
     font-size: 20px;
-    border-radius: 8px;
     border-color: #776dff;
 }
 
@@ -140,6 +144,7 @@ hr.line{
     align-items: center;
     border-radius: 8px;
     border: 2px solid #776dff;
+    overflow: hidden;
 }
 
 .modal .price-box .dollar{
@@ -150,7 +155,6 @@ hr.line{
     padding-left: 17px;
     padding-right: 16px;
     background: lavender;
-    margin-right: 8px;
     border-top-left-radius: 6px;
     border-end-start-radius: 6px;
 }
@@ -159,7 +163,7 @@ hr.line{
     width: calc(60% - 10px);
     border: none;
     /* width: 100%; */
-    padding: 1px 5px;
+    padding: 1px 12px;
 }
 
 .modal .price-box .fiat-text{
@@ -172,9 +176,13 @@ hr.line{
 }
 
 .modal .price-box .token-drop-down{
-    width: calc(40% - 10px);
+    width: calc(40%);
     font-size: 20px;
     position: relative;
+    background: lavender;
+    height: 42px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .modal .price-box .token-drop-down .selected-token{
@@ -189,10 +197,18 @@ hr.line{
 }
 
 .modal .price-box .token-drop-down .drop-down-list{
-    font-size: 19px;
-    width: 100%;
+    font-size: 14px;
+    width: 80%;
     text-align: center;
     border: none !important;
+    height: 40px;
+    background: transparent;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.modal .price-box .token-drop-down .drop-down-list:focus{
+    outline: none;
 }
 
 .modal .agreement-details textarea{
@@ -202,6 +218,7 @@ hr.line{
     font-size: 16px;
     font-family: unset;
     border: 2px solid #776dff;
+    border-radius: 8px;
 }
 
 .modal .add-skill-btn{
@@ -253,43 +270,4 @@ hr.line{
 .model-skill-btn{
     margin: 12px auto !important;
     width: 94% !important;
-}
-
-@media screen and (max-width : 890px){
-    .modal .agreement-details textarea {
-        height: 118px;
-    }
-}
-
-@media screen and (max-width : 620px){
-    .modal .agreement-details textarea {
-        height: 100px;
-    }
-    .model .price-box{
-        padding: 0 20px;
-    }
-    .modal .price-box .token-drop-down {
-        padding: 0 15px;
-        font-size: 17px;
-    }
-    .selected-token .arrow{
-        top: 15% !important;
-        /* right: -19%; */
-    }
-    .modal .question {
-        font-size: 17px;
-    }
-    .modal .add-skill-btn{
-        height: 28px;
-        margin-bottom: 10px !important;
-    }
-    .modal .skill-box input{
-        height: 18px;
-        font-size: 14px;
-    }
-    .note .text-success-add{
-        display: flex;
-        align-items: center;
-        font-size: 8px !important;
-    }
 }
